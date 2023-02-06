@@ -113,7 +113,7 @@ public class ButtonCustom extends JButton {
     public enum ButtonStyle {
         PRIMARY(new Color(18,23,28), new Color(238, 238, 238), new Color(50,76,94), new Color(4, 205, 151)),
         SECONDARY(new Color(33,50,60), new Color(238, 238, 238), new Color(50,76,94), new Color(4, 205, 151)),
-        DESTRUCTIVE(new Color(255, 138, 48), new Color(238, 238, 238), new Color(198, 86, 0), new Color(255, 161, 90));
+        DESTRUCTIVE(new Color(168, 46, 46), new Color(168, 46, 46), new Color(168, 46, 46), new Color(168, 46, 46));
 
         private ButtonStyle(Color background, Color foreground, Color backgroundHover, Color backgroundPress) {
             this.background = background;
