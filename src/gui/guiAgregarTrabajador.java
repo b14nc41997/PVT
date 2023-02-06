@@ -4,7 +4,7 @@
  */
 package gui;
 
-import java.awt.Dimension;
+import button.*;
 
 /**
  *
@@ -16,12 +16,12 @@ public class guiAgregarTrabajador extends javax.swing.JFrame {
      * Creates new form guiAgregarTrabajador
      */
     public guiAgregarTrabajador() {
+        initComponents();
         setLocationRelativeTo(null); //centrado
         setResizable(false); //para no maximizar interfaz
         this.setTitle("PUNTO DE VENTA TATOOS");
-        this.setSize(new Dimension(700, 400));
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,33 +31,328 @@ public class guiAgregarTrabajador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        pnlFondo = new javax.swing.JPanel();
+        tbdSeccion = new javax.swing.JTabbedPane();
+        pnlProducto = new javax.swing.JPanel();
+        pnlFondoProducto = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        txtNombreProducto = new javax.swing.JTextField();
+        cbxCategoriaProducto = new javax.swing.JComboBox<>();
+        lblUsuario1 = new javax.swing.JLabel();
+        lblUsuario2 = new javax.swing.JLabel();
+        txtDescripcionProducto = new javax.swing.JTextField();
+        lblUsuario3 = new javax.swing.JLabel();
+        txtPrecioCostoProducto = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lblUsuario4 = new javax.swing.JLabel();
+        txtPrecioVentaProducto = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        lblUsuario5 = new javax.swing.JLabel();
+        txtStockProducto = new javax.swing.JSpinner();
+        lblUsuario6 = new javax.swing.JLabel();
+        txtFotoProducto = new javax.swing.JTextField();
+        lblUsuario7 = new javax.swing.JLabel();
+        txtCodigoProducto = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        botonGuardarProducto = new button.ButtonCustom();
+        botonLimpiarProducto = new button.ButtonCustom();
+        pnlVenta = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(67, 102, 129));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
+        setResizable(false);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        pnlFondo.setBackground(new java.awt.Color(67, 102, 129));
+        pnlFondo.setPreferredSize(new java.awt.Dimension(1280, 720));
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        tbdSeccion.setBackground(new java.awt.Color(33, 50, 60));
+        tbdSeccion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbdSeccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tbdSeccion.setInheritsPopupMenu(true);
 
-        setJMenuBar(jMenuBar1);
+        pnlProducto.setBackground(new java.awt.Color(33, 50, 60));
+        pnlProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlProducto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        pnlProducto.setOpaque(false);
+
+        pnlFondoProducto.setBackground(new java.awt.Color(18, 23, 28));
+        pnlFondoProducto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(33, 50, 60));
+
+        jLabel2.setBackground(new java.awt.Color(67, 102, 129));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Agregar Producto");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        );
+
+        pnlFondoProducto.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 170, 50));
+
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario.setText("Categoría*");
+        pnlFondoProducto.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, -1, -1));
+
+        txtNombreProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombreProducto.setToolTipText("Ingresar nombre(s)");
+        txtNombreProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlFondoProducto.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 180, 30));
+
+        cbxCategoriaProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxCategoriaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCategoriaProducto.setBorder(null);
+        cbxCategoriaProducto.setLightWeightPopupEnabled(false);
+        cbxCategoriaProducto.setRequestFocusEnabled(false);
+        pnlFondoProducto.add(cbxCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 180, 35));
+
+        lblUsuario1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario1.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario1.setText("Descripción");
+        pnlFondoProducto.add(lblUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+
+        lblUsuario2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario2.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario2.setText("Nombre*");
+        pnlFondoProducto.add(lblUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        txtDescripcionProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDescripcionProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlFondoProducto.add(txtDescripcionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 400, 60));
+
+        lblUsuario3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario3.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario3.setText("Precio de compra");
+        pnlFondoProducto.add(lblUsuario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+
+        txtPrecioCostoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPrecioCostoProducto.setToolTipText("Ingresar nombre(s)");
+        txtPrecioCostoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlFondoProducto.add(txtPrecioCostoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 150, 30));
+
+        jPanel2.setBackground(new java.awt.Color(67, 102, 129));
+
+        jLabel1.setBackground(new java.awt.Color(67, 102, 129));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("S/");
+        jLabel1.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pnlFondoProducto.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 30, 30));
+
+        lblUsuario4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario4.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario4.setText("Precio de venta");
+        pnlFondoProducto.add(lblUsuario4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
+
+        txtPrecioVentaProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPrecioVentaProducto.setToolTipText("Ingresar nombre(s)");
+        txtPrecioVentaProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlFondoProducto.add(txtPrecioVentaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 150, 30));
+
+        jPanel3.setBackground(new java.awt.Color(67, 102, 129));
+
+        jLabel3.setBackground(new java.awt.Color(67, 102, 129));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("S/");
+        jLabel3.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pnlFondoProducto.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 30, 30));
+
+        lblUsuario5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario5.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario5.setText("Stock*");
+        pnlFondoProducto.add(lblUsuario5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, -1, -1));
+
+        txtStockProducto.setModel(new javax.swing.SpinnerNumberModel(1, 0, null, 1));
+        txtStockProducto.setAutoscrolls(true);
+        txtStockProducto.setBorder(null);
+        txtStockProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtStockProducto.setEditor(new javax.swing.JSpinner.NumberEditor(txtStockProducto, ""));
+        txtStockProducto.setFocusable(false);
+        pnlFondoProducto.add(txtStockProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 70, 30));
+
+        lblUsuario6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario6.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario6.setText("Foto");
+        pnlFondoProducto.add(lblUsuario6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
+
+        txtFotoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtFotoProducto.setToolTipText("Ingresar nombre(s)");
+        txtFotoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlFondoProducto.add(txtFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 80, 30));
+
+        lblUsuario7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblUsuario7.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario7.setText("Código");
+        pnlFondoProducto.add(lblUsuario7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, -1, -1));
+
+        txtCodigoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCodigoProducto.setToolTipText("Ingresar nombre(s)");
+        txtCodigoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlFondoProducto.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 180, 30));
+
+        jPanel4.setBackground(new java.awt.Color(67, 102, 129));
+        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconUpload.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        pnlFondoProducto.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 30, 30));
+
+        botonGuardarProducto.setText("Agregar");
+        botonGuardarProducto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonGuardarProducto.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
+        pnlFondoProducto.add(botonGuardarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 410, 180, 37));
+
+        botonLimpiarProducto.setText("Limpiar");
+        botonLimpiarProducto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonLimpiarProducto.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
+        botonLimpiarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonLimpiarProductoMouseEntered(evt);
+            }
+        });
+        pnlFondoProducto.add(botonLimpiarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 180, 37));
+
+        javax.swing.GroupLayout pnlProductoLayout = new javax.swing.GroupLayout(pnlProducto);
+        pnlProducto.setLayout(pnlProductoLayout);
+        pnlProductoLayout.setHorizontalGroup(
+            pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProductoLayout.createSequentialGroup()
+                .addGap(384, 384, 384)
+                .addComponent(pnlFondoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(386, Short.MAX_VALUE))
+        );
+        pnlProductoLayout.setVerticalGroup(
+            pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProductoLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(pnlFondoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
+        tbdSeccion.addTab("<html><center>Agregar Producto</html>", new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconProducto.png")), pnlProducto); // NOI18N
+
+        pnlVenta.setBackground(new java.awt.Color(33, 50, 60));
+        pnlVenta.setOpaque(false);
+
+        javax.swing.GroupLayout pnlVentaLayout = new javax.swing.GroupLayout(pnlVenta);
+        pnlVenta.setLayout(pnlVentaLayout);
+        pnlVentaLayout.setHorizontalGroup(
+            pnlVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1235, Short.MAX_VALUE)
+        );
+        pnlVentaLayout.setVerticalGroup(
+            pnlVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 594, Short.MAX_VALUE)
+        );
+
+        tbdSeccion.addTab("Generar Venta", new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconVenta.png")), pnlVenta); // NOI18N
+
+        javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
+        pnlFondo.setLayout(pnlFondoLayout);
+        pnlFondoLayout.setHorizontalGroup(
+            pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondoLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(tbdSeccion)
+                .addGap(20, 20, 20))
+        );
+        pnlFondoLayout.setVerticalGroup(
+            pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondoLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(tbdSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+
+        tbdSeccion.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonLimpiarProductoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonLimpiarProductoMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonLimpiarProductoMouseEntered
 
     /**
      * @param args the command line arguments
@@ -95,8 +390,36 @@ public class guiAgregarTrabajador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
+    private button.ButtonCustom botonGuardarProducto;
+    private button.ButtonCustom botonLimpiarProducto;
+    private javax.swing.JComboBox<String> cbxCategoriaProducto;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JLabel lblUsuario1;
+    private javax.swing.JLabel lblUsuario2;
+    private javax.swing.JLabel lblUsuario3;
+    private javax.swing.JLabel lblUsuario4;
+    private javax.swing.JLabel lblUsuario5;
+    private javax.swing.JLabel lblUsuario6;
+    private javax.swing.JLabel lblUsuario7;
+    private javax.swing.JPanel pnlFondo;
+    private javax.swing.JPanel pnlFondoProducto;
+    private javax.swing.JPanel pnlProducto;
+    private javax.swing.JPanel pnlVenta;
+    private javax.swing.JTabbedPane tbdSeccion;
+    private javax.swing.JTextField txtCodigoProducto;
+    private javax.swing.JTextField txtDescripcionProducto;
+    private javax.swing.JTextField txtFotoProducto;
+    private javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtPrecioCostoProducto;
+    private javax.swing.JTextField txtPrecioVentaProducto;
+    private javax.swing.JSpinner txtStockProducto;
     // End of variables declaration//GEN-END:variables
 }
