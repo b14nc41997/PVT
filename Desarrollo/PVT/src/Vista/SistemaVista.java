@@ -241,7 +241,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblTituloReporte = new javax.swing.JLabel();
         lblFondoTitulo = new javax.swing.JLabel();
         botonGuardarEmpleado1 = new button.ButtonCustom();
-        botonLimpiarEmpleado1 = new button.ButtonCustom();
         lblSelFechaReporte = new javax.swing.JLabel();
         txtFecReporte = new javax.swing.JTextField();
         pnlIconCalendarioReporte = new javax.swing.JPanel();
@@ -850,7 +849,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblBuscarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblBuscarInventario.setForeground(new java.awt.Color(255, 255, 255));
         lblBuscarInventario.setText("Buscar por");
-        pnlFondoInventario.add(lblBuscarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, -1, -1));
+        pnlFondoInventario.add(lblBuscarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, -1, -1));
 
         cbxCriterioInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxCriterioInventario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Categoría", "Código" }));
@@ -859,7 +858,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 cbxCriterioInventarioActionPerformed(evt);
             }
         });
-        pnlFondoInventario.add(cbxCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 120, 35));
+        pnlFondoInventario.add(cbxCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 120, 35));
 
         txtCriterioInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCriterioInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
@@ -868,21 +867,21 @@ public class SistemaVista extends javax.swing.JFrame {
                 txtCriterioInventarioActionPerformed(evt);
             }
         });
-        pnlFondoInventario.add(txtCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 180, 30));
+        pnlFondoInventario.add(txtCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 180, 30));
 
         buscarInventario.setText("Buscar");
         buscarInventario.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         buscarInventario.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
-        pnlFondoInventario.add(buscarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 120, 37));
+        pnlFondoInventario.add(buscarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 120, 37));
 
         lblOrdenarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblOrdenarInventario.setForeground(new java.awt.Color(255, 255, 255));
         lblOrdenarInventario.setText("Ordenar por");
-        pnlFondoInventario.add(lblOrdenarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 70, -1, -1));
+        pnlFondoInventario.add(lblOrdenarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, -1, -1));
 
         cbxOrdenarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxOrdenarInventario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Categoría", "Código" }));
-        pnlFondoInventario.add(cbxOrdenarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 90, 120, 35));
+        pnlFondoInventario.add(cbxOrdenarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 90, 120, 35));
 
         tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1119,7 +1118,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtIdInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel14Layout.createSequentialGroup()
@@ -1141,7 +1140,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addComponent(lblDescripcionInventario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(lblPrecioCostoInventario)
@@ -1720,9 +1719,10 @@ public class SistemaVista extends javax.swing.JFrame {
         lblFondoTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
         pnlTituloReporte.add(lblFondoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        pnlFondoReporte.add(pnlTituloReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 180, -1));
+        pnlFondoReporte.add(pnlTituloReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 180, -1));
 
-        botonGuardarEmpleado1.setText("??????????");
+        botonGuardarEmpleado1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconDescarga.png"))); // NOI18N
+        botonGuardarEmpleado1.setText("Descargar progreso del día");
         botonGuardarEmpleado1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         botonGuardarEmpleado1.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
         botonGuardarEmpleado1.addActionListener(new java.awt.event.ActionListener() {
@@ -1730,22 +1730,12 @@ public class SistemaVista extends javax.swing.JFrame {
                 botonGuardarEmpleado1ActionPerformed(evt);
             }
         });
-        pnlFondoReporte.add(botonGuardarEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 120, 37));
-
-        botonLimpiarEmpleado1.setText("???????");
-        botonLimpiarEmpleado1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        botonLimpiarEmpleado1.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
-        botonLimpiarEmpleado1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonLimpiarEmpleado1ActionPerformed(evt);
-            }
-        });
-        pnlFondoReporte.add(botonLimpiarEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 120, 37));
+        pnlFondoReporte.add(botonGuardarEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 220, 50));
 
         lblSelFechaReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSelFechaReporte.setForeground(new java.awt.Color(255, 255, 255));
         lblSelFechaReporte.setText("Seleccionar fecha");
-        pnlFondoReporte.add(lblSelFechaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, -1, -1));
+        pnlFondoReporte.add(lblSelFechaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 80, -1, -1));
 
         txtFecReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtFecReporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
@@ -1754,7 +1744,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 txtFecReporteActionPerformed(evt);
             }
         });
-        pnlFondoReporte.add(txtFecReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 150, 30));
+        pnlFondoReporte.add(txtFecReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 150, 30));
 
         pnlIconCalendarioReporte.setBackground(new java.awt.Color(67, 102, 129));
         pnlIconCalendarioReporte.setAlignmentX(0.0F);
@@ -1782,7 +1772,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addComponent(lblIconCalendarioReporte))
         );
 
-        pnlFondoReporte.add(pnlIconCalendarioReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 130, 30, 30));
+        pnlFondoReporte.add(pnlIconCalendarioReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 100, 30, 30));
 
         tablaReporte.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1809,13 +1799,13 @@ public class SistemaVista extends javax.swing.JFrame {
             tablaReporte.getColumnModel().getColumn(7).setPreferredWidth(8);
         }
 
-        pnlFondoReporte.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 980, 172));
+        pnlFondoReporte.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 980, 172));
 
         lblPrecioReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPrecioReporte.setForeground(new java.awt.Color(255, 255, 255));
         lblPrecioReporte.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblPrecioReporte.setText("Total a pagar");
-        pnlFondoReporte.add(lblPrecioReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 380, 89, 30));
+        lblPrecioReporte.setText("Total del día");
+        pnlFondoReporte.add(lblPrecioReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 340, 89, 30));
 
         pnlIconSolReporte.setBackground(new java.awt.Color(67, 102, 129));
 
@@ -1841,15 +1831,15 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addComponent(lblIconSolReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        pnlFondoReporte.add(pnlIconSolReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 380, -1, -1));
+        pnlFondoReporte.add(pnlIconSolReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 340, -1, -1));
 
         txtTotalReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtTotalReporte.setToolTipText("Ingresar nombre(s)");
         txtTotalReporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 5));
         txtTotalReporte.setEnabled(false);
-        pnlFondoReporte.add(txtTotalReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 380, 130, 30));
+        pnlFondoReporte.add(txtTotalReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 340, 130, 30));
 
-        lblFondoReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoInventario.png"))); // NOI18N
+        lblFondoReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoReporte.png"))); // NOI18N
         pnlFondoReporte.add(lblFondoReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, -1));
 
         javax.swing.GroupLayout pnlReporteLayout = new javax.swing.GroupLayout(pnlReporte);
@@ -1857,16 +1847,16 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlReporteLayout.setHorizontalGroup(
             pnlReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReporteLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(pnlFondoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 1037, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(pnlFondoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         pnlReporteLayout.setVerticalGroup(
             pnlReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReporteLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(pnlFondoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(100, 100, 100)
+                .addComponent(pnlFondoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("<html><center>Ver<p>reporte</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconReporte.png")), pnlReporte); // NOI18N
@@ -2153,10 +2143,6 @@ public class SistemaVista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFecReporteActionPerformed
 
-    private void botonLimpiarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLimpiarEmpleado1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonLimpiarEmpleado1ActionPerformed
-
     private void botonGuardarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarEmpleado1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarEmpleado1ActionPerformed
@@ -2214,7 +2200,6 @@ public class SistemaVista extends javax.swing.JFrame {
     private button.ButtonCustom botonLimpiarCarrito1;
     private button.ButtonCustom botonLimpiarCarrito2;
     private button.ButtonCustom botonLimpiarEmpleado;
-    private button.ButtonCustom botonLimpiarEmpleado1;
     private button.ButtonCustom botonLimpiarProducto;
     private button.ButtonCustom buscarInventario;
     private button.ButtonCustom buttonCustom1;
