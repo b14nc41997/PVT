@@ -1,12 +1,20 @@
 
 package Modelo;
 
+import Vista.SistemaVista;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -31,7 +39,7 @@ public class ProductoDao {
             ps.setFloat(5, pro.getVenta_producto());
             ps.setInt(6, pro.getStock_producto());
             ps.setString(7, pro.getCodigo_producto());
-            ps.setString(8, pro.getFoto_producto());
+            ps.setBytes(8, pro.getFoto_producto());
             ps.execute();
             return  true;
         } catch (SQLException e) {
@@ -74,7 +82,7 @@ public class ProductoDao {
                 pro.setVenta_producto(rs.getFloat("venta_producto"));
                 pro.setStock_producto(rs.getInt("stock_producto"));
                 pro.setCodigo_producto(rs.getString("codigo_producto"));
-                pro.setFoto_producto(rs.getString("foto_producto"));
+                pro.setFoto_producto(rs.getBytes("foto_producto"));
                 
                 listPro.add(pro);
             }
@@ -83,6 +91,7 @@ public class ProductoDao {
         }
         return listPro;
     }
+        
     
     public boolean eliminarProducto(int id_producto){
         String sql = "DELETE "
@@ -136,4 +145,5 @@ public class ProductoDao {
             }
         }
     }
+    
 }

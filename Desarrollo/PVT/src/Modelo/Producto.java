@@ -10,12 +10,12 @@ public class Producto {
     private float venta_producto;
     private int stock_producto;
     private String codigo_producto;
-    private String foto_producto;
+    private byte[] foto_producto;
 
     public Producto() {
     }
 
-    public Producto(int id_producto, String nombre_producto, String categoria_producto, String descripcion_producto, float costo_producto, float venta_producto, int stock_producto, String codigo_producto, String foto_producto) {
+    public Producto(int id_producto, String nombre_producto, String categoria_producto, String descripcion_producto, float costo_producto, float venta_producto, int stock_producto, String codigo_producto, byte[] foto_producto) {
         this.id_producto = id_producto;
         this.nombre_producto = nombre_producto;
         this.categoria_producto = categoria_producto;
@@ -91,11 +91,11 @@ public class Producto {
         this.codigo_producto = codigo_producto;
     }
 
-    public String getFoto_producto() {
+    public byte[] getFoto_producto() {
         return foto_producto;
     }
 
-    public void setFoto_producto(String foto_producto) {
+    public void setFoto_producto(byte[] foto_producto) {
         this.foto_producto = foto_producto;
     }
     

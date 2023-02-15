@@ -47,7 +47,7 @@ public class LoginVista extends javax.swing.JFrame {
         pnlIconContrasenia = new javax.swing.JPanel();
         lblIconContrasenia = new javax.swing.JLabel();
         txtContrasenia = new javax.swing.JPasswordField();
-        botonIngresar = new button.ButtonCustom();
+        btnIngresar = new javax.swing.JButton();
         lblfondoTarjetaLogin = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
@@ -140,14 +140,19 @@ public class LoginVista extends javax.swing.JFrame {
         });
         jPanel2.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 150, 30));
 
-        botonIngresar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        botonIngresar.setLabel("Ingresar");
-        botonIngresar.addActionListener(new java.awt.event.ActionListener() {
+        btnIngresar.setBackground(new java.awt.Color(17, 16, 22));
+        btnIngresar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIngresar.setText("Ingresar");
+        btnIngresar.setBorder(null);
+        btnIngresar.setBorderPainted(false);
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonIngresarActionPerformed(evt);
+                btnIngresarActionPerformed(evt);
             }
         });
-        jPanel2.add(botonIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 120, 37));
+        jPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 120, 37));
 
         lblfondoTarjetaLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoTarjetaLogin.png"))); // NOI18N
         jPanel2.add(lblfondoTarjetaLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 320));
@@ -178,9 +183,9 @@ public class LoginVista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseniaActionPerformed
 
-    private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         validar();
-    }//GEN-LAST:event_botonIngresarActionPerformed
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,7 +224,7 @@ public class LoginVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private button.ButtonCustom botonIngresar;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
