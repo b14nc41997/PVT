@@ -2271,14 +2271,17 @@ public class SistemaVista extends javax.swing.JFrame {
     
     private void limpiarEmpleado(){
        
+        Date fechatxt1 = null, fechatxt2 = null;
+        
         txtIdEmpleado.setText("");
         txtNombreEmpleado.setText("");
         txtApePaternoEmpleado.setText("");
         txtApeMaternoEmpleado.setText("");
         txtDocumentoEmpleado.setText("");
         txtCelularEmpleado.setText("");
-//        dchFecNacimientoEmpleado.setDate(dateObj);
-//        dchFecIngresoEmpleado.setDate(dateObj);
+
+        dchFecNacimientoEmpleado.setDate(fechatxt1);
+        dchFecIngresoEmpleado.setDate(fechatxt2);
     }
     
     private void limpiarProducto(){
