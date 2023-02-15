@@ -67,7 +67,7 @@ public class SistemaVista extends javax.swing.JFrame {
     
     public void listarProductos(){
         List<Producto> listPro = proDao.listarProductos();
-        modelo = (DefaultTableModel) tablaProducto.getModel();
+        modelo = (DefaultTableModel) tablaInventario.getModel();
         Object[] obj = new Object[8];
         for (int i = 0; i < listPro.size(); i++) {
             obj[0] = listPro.get(i).getId_producto();
@@ -80,7 +80,7 @@ public class SistemaVista extends javax.swing.JFrame {
             obj[1] = listPro.get(i).getCodigo_producto();
             modelo.addRow((obj));
         }
-        tablaProducto.setModel(modelo);
+        tablaInventario.setModel(modelo);
     }
     
     public void limpiarTabla(){
@@ -160,7 +160,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblOrdenarInventario = new javax.swing.JLabel();
         cbxOrdenarInventario = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tablaProducto = new javax.swing.JTable();
+        tablaInventario = new javax.swing.JTable();
         jPanel14 = new javax.swing.JPanel();
         txtIdInventario = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -872,7 +872,7 @@ public class SistemaVista extends javax.swing.JFrame {
         cbxOrdenarInventario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Categoría", "Código" }));
         pnlFondoInventario.add(cbxOrdenarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 90, 120, 35));
 
-        tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -880,17 +880,17 @@ public class SistemaVista extends javax.swing.JFrame {
                 "ID", "Código", "Nombre", "Categoría", "Descripción", "Costo", "Venta", "Stock"
             }
         ));
-        tablaProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaProductoMouseClicked(evt);
+                tablaInventarioMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(tablaProducto);
-        if (tablaProducto.getColumnModel().getColumnCount() > 0) {
-            tablaProducto.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tablaProducto.getColumnModel().getColumn(2).setPreferredWidth(100);
-            tablaProducto.getColumnModel().getColumn(3).setPreferredWidth(100);
-            tablaProducto.getColumnModel().getColumn(4).setPreferredWidth(200);
+        jScrollPane3.setViewportView(tablaInventario);
+        if (tablaInventario.getColumnModel().getColumnCount() > 0) {
+            tablaInventario.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tablaInventario.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tablaInventario.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tablaInventario.getColumnModel().getColumn(4).setPreferredWidth(200);
         }
 
         pnlFondoInventario.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 520, 330));
@@ -1846,20 +1846,20 @@ public class SistemaVista extends javax.swing.JFrame {
         //txtFecIngresoEmpleado.setText(tablaEmpleado.getValueAt(fila,7).toString());
     }//GEN-LAST:event_tablaEmpleadoMouseClicked
 
-    private void tablaProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductoMouseClicked
+    private void tablaInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInventarioMouseClicked
 
-        int fila = tablaProducto.rowAtPoint(evt.getPoint());
+        int fila = tablaInventario.rowAtPoint(evt.getPoint());
        
-        txtIdInventario.setText(tablaProducto.getValueAt(fila, 0).toString());
-        txtNombreInventario.setText(tablaProducto.getValueAt(fila, 2).toString());
-        cbxCategoriaInventario.setSelectedItem(tablaProducto.getValueAt(fila, 3).toString());
-        txtDescripcionInventario.setText(tablaProducto.getValueAt(fila, 4).toString());
-        txtPrecioCostoInventario.setText(tablaProducto.getValueAt(fila, 5).toString());
-        txtPrecioVentaProducto.setText(tablaProducto.getValueAt(fila, 6).toString());
-        txtStockInventario.setValue(tablaProducto.getValueAt(fila, 7));
-        txtCodigoInventario.setText(tablaProducto.getValueAt(fila, 1).toString());
+        txtIdInventario.setText(tablaInventario.getValueAt(fila, 0).toString());
+        txtNombreInventario.setText(tablaInventario.getValueAt(fila, 2).toString());
+        cbxCategoriaInventario.setSelectedItem(tablaInventario.getValueAt(fila, 3).toString());
+        txtDescripcionInventario.setText(tablaInventario.getValueAt(fila, 4).toString());
+        txtPrecioCostoInventario.setText(tablaInventario.getValueAt(fila, 5).toString());
+        txtPrecioVentaProducto.setText(tablaInventario.getValueAt(fila, 6).toString());
+        txtStockInventario.setValue(tablaInventario.getValueAt(fila, 7));
+        txtCodigoInventario.setText(tablaInventario.getValueAt(fila, 1).toString());
         
-    }//GEN-LAST:event_tablaProductoMouseClicked
+    }//GEN-LAST:event_tablaInventarioMouseClicked
 
     private void tabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneMouseClicked
         if(tabbedPane.getSelectedIndex()==1){
@@ -1972,6 +1972,7 @@ public class SistemaVista extends javax.swing.JFrame {
             emp.setFec_ingreso_empleado(fecIngreso.toString());
             
             empDao.registrarEmpleado(emp);
+            
             limpiarTabla();
             limpiarEmpleado();
             listarEmpleados();
@@ -2234,7 +2235,7 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable tablaCarrito;
     private javax.swing.JTable tablaEmpleado;
-    private javax.swing.JTable tablaProducto;
+    private javax.swing.JTable tablaInventario;
     private javax.swing.JTable tablaReporte;
     private javax.swing.JTextField txtApeMaternoEmpleado;
     private javax.swing.JTextField txtApePaternoEmpleado;
