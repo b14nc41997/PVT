@@ -3,26 +3,20 @@ package Vista;
 
 import Modelo.Empleado;
 import Modelo.EmpleadoDao;
+import Modelo.ExportarReporteExcel;
 import Modelo.Producto;
 import Modelo.ProductoDao;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+import Modelo.Venta;
+import Modelo.VentaDao;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.System.Logger.Level;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,6 +26,8 @@ public class SistemaVista extends javax.swing.JFrame {
     EmpleadoDao empDao = new EmpleadoDao();
     Producto pro = new Producto();
     ProductoDao proDao = new ProductoDao();
+    Venta repo = new Venta();
+    VentaDao repoDao = new VentaDao();
     DefaultTableModel modelo = new DefaultTableModel();
     
     public SistemaVista() {
@@ -152,11 +148,12 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoTituloInventario = new javax.swing.JPanel();
         lblTituloInventario = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        btnBuscarInventario = new javax.swing.JButton();
         lblBuscarInventario = new javax.swing.JLabel();
         cbxCriterioInventario = new javax.swing.JComboBox<>();
         txtCriterioInventario = new javax.swing.JTextField();
         btnDescargarInventario = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        lblBotonBuscarInventario = new javax.swing.JLabel();
         lblOrdenarInventario = new javax.swing.JLabel();
         cbxOrdenarInventario = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -257,10 +254,10 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargaReporte = new javax.swing.JButton();
         dchFechaReporte = new com.toedter.calendar.JDateChooser();
         jPanel7 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lblBotonBuscarReporte = new javax.swing.JLabel();
         lblSelFechaReporte = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        tablaReporte = new javax.swing.JTable();
+        tablaReporte = new ColorCelda();
         lblPrecioReporte = new javax.swing.JLabel();
         pnlIconSolReporte = new javax.swing.JPanel();
         lblIconSolReporte = new javax.swing.JLabel();
@@ -834,14 +831,6 @@ public class SistemaVista extends javax.swing.JFrame {
 
         pnlFondoInventario.add(pnlFondoTituloInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, -1));
 
-        btnBuscarInventario.setBackground(new java.awt.Color(33, 50, 60));
-        btnBuscarInventario.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnBuscarInventario.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscarInventario.setText("Buscar");
-        btnBuscarInventario.setBorder(null);
-        btnBuscarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlFondoInventario.add(btnBuscarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 120, 40));
-
         lblBuscarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblBuscarInventario.setForeground(new java.awt.Color(255, 255, 255));
         lblBuscarInventario.setText("Buscar por");
@@ -861,7 +850,33 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargarInventario.setText("Descargar Inventario");
         btnDescargarInventario.setBorder(null);
         btnDescargarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargarInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarInventarioActionPerformed(evt);
+            }
+        });
         pnlFondoInventario.add(btnDescargarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 180, 40));
+
+        jPanel8.setBackground(new java.awt.Color(67, 102, 129));
+
+        lblBotonBuscarInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(lblBotonBuscarInventario)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(lblBotonBuscarInventario)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        pnlFondoInventario.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, 30, 30));
 
         lblOrdenarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblOrdenarInventario.setForeground(new java.awt.Color(255, 255, 255));
@@ -1163,7 +1178,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminarInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizarInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlFondoInventario.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 466, 340));
@@ -1562,9 +1577,9 @@ public class SistemaVista extends javax.swing.JFrame {
                 btnActualizarEmpleadoActionPerformed(evt);
             }
         });
-        pnlFondoEmpleado.add(btnActualizarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 120, 40));
+        pnlFondoEmpleado.add(btnActualizarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 120, 40));
 
-        btnEliminarEmpleado.setBackground(new java.awt.Color(33, 50, 60));
+        btnEliminarEmpleado.setBackground(new java.awt.Color(51, 0, 0));
         btnEliminarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnEliminarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarEmpleado.setText("Eliminar");
@@ -1575,7 +1590,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 btnEliminarEmpleadoActionPerformed(evt);
             }
         });
-        pnlFondoEmpleado.add(btnEliminarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 120, 40));
+        pnlFondoEmpleado.add(btnEliminarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 120, 40));
 
         btnLimpiarEmpleado.setBackground(new java.awt.Color(33, 50, 60));
         btnLimpiarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1676,6 +1691,11 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargaReporte.setText("Descargar progreso del día");
         btnDescargaReporte.setBorder(null);
         btnDescargaReporte.setBorderPainted(false);
+        btnDescargaReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargaReporteActionPerformed(evt);
+            }
+        });
         pnlFondoReporte.add(btnDescargaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 220, 50));
 
         dchFechaReporte.setDateFormatString("dd-MM-yyyy");
@@ -1685,22 +1705,27 @@ public class SistemaVista extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(67, 102, 129));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
-        jLabel4.setToolTipText("");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBotonBuscarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
+        lblBotonBuscarReporte.setToolTipText("");
+        lblBotonBuscarReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBotonBuscarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBotonBuscarReporteMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblBotonBuscarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblBotonBuscarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1716,7 +1741,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
             },
             new String [] {
-                "#", "ID", "Fecha", "DNI/CE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total"
+                "#", "ID", "Fecha", "DNI/CE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total", "Progreso del Día"
             }
         ));
         jScrollPane7.setViewportView(tablaReporte);
@@ -1766,9 +1791,10 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoReporte.add(pnlIconSolReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 340, -1, -1));
 
         txtTotalReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtTotalReporte.setToolTipText("Ingresar nombre(s)");
+        txtTotalReporte.setToolTipText("");
         txtTotalReporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 5));
-        txtTotalReporte.setEnabled(false);
+        txtTotalReporte.setFocusable(false);
+        txtTotalReporte.setRequestFocusEnabled(false);
         pnlFondoReporte.add(txtTotalReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 340, 130, 30));
 
         lblFondoReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoReporte.png"))); // NOI18N
@@ -2060,6 +2086,35 @@ public class SistemaVista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
+    private void lblBotonBuscarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonBuscarReporteMouseClicked
+        //Si el campo "fecha" está vacío       
+        if (dchFechaReporte.getDate().equals("") || 
+                dchFechaReporte.getDate().equals(null)) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una fecha");
+        } else {
+            limpiarTabla();
+            try {
+                listarReportes();
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
+    }//GEN-LAST:event_lblBotonBuscarReporteMouseClicked
+
+    private void btnDescargaReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargaReporteActionPerformed
+        modelo = (DefaultTableModel) tablaReporte.getModel();
+        
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formato.format(dchFechaReporte.getDate());
+        
+        ExportarReporteExcel excel = new ExportarReporteExcel();
+        excel.reporte(modelo);
+    }//GEN-LAST:event_btnDescargaReporteActionPerformed
+
+    private void btnDescargarInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarInventarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDescargarInventarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2101,7 +2156,6 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JButton btnActualizarVenta;
     private javax.swing.JButton btnAgregarVenta;
     private javax.swing.JButton btnAgregarVenta1;
-    private javax.swing.JButton btnBuscarInventario;
     private javax.swing.JButton btnDescargaReporte;
     private javax.swing.JButton btnDescargarInventario;
     private javax.swing.JButton btnEliminarEmpleado;
@@ -2141,7 +2195,6 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -2159,6 +2212,7 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -2169,6 +2223,8 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JLabel lblApeMaternoEmpleado;
     private javax.swing.JLabel lblApePaternoEmpleado;
+    private javax.swing.JLabel lblBotonBuscarInventario;
+    private javax.swing.JLabel lblBotonBuscarReporte;
     private javax.swing.JLabel lblBuscarInventario;
     private javax.swing.JLabel lblCantidadCarrito;
     private javax.swing.JLabel lblCategoriaCarrito;
@@ -2319,4 +2375,34 @@ public class SistemaVista extends javax.swing.JFrame {
         }
     }
 
+    public void listarReportes() throws ParseException{
+        
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formato.format(dchFechaReporte.getDate());
+        
+        List<Venta> listRepo = repoDao.listarReportes(fecha);
+        modelo = (DefaultTableModel) tablaReporte.getModel();        
+
+        //Variable donde se almacenará la suma
+        float suma = 0;
+
+        Object[] obj = new Object[9];
+        for (int i = 0; i < listRepo.size(); i++) {            
+            obj[0] = (i+1);
+            obj[1] = listRepo.get(i).getId();
+            obj[2] = listRepo.get(i).getFecha();
+            obj[3] = listRepo.get(i).getDni();
+            obj[4] = listRepo.get(i).getNombre();
+            obj[5] = listRepo.get(i).getEmpleado();
+            obj[6] = listRepo.get(i).getDescripcion();
+            obj[7] = listRepo.get(i).getTotal();
+            //Se realiza la suma de la columna "Total"            
+            suma += listRepo.get(i).getTotal();
+            obj[8] = suma;
+            modelo.addRow((obj));
+        }          
+        tablaReporte.setModel(modelo);        
+        txtTotalReporte.setText(String.valueOf(suma)); //Se muestra la suma
+    }
+    
 }
