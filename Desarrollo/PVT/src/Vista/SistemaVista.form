@@ -98,11 +98,6 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/logo2.png"/>
-                </Property>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnSalir">
               <Properties>
@@ -114,9 +109,6 @@
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/iconSalir.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Salir"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -158,7 +150,7 @@
                   <Color blue="3c" green="32" red="21" type="rgb"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <AccessibilityProperties>
@@ -168,9 +160,6 @@
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt; Generar &lt;p&gt; venta &lt;/center&gt;&lt;/html&gt;" toolTip="">
                     <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt; Generar &lt;p&gt; venta &lt;/center&gt;&lt;/html&gt;"/>
-                    <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/iconCarrito.png"/>
-                    </Property>
                     <Property name="tabToolTip" type="java.lang.String" value=""/>
                   </JTabbedPaneConstraints>
                 </Constraint>
@@ -247,11 +236,6 @@
                           </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel7">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/fondoTitulos.png"/>
-                            </Property>
-                          </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                               <AbsoluteConstraints x="0" y="0" width="180" height="-1"/>
@@ -593,12 +577,9 @@
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                 </Property>
                                 <Property name="horizontalAlignment" type="int" value="0"/>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/iconBuscar.png"/>
-                                </Property>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Color id="Cursor Por defecto"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -655,7 +636,7 @@
                             </Property>
                             <Property name="autoscrolls" type="boolean" value="true"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Default Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                               <SpinnerEditor format="" type="3"/>
@@ -810,7 +791,7 @@
                               <Border info="null"/>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -830,7 +811,7 @@
                               <Border info="null"/>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -850,7 +831,7 @@
                               <Border info="null"/>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -870,7 +851,7 @@
                               <Border info="null"/>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -892,7 +873,7 @@
                           <Border info="null"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1210,12 +1191,9 @@
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                 </Property>
                                 <Property name="horizontalAlignment" type="int" value="0"/>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/iconBuscar.png"/>
-                                </Property>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Color id="Cursor Por defecto"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -1257,11 +1235,6 @@
                       </SubComponents>
                     </Container>
                     <Component class="javax.swing.JLabel" name="jLabel3">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Imagenes/fondoVenta.png"/>
-                        </Property>
-                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -1282,9 +1255,6 @@
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;inventario&lt;/center&gt;&lt;/html&gt;">
                     <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;inventario&lt;/center&gt;&lt;/html&gt;"/>
-                    <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/iconInventario.png"/>
-                    </Property>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -1360,11 +1330,6 @@
                           </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel10">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/fondoTitulos.png"/>
-                            </Property>
-                          </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                               <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -1389,7 +1354,7 @@
                           <Border info="null"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1472,7 +1437,7 @@
                           <Border info="null"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1759,7 +1724,7 @@
                                               <Component id="lblStockInventario1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="pnlImagenInventario" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="pnlImagenInventario" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -2010,7 +1975,7 @@
                             </Property>
                             <Property name="autoscrolls" type="boolean" value="true"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Default Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                               <SpinnerEditor format="" type="3"/>
@@ -2034,7 +1999,7 @@
                               <Border info="null"/>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -2057,7 +2022,7 @@
                               <Border info="null"/>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -2096,7 +2061,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                       <Component id="lblImagenInventario" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="30" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -2104,11 +2069,8 @@
                           <SubComponents>
                             <Component class="javax.swing.JLabel" name="lblImagenInventario">
                               <Properties>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/iconImagen.png"/>
-                                </Property>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Color id="Cursor Por defecto"/>
                                 </Property>
                               </Properties>
                               <Events>
@@ -2145,11 +2107,6 @@
                       </SubComponents>
                     </Container>
                     <Component class="javax.swing.JLabel" name="jLabel5">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Imagenes/fondoInventario.png"/>
-                        </Property>
-                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="0" y="0" width="1040" height="-1"/>
@@ -2170,9 +2127,6 @@
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;producto&lt;/center&gt;&lt;/html&gt;">
                     <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;producto&lt;/center&gt;&lt;/html&gt;"/>
-                    <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/iconProducto.png"/>
-                    </Property>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -2248,11 +2202,6 @@
                           </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblFondoTituloProducto">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/fondoTitulos.png"/>
-                            </Property>
-                          </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                               <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -2578,7 +2527,7 @@
                         </Property>
                         <Property name="autoscrolls" type="boolean" value="true"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Default Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                         <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                           <SpinnerEditor format="" type="3"/>
@@ -2670,7 +2619,7 @@
                           <Color blue="81" green="66" red="43" type="rgb"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -2699,11 +2648,6 @@
                       </Layout>
                       <SubComponents>
                         <Component class="javax.swing.JLabel" name="btnFotoProducto">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/imagenes/iconUpload.png"/>
-                            </Property>
-                          </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnFotoProductoMouseClicked"/>
                           </Events>
@@ -2726,7 +2670,7 @@
                           <Border info="null"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -2754,7 +2698,7 @@
                           <Border info="null"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -2767,11 +2711,6 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblFondoProducto">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Imagenes/fondoProducto.png"/>
-                        </Property>
-                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -2792,9 +2731,6 @@
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;empleado&lt;/center&gt;&lt;/html&gt;">
                     <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;empleado&lt;/center&gt;&lt;/html&gt;"/>
-                    <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/iconEmpleado.png"/>
-                    </Property>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -2870,11 +2806,6 @@
                           </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel15">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/fondoTitulos.png"/>
-                            </Property>
-                          </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                               <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -3089,11 +3020,6 @@
                       </Layout>
                       <SubComponents>
                         <Component class="javax.swing.JLabel" name="jLabel12">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/iconCellphone.png"/>
-                            </Property>
-                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -3138,9 +3064,6 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
                         </Property>
-                        <Property name="icon" type="javax.swing.ImageIcon" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
-                        </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                       <Constraints>
@@ -3170,9 +3093,6 @@
                         <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
-                        </Property>
-                        <Property name="icon" type="javax.swing.ImageIcon" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
                         </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
@@ -3382,11 +3302,6 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblFondoEmpleado">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Imagenes/fondoEmpleado.png"/>
-                        </Property>
-                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -3407,9 +3322,6 @@
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;reporte&lt;/center&gt;&lt;/html&gt;">
                     <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;reporte&lt;/center&gt;&lt;/html&gt;"/>
-                    <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/iconReporte.png"/>
-                    </Property>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -3429,7 +3341,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="pnlFondoReporte" min="-2" pref="396" max="-2" attributes="0"/>
-                          <EmptySpace pref="99" max="32767" attributes="0"/>
+                          <EmptySpace pref="96" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3485,11 +3397,6 @@
                           </Constraints>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblFondoTitulo">
-                          <Properties>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/fondoTitulos.png"/>
-                            </Property>
-                          </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                               <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
@@ -3509,15 +3416,15 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Imagenes/iconDescarga.png"/>
-                        </Property>
                         <Property name="text" type="java.lang.String" value="Descargar progreso del d&#xed;a"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="null"/>
                         </Property>
                         <Property name="borderPainted" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDescargaReporteActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="130" y="80" width="220" height="50"/>
@@ -3529,9 +3436,6 @@
                         <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
-                        </Property>
-                        <Property name="icon" type="javax.swing.ImageIcon" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
                         </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
@@ -3575,13 +3479,17 @@
                         <Component class="javax.swing.JLabel" name="jLabel4">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Imagenes/iconBuscar.png"/>
+                              <Image iconType="2" name="C:\Users\user\Documents\GitHub\PVT-main\Desarrollo\PVT\src\Imagenes\iconBuscar.png"/>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseClicked"/>
+                            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MousePressed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -3616,7 +3524,7 @@
                         <Component class="javax.swing.JTable" name="tablaReporte">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="8" rowCount="0">
+                              <Table columnCount="9" rowCount="0">
                                 <Column editable="true" title="#" type="java.lang.Object"/>
                                 <Column editable="true" title="ID" type="java.lang.Object"/>
                                 <Column editable="true" title="Fecha" type="java.lang.Object"/>
@@ -3625,6 +3533,7 @@
                                 <Column editable="true" title="Empleado" type="java.lang.Object"/>
                                 <Column editable="true" title="Descripci&#xf3;n" type="java.lang.Object"/>
                                 <Column editable="true" title="Total" type="java.lang.Object"/>
+                                <Column editable="true" title="Progreso del d&#xed;a" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -3675,6 +3584,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ColorCelda()"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -3766,11 +3678,6 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblFondoReporte">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Imagenes/fondoReporte.png"/>
-                        </Property>
-                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="0" y="0" width="1040" height="-1"/>

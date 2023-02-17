@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 15-02-2023 a las 16:55:28
+-- Servidor: localhost:3307
+-- Tiempo de generación: 17-02-2023 a las 06:32:28
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -112,6 +112,46 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `correo_usuario`, `contr
 (1, 'gerente', 'gerente@gmail.com', '123'),
 (2, 'Secretaria', 'secretaria@gmail.com', '456');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ventas`
+--
+
+CREATE TABLE `ventas` (
+  `id_venta` int(12) NOT NULL,
+  `fecha` date NOT NULL,
+  `dni_cliente` varchar(12) NOT NULL,
+  `nombre_cliente` varchar(50) NOT NULL,
+  `nombre_empleado` varchar(50) NOT NULL,
+  `descripcion_venta` varchar(100) NOT NULL,
+  `monto_total` float(6,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`id_venta`, `fecha`, `dni_cliente`, `nombre_cliente`, `nombre_empleado`, `descripcion_venta`, `monto_total`) VALUES
+(1, '2023-02-15', '76463593', 'Manuel', 'Marco', 'Esta es una descripcion de venta 1', 90.00),
+(2, '2023-02-15', '387427343', 'Marcos', 'Marcelo', 'Otra descripcion de venta', 110.00),
+(3, '2023-02-16', '43435423', 'Sebas', 'Nestor', 'Descripcion de venta para balblavblablabl', 300.00),
+(4, '2023-02-16', '7646359', 'Elias', 'Juan', 'djisfj isdfjs difijsdf ', 200.00),
+(5, '2023-02-16', '43435423', 'Pablo', 'Manuel', 'afsdf sdf sdfsdf', 300.00),
+(6, '2023-02-16', '7646359', 'Marcos', 'Nestor', 'bal bal bla lbablalba lbla lbla lba', 200.00),
+(7, '2023-02-16', '7646359', 'Pablo', 'Elias', 'balbl lbal albla bla lalblab', 60.00),
+(8, '2023-02-16', '7646359', 'Elias', 'Jose', 'Este es una descripcion', 70.00),
+(9, '2023-02-16', '445424234', 'Pablo', 'Manuel', 'Esto es una descripcion 2 34 54234', 80.00),
+(12, '2023-02-14', '43435423', 'Marcos', 'Manuel', 'Tatuaje de dragon', 120.00),
+(13, '2023-02-15', '', 'Pablo', 'Nestor', 'Piercing de nariz', 110.00),
+(14, '2023-02-15', '43435423', 'Elias', 'Marcelo', 'Piercing de oreja', 80.00),
+(15, '2023-02-14', '43235465', 'Sebas', 'Bianca', 'Tatuaje de serpiente en la pierna derecha', 80.00),
+(16, '2023-02-14', '12345678', 'Bianca', 'Sebas', 'Tatuaje en la frente', 100.00),
+(17, '2023-02-14', '34537294', 'Marcelo', 'Juan Manuel', 'Tatuaje en el brazo izquierdo de araña', 80.00),
+(18, '2023-02-14', '43435423', 'Pablo', 'Nestor', 'Piercing de ojo', 50.00),
+(19, '2023-02-14', '485728384', 'Elias', 'Elias 2', 'Piercing de lengua', 90.00),
+(20, '2023-02-14', '7646359', 'Pablo', 'Nestor', 'Piercing de lengua', 60.00);
+
 --
 -- Índices para tablas volcadas
 --
@@ -135,6 +175,12 @@ ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`);
 
 --
+-- Indices de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD PRIMARY KEY (`id_venta`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -155,6 +201,12 @@ ALTER TABLE `productos`
 --
 ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  MODIFY `id_venta` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

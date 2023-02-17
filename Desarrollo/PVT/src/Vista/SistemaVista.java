@@ -3,8 +3,11 @@ package Vista;
 
 import Modelo.Empleado;
 import Modelo.EmpleadoDao;
+import Modelo.ExportarReporteExcel;
 import Modelo.Producto;
 import Modelo.ProductoDao;
+import Modelo.Venta;
+import Modelo.VentaDao;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -12,7 +15,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.System.Logger.Level;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +34,8 @@ public class SistemaVista extends javax.swing.JFrame {
     EmpleadoDao empDao = new EmpleadoDao();
     Producto pro = new Producto();
     ProductoDao proDao = new ProductoDao();
+    Venta repo = new Venta();
+    VentaDao repoDao = new VentaDao();
     DefaultTableModel modelo = new DefaultTableModel();
     
     public SistemaVista() {
@@ -260,7 +264,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lblSelFechaReporte = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        tablaReporte = new javax.swing.JTable();
+        tablaReporte = new ColorCelda();
         lblPrecioReporte = new javax.swing.JLabel();
         pnlIconSolReporte = new javax.swing.JPanel();
         lblIconSolReporte = new javax.swing.JLabel();
@@ -277,12 +281,9 @@ public class SistemaVista extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(67, 102, 129));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo2.png"))); // NOI18N
-
         btnSalir.setBackground(new java.awt.Color(18, 23, 28));
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconSalir.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setBorder(null);
         btnSalir.setBorderPainted(false);
@@ -342,8 +343,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblTituloVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloVenta.setText("Venta");
         pnlFondoTituloVenta.add(lblTituloVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, 43));
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
         pnlFondoTituloVenta.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
 
         pnlFondoVenta.add(pnlFondoTituloVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 11, -1, -1));
@@ -394,9 +393,8 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(255, 255, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         jLabel35.setToolTipText("");
-        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -487,28 +485,28 @@ public class SistemaVista extends javax.swing.JFrame {
         btnActualizarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizarVenta.setText("Actualizar item");
         btnActualizarVenta.setBorder(null);
-        btnActualizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnEliminarVenta.setBackground(new java.awt.Color(51, 0, 0));
         btnEliminarVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnEliminarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarVenta.setText("Eliminar item");
         btnEliminarVenta.setBorder(null);
-        btnEliminarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnLimpiarVenta.setBackground(new java.awt.Color(33, 50, 60));
         btnLimpiarVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnLimpiarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiarVenta.setText("Limpiar carrito");
         btnLimpiarVenta.setBorder(null);
-        btnLimpiarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnAgregarVenta.setBackground(new java.awt.Color(33, 50, 60));
         btnAgregarVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAgregarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarVenta.setText("Agregar a carrito");
         btnAgregarVenta.setBorder(null);
-        btnAgregarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -627,7 +625,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnAgregarVenta1.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarVenta1.setText("Generar venta");
         btnAgregarVenta1.setBorder(null);
-        btnAgregarVenta1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarVenta1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlFondoVenta.add(btnAgregarVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 520, 150, 40));
 
         lblPrecioCarrito1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -715,9 +713,8 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel37.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         jLabel37.setToolTipText("");
-        jLabel37.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel37.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -788,8 +785,6 @@ public class SistemaVista extends javax.swing.JFrame {
         );
 
         pnlFondoVenta.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 62, -1, -1));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoVenta.png"))); // NOI18N
         pnlFondoVenta.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout pnlVentaLayout = new javax.swing.GroupLayout(pnlVenta);
@@ -809,7 +804,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tabbedPane.addTab("<html><center> Generar <p> venta </center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconCarrito.png")), pnlVenta, ""); // NOI18N
+        tabbedPane.addTab("<html><center> Generar <p> venta </center></html>", null, pnlVenta, "");
         pnlVenta.getAccessibleContext().setAccessibleDescription("");
 
         pnlInventario.setBackground(new java.awt.Color(33, 50, 60));
@@ -828,8 +823,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblTituloInventario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloInventario.setText("Inventario");
         pnlFondoTituloInventario.add(lblTituloInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 43));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
         pnlFondoTituloInventario.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pnlFondoInventario.add(pnlFondoTituloInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, -1));
@@ -839,7 +832,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnBuscarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscarInventario.setText("Buscar");
         btnBuscarInventario.setBorder(null);
-        btnBuscarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlFondoInventario.add(btnBuscarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 120, 40));
 
         lblBuscarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -860,7 +853,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnDescargarInventario.setText("Descargar Inventario");
         btnDescargarInventario.setBorder(null);
-        btnDescargarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlFondoInventario.add(btnDescargarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 180, 40));
 
         lblOrdenarInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -999,7 +992,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnEliminarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarInventario.setText("Eliminar");
         btnEliminarInventario.setBorder(null);
-        btnEliminarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEliminarInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarInventarioActionPerformed(evt);
@@ -1011,7 +1004,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnActualizarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizarInventario.setText("Actualizar");
         btnActualizarInventario.setBorder(null);
-        btnActualizarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizarInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarInventarioActionPerformed(evt);
@@ -1024,8 +1017,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         pnlImagenInventario.setBackground(new java.awt.Color(67, 102, 129));
 
-        lblImagenInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconImagen.png"))); // NOI18N
-        lblImagenInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblImagenInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblImagenInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblImagenInventarioMouseClicked(evt);
@@ -1045,7 +1037,7 @@ public class SistemaVista extends javax.swing.JFrame {
             .addGroup(pnlImagenInventarioLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(lblImagenInventario)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         txtDescripcionInventario.setColumns(20);
@@ -1158,7 +1150,7 @@ public class SistemaVista extends javax.swing.JFrame {
                             .addComponent(lblStockInventario)
                             .addComponent(lblStockInventario1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlImagenInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlImagenInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminarInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1167,8 +1159,6 @@ public class SistemaVista extends javax.swing.JFrame {
         );
 
         pnlFondoInventario.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 466, 340));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoInventario.png"))); // NOI18N
         pnlFondoInventario.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, -1));
 
         javax.swing.GroupLayout pnlInventarioLayout = new javax.swing.GroupLayout(pnlInventario);
@@ -1188,7 +1178,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        tabbedPane.addTab("<html><center>Ver<p>inventario</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconInventario.png")), pnlInventario); // NOI18N
+        tabbedPane.addTab("<html><center>Ver<p>inventario</center></html>", pnlInventario);
 
         pnlProducto.setBackground(new java.awt.Color(33, 50, 60));
 
@@ -1206,8 +1196,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblTituloProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloProducto.setText("Agregar Producto");
         pnlTituloProducto.add(lblTituloProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 43));
-
-        lblFondoTituloProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
         pnlTituloProducto.add(lblFondoTituloProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pnlFondoProducto.add(pnlTituloProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 180, 43));
@@ -1353,9 +1341,8 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoProducto.add(txtFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 80, 30));
 
         jPanel12.setBackground(new java.awt.Color(67, 102, 129));
-        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        btnFotoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconUpload.png"))); // NOI18N
         btnFotoProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnFotoProductoMouseClicked(evt);
@@ -1384,7 +1371,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnGuardarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarProducto.setText("Guardar");
         btnGuardarProducto.setBorder(null);
-        btnGuardarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnGuardarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarProductoActionPerformed(evt);
@@ -1397,15 +1384,13 @@ public class SistemaVista extends javax.swing.JFrame {
         btnLimpiarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiarProducto.setText("Limpiar");
         btnLimpiarProducto.setBorder(null);
-        btnLimpiarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLimpiarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarProductoActionPerformed(evt);
             }
         });
         pnlFondoProducto.add(btnLimpiarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 180, 40));
-
-        lblFondoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoProducto.png"))); // NOI18N
         pnlFondoProducto.add(lblFondoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout pnlProductoLayout = new javax.swing.GroupLayout(pnlProducto);
@@ -1425,7 +1410,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        tabbedPane.addTab("<html><center>Agregar<p>producto</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconProducto.png")), pnlProducto); // NOI18N
+        tabbedPane.addTab("<html><center>Agregar<p>producto</center></html>", pnlProducto);
 
         pnlEmpleado.setBackground(new java.awt.Color(33, 50, 60));
 
@@ -1443,8 +1428,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblTituloEmpleado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloEmpleado.setText("Agregar Empleado");
         pnlTituloEmpleado.add(lblTituloEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 43));
-
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
         pnlTituloEmpleado.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pnlFondoEmpleado.add(pnlTituloEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 180, -1));
@@ -1494,8 +1477,6 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoEmpleado.add(lblCelularEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(67, 102, 129));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconCellphone.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1624,8 +1605,6 @@ public class SistemaVista extends javax.swing.JFrame {
             }
         });
         pnlFondoEmpleado.add(txtIdEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 40, 20));
-
-        lblFondoEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoEmpleado.png"))); // NOI18N
         pnlFondoEmpleado.add(lblFondoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout pnlEmpleadoLayout = new javax.swing.GroupLayout(pnlEmpleado);
@@ -1645,7 +1624,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        tabbedPane.addTab("<html><center>Agregar<p>empleado</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconEmpleado.png")), pnlEmpleado); // NOI18N
+        tabbedPane.addTab("<html><center>Agregar<p>empleado</center></html>", pnlEmpleado);
 
         pnlReporte.setBackground(new java.awt.Color(33, 50, 60));
 
@@ -1663,8 +1642,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblTituloReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloReporte.setText("Reporte de ventas");
         pnlTituloReporte.add(lblTituloReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 43));
-
-        lblFondoTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
         pnlTituloReporte.add(lblFondoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pnlFondoReporte.add(pnlTituloReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 180, -1));
@@ -1672,10 +1649,14 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargaReporte.setBackground(new java.awt.Color(33, 50, 60));
         btnDescargaReporte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnDescargaReporte.setForeground(new java.awt.Color(255, 255, 255));
-        btnDescargaReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconDescarga.png"))); // NOI18N
         btnDescargaReporte.setText("Descargar progreso del día");
         btnDescargaReporte.setBorder(null);
         btnDescargaReporte.setBorderPainted(false);
+        btnDescargaReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargaReporteActionPerformed(evt);
+            }
+        });
         pnlFondoReporte.add(btnDescargaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 220, 50));
 
         dchFechaReporte.setDateFormatString("dd-MM-yyyy");
@@ -1685,9 +1666,17 @@ public class SistemaVista extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(67, 102, 129));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\user\\Documents\\GitHub\\PVT-main\\Desarrollo\\PVT\\src\\Imagenes\\iconBuscar.png")); // NOI18N
         jLabel4.setToolTipText("");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel4MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1716,7 +1705,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
             },
             new String [] {
-                "#", "ID", "Fecha", "DNI/CE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total"
+                "#", "ID", "Fecha", "DNI/CE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total", "Progreso del día"
             }
         ));
         jScrollPane7.setViewportView(tablaReporte);
@@ -1770,8 +1759,6 @@ public class SistemaVista extends javax.swing.JFrame {
         txtTotalReporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 5));
         txtTotalReporte.setEnabled(false);
         pnlFondoReporte.add(txtTotalReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 340, 130, 30));
-
-        lblFondoReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoReporte.png"))); // NOI18N
         pnlFondoReporte.add(lblFondoReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, -1));
 
         javax.swing.GroupLayout pnlReporteLayout = new javax.swing.GroupLayout(pnlReporte);
@@ -1788,10 +1775,10 @@ public class SistemaVista extends javax.swing.JFrame {
             .addGroup(pnlReporteLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(pnlFondoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
-        tabbedPane.addTab("<html><center>Ver<p>reporte</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconReporte.png")), pnlReporte); // NOI18N
+        tabbedPane.addTab("<html><center>Ver<p>reporte</center></html>", pnlReporte);
 
         jPanel1.add(tabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1210, 600));
 
@@ -2059,6 +2046,75 @@ public class SistemaVista extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Seleccione un empleado");
         }
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
+
+    public void listarReportes() throws ParseException{
+        
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formato.format(dchFechaReporte.getDate());
+        
+        List<Venta> listRepo = repoDao.listarReportes(fecha);
+        modelo = (DefaultTableModel) tablaReporte.getModel();        
+        
+
+        //Formato para decimal
+        
+        
+        //Variable donde se almacenará la suma
+        float suma = 0;
+
+        Object[] obj = new Object[9];
+        for (int i = 0; i < listRepo.size(); i++) {            
+            obj[0] = (i+1);
+            obj[1] = listRepo.get(i).getId();
+            obj[2] = listRepo.get(i).getFecha();
+            obj[3] = listRepo.get(i).getDni();
+            obj[4] = listRepo.get(i).getNombre();
+            obj[5] = listRepo.get(i).getEmpleado();
+            obj[6] = listRepo.get(i).getDescripcion();
+            obj[7] = listRepo.get(i).getTotal();
+            //Se realiza la suma de la columna "Total"            
+            suma += listRepo.get(i).getTotal();
+            obj[8] = suma;
+            modelo.addRow((obj));
+        }          
+        tablaReporte.setModel(modelo);        
+        txtTotalReporte.setText(String.valueOf(suma)); //Se muestra la suma
+    }
+    
+    private void btnDescargaReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargaReporteActionPerformed
+        
+        modelo = (DefaultTableModel) tablaReporte.getModel();
+        
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formato.format(dchFechaReporte.getDate());
+        
+        ExportarReporteExcel excel = new ExportarReporteExcel();
+        excel.reporte(modelo);
+        //excel.reporte(fecha);
+    }//GEN-LAST:event_btnDescargaReporteActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        //Si el campo "fecha" está vacío       
+        if (dchFechaReporte.getDate().equals("") || 
+                dchFechaReporte.getDate().equals(null)) {
+
+            JOptionPane.showMessageDialog(null, "Debe ingresar una fecha");
+
+        } else {
+
+            limpiarTabla();
+            try {
+                listarReportes();
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+
+        }
+    }//GEN-LAST:event_jLabel4MousePressed
 
     /**
      * @param args the command line arguments
