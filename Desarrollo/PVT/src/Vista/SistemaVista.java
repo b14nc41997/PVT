@@ -1,10 +1,35 @@
 
 package Vista;
 
+import Modelo.Cliente;
+import Modelo.ClienteDao;
+import Modelo.DetalleVenta;
 import Modelo.Empleado;
 import Modelo.EmpleadoDao;
 import Modelo.Producto;
 import Modelo.ProductoDao;
+import Modelo.Venta;
+import Modelo.VentaDao;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,10 +40,17 @@ public class SistemaVista extends javax.swing.JFrame {
     EmpleadoDao empDao = new EmpleadoDao();
     Producto pro = new Producto();
     ProductoDao proDao = new ProductoDao();
+    Cliente cli = new Cliente();
+    ClienteDao cliDao = new ClienteDao();
+    Venta vent = new Venta();
+    VentaDao ventDao = new VentaDao();
+    DetalleVenta detalleVenta = new DetalleVenta();
+    
     DefaultTableModel modelo = new DefaultTableModel();
     
     public SistemaVista() {
         initComponents();
+        llenarEmpleados(); //Usar método al inicializar programa
         txtIdEmpleado.setVisible(false);
         txtIdInventario.setVisible(false);
         proDao.seleccionarCategoriaVenta(cbxCategoriaProducto);
@@ -63,6 +95,8 @@ public class SistemaVista extends javax.swing.JFrame {
         tablaProducto.setModel(modelo);
     }
     
+    
+    
     public void limpiarTabla(){
         for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
@@ -70,7 +104,61 @@ public class SistemaVista extends javax.swing.JFrame {
         }
     }
     
+    //Generar Venta
+    //Llenar el combobux Empleados
+    private void llenarEmpleados(){
+        List<Empleado> listaEmpleados = empDao.listarEmpleados();
+        cboEmpleados.removeAllItems();
+        for (int i = 0; i < listaEmpleados.size(); i++) {
+            cboEmpleados.addItem(listaEmpleados.get(i).getNombre_empleado());
+        }
+    }
     
+    //Llenar datos del cliente
+    private void llenarClientes(int dni){
+        
+        String nombre = cliDao.clienteEscogido(dni);
+        txtNombreCliente.setText(nombre);
+        
+    }
+    
+    private void registrarVenta(){
+        int dni = Integer.parseInt(txtNombreCliente2.getText());
+        String cliente = txtNombreCliente.getText();
+        String empleado = cboEmpleados.getSelectedItem().toString();
+        String descripcion = txtDescripcionCarrito.getText();
+        
+        /*float precioUnitario = Float.valueOf(txtPrecioCarrito.getText());
+        float cantidad = (Float) txtCantidadCarrito.getValue();*/
+        
+        float monto = Float.valueOf(txtPrecioCarrito1.getText());
+        
+        
+        
+        vent.setDni(dni);
+        vent.setNombre(cliente);
+        vent.setEmpleado(empleado);
+        vent.setDescripcion(descripcion);
+        vent.setTotal(monto);
+        
+        ventDao.RegistrarVenta(vent);
+    }
+    
+    private void registrarDetalle(){
+        int id = ventDao.IdVenta();
+        for (int i = 0; i < tablaProducto1.getRowCount(); i++) {
+            String codigoProducto = tablaProducto1.getValueAt(i, 2).toString();
+            int cantidadProducto = Integer.parseInt(tablaProducto1.getValueAt(i, 4).toString());
+            float precioU = Float.valueOf(tablaProducto1.getValueAt(i, 5).toString());
+            
+            detalleVenta.setId_producto(codigoProducto);
+            detalleVenta.setCantidad(cantidadProducto);
+            detalleVenta.setPrecio(precioU);
+            detalleVenta.setId_venta(id);
+            
+            ventDao.RegistrarDetalleVenta(detalleVenta);
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -108,25 +196,25 @@ public class SistemaVista extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         txtDescripcionCarrito = new javax.swing.JTextArea();
         botonAgregarCarrito = new button.ButtonCustom();
-        botonLimpiarCarrito2 = new button.ButtonCustom();
-        buttonCustom2 = new button.ButtonCustom();
+        botonActualizarCarrito = new button.ButtonCustom();
+        buttonEliminarCarrito = new button.ButtonCustom();
         botonLimpiarCarrito1 = new button.ButtonCustom();
         txtStockCarrito = new javax.swing.JTextField();
-        botonLimpiarCarrito = new button.ButtonCustom();
+        botonGenerarVenta = new button.ButtonCustom();
         lblPrecioCarrito1 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         txtPrecioCarrito1 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         lblNombreCarrito1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboEmpleados = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
-        cbxDocumentoEmpleado2 = new javax.swing.JComboBox<>();
-        txtCodigoCarrito2 = new javax.swing.JTextField();
+        cbxDocumentoCliente2 = new javax.swing.JComboBox<>();
+        txtNombreCliente2 = new javax.swing.JTextField();
         jPanel21 = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         lblNombreCarrito2 = new javax.swing.JLabel();
-        txtNombreCarrito2 = new javax.swing.JTextField();
+        txtNombreCliente = new javax.swing.JTextField();
         lblCodigoCarrito3 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         pnlInventario = new javax.swing.JPanel();
@@ -269,6 +357,11 @@ public class SistemaVista extends javax.swing.JFrame {
         buttonCustom1.setText("Salir");
         buttonCustom1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         buttonCustom1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        buttonCustom1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCustom1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -390,7 +483,12 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         jLabel35.setToolTipText("");
-        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel35.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel35MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -411,6 +509,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblNombreCarrito.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreCarrito.setText("Nombre");
 
+        txtNombreCarrito.setEditable(false);
         txtNombreCarrito.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
         lblStockCarrito.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -455,6 +554,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        txtPrecioCarrito.setEditable(false);
         txtPrecioCarrito.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPrecioCarrito.setToolTipText("Ingresar nombre(s)");
         txtPrecioCarrito.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
@@ -480,18 +580,28 @@ public class SistemaVista extends javax.swing.JFrame {
             }
         });
 
-        botonLimpiarCarrito2.setText("Actualizar");
-        botonLimpiarCarrito2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        botonLimpiarCarrito2.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
-        botonLimpiarCarrito2.addActionListener(new java.awt.event.ActionListener() {
+        botonActualizarCarrito.setText("Actualizar");
+        botonActualizarCarrito.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonActualizarCarrito.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
+        botonActualizarCarrito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                botonActualizarCarritoMousePressed(evt);
+            }
+        });
+        botonActualizarCarrito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonLimpiarCarrito2ActionPerformed(evt);
+                botonActualizarCarritoActionPerformed(evt);
             }
         });
 
-        buttonCustom2.setText("Eliminar");
-        buttonCustom2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        buttonCustom2.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
+        buttonEliminarCarrito.setText("Eliminar");
+        buttonEliminarCarrito.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        buttonEliminarCarrito.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
+        buttonEliminarCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEliminarCarritoActionPerformed(evt);
+            }
+        });
 
         botonLimpiarCarrito1.setText("Limpiar");
         botonLimpiarCarrito1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -506,6 +616,11 @@ public class SistemaVista extends javax.swing.JFrame {
         txtStockCarrito.setToolTipText("Ingresar nombre(s)");
         txtStockCarrito.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 5));
         txtStockCarrito.setEnabled(false);
+        txtStockCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStockCarritoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -550,9 +665,9 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(botonLimpiarCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonActualizarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(buttonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonEliminarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(botonLimpiarCarrito1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
@@ -609,23 +724,23 @@ public class SistemaVista extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(botonAgregarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(botonLimpiarCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(buttonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(botonActualizarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonEliminarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(botonLimpiarCarrito1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(14, 14, 14))))))
         );
 
         pnlFondoVenta.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 168, -1, -1));
 
-        botonLimpiarCarrito.setText("Generar venta");
-        botonLimpiarCarrito.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        botonLimpiarCarrito.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
-        botonLimpiarCarrito.addActionListener(new java.awt.event.ActionListener() {
+        botonGenerarVenta.setText("Generar venta");
+        botonGenerarVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonGenerarVenta.setStyle(button.ButtonCustom.ButtonStyle.SECONDARY);
+        botonGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonLimpiarCarritoActionPerformed(evt);
+                botonGenerarVentaActionPerformed(evt);
             }
         });
-        pnlFondoVenta.add(botonLimpiarCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 524, 150, 37));
+        pnlFondoVenta.add(botonGenerarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 524, 150, 37));
 
         lblPrecioCarrito1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPrecioCarrito1.setForeground(new java.awt.Color(255, 255, 255));
@@ -672,7 +787,12 @@ public class SistemaVista extends javax.swing.JFrame {
         lblNombreCarrito1.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreCarrito1.setText("Nombre");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboEmpleados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEmpleadosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -682,7 +802,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombreCarrito1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -691,7 +811,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblNombreCarrito1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -700,13 +820,13 @@ public class SistemaVista extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(153, 153, 153))); // NOI18N
         jPanel6.setOpaque(false);
 
-        cbxDocumentoEmpleado2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "CE" }));
+        cbxDocumentoCliente2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "CE" }));
 
-        txtCodigoCarrito2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCodigoCarrito2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
-        txtCodigoCarrito2.addActionListener(new java.awt.event.ActionListener() {
+        txtNombreCliente2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombreCliente2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtNombreCliente2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoCarrito2ActionPerformed(evt);
+                txtNombreCliente2ActionPerformed(evt);
             }
         });
 
@@ -719,7 +839,12 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         jLabel37.setToolTipText("");
-        jLabel37.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel37.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel37MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -740,7 +865,12 @@ public class SistemaVista extends javax.swing.JFrame {
         lblNombreCarrito2.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreCarrito2.setText("Nombre");
 
-        txtNombreCarrito2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtNombreCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtNombreCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreClienteActionPerformed(evt);
+            }
+        });
 
         lblCodigoCarrito3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCodigoCarrito3.setForeground(new java.awt.Color(255, 255, 255));
@@ -754,9 +884,9 @@ public class SistemaVista extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(cbxDocumentoEmpleado2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxDocumentoCliente2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCodigoCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombreCliente2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36))
@@ -765,7 +895,7 @@ public class SistemaVista extends javax.swing.JFrame {
                         .addComponent(lblCodigoCarrito3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombreCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
@@ -779,12 +909,12 @@ public class SistemaVista extends javax.swing.JFrame {
                             .addComponent(lblNombreCarrito2)
                             .addComponent(lblCodigoCarrito3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cbxDocumentoEmpleado2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxDocumentoCliente2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCodigoCarrito2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombreCliente2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1035,7 +1165,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(67, 102, 129));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconImagen.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1238,6 +1368,11 @@ public class SistemaVista extends javax.swing.JFrame {
         cbxCategoriaProducto.setBorder(null);
         cbxCategoriaProducto.setLightWeightPopupEnabled(false);
         cbxCategoriaProducto.setRequestFocusEnabled(false);
+        cbxCategoriaProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCategoriaProductoActionPerformed(evt);
+            }
+        });
         pnlFondoProducto.add(cbxCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 180, 35));
 
         lblDescripcionProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1359,7 +1494,7 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoProducto.add(txtFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 80, 30));
 
         jPanel12.setBackground(new java.awt.Color(67, 102, 129));
-        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconUpload.png"))); // NOI18N
 
@@ -1541,7 +1676,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconCalendar.png"))); // NOI18N
         jLabel33.setToolTipText("");
-        jLabel33.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel33.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -1583,7 +1718,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblIconCalendarioEmpleado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIconCalendarioEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconCalendar.png"))); // NOI18N
         lblIconCalendarioEmpleado.setToolTipText("");
-        lblIconCalendarioEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblIconCalendarioEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -1755,7 +1890,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblIconCalendarioReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIconCalendarioReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconCalendar.png"))); // NOI18N
         lblIconCalendarioReporte.setToolTipText("");
-        lblIconCalendarioReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblIconCalendarioReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout pnlIconCalendarioReporteLayout = new javax.swing.GroupLayout(pnlIconCalendarioReporte);
         pnlIconCalendarioReporte.setLayout(pnlIconCalendarioReporteLayout);
@@ -2085,7 +2220,13 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGuardarProductoActionPerformed
 
     private void tablaProducto1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProducto1MouseClicked
-        // TODO add your handling code here:
+        int fila = tablaProducto1.rowAtPoint(evt.getPoint());
+        cbxCategoriaVenta.setSelectedItem(tablaProducto1.getValueAt(fila, 1));
+        txtCodigoCarrito.setText(String.valueOf(tablaProducto1.getValueAt(fila, 2)));
+        txtNombreCarrito.setText(String.valueOf(tablaProducto1.getValueAt(fila, 3)));
+        txtCantidadCarrito.setValue(tablaProducto1.getValueAt(fila, 4));
+        txtPrecioCarrito.setText(String.valueOf(tablaProducto1.getValueAt(fila, 5)));
+        
     }//GEN-LAST:event_tablaProducto1MouseClicked
 
     private void cbxCategoriaInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaInventarioActionPerformed
@@ -2093,12 +2234,69 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCategoriaInventarioActionPerformed
 
     private void botonAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarCarritoActionPerformed
-        // TODO add your handling code here:
+
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        String codigo = txtCodigoCarrito.getText();
+        String cliente = txtNombreCliente.getText();
+        String empleado = cboEmpleados.getSelectedItem().toString();
+        String nombreProd = txtNombreCarrito.getText();
+        String categoria = cbxCategoriaVenta.getSelectedItem().toString();
+        int cantidad = (Integer) txtCantidadCarrito.getValue();
+        float precio = Float.valueOf(txtPrecioCarrito.getText());   
+        int contador = 1;
+        float total = cantidad*precio;
+        
+        float sumaTotal = 0;
+        
+        
+        if (cliente.equals("") || txtNombreCliente.getText().equals(null)) {
+            JOptionPane.showMessageDialog(null, "El campo cliente debe estar lleno");
+        }
+        
+        if (nombreProd.equals("") ||
+                txtPrecioCarrito.getText().equals("") ||
+                txtStockCarrito.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Todos los campos de productos deben estar llenos. Selecciónelo buscando el ID del producto.");
+        }
+        
+        modelo = (DefaultTableModel) tablaProducto1.getModel();
+        Object[] obj = new Object[7];        
+        obj[0] = contador;
+        obj[1] = categoria;
+        obj[2] = codigo;
+        obj[3] = nombreProd;
+        obj[4] = cantidad;        
+        obj[5] = df.format(precio);
+        obj[6] = df.format(total);        
+        modelo.addRow((obj));
+
+        contador++;
+        tablaProducto.setModel(modelo);
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            sumaTotal += Float.valueOf(tablaProducto1.getValueAt(i, 6).toString());
+        }
+        
+        txtPrecioCarrito1.setText(String.valueOf(df.format(sumaTotal)));
+        
+        limpiarVenta();
+        
     }//GEN-LAST:event_botonAgregarCarritoActionPerformed
 
-    private void botonLimpiarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLimpiarCarritoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonLimpiarCarritoActionPerformed
+    private void botonGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarVentaActionPerformed
+        pdf();
+        registrarVenta();
+        registrarDetalle();
+        limpiarTabla();
+        limpiarVenta();
+        txtNombreCliente2.setText("");
+        txtNombreCliente.setText("");
+        txtDescripcionCarrito.setText("");
+        txtPrecioCarrito1.setText("");
+        
+        JOptionPane.showMessageDialog(null, "¡Venta realizada con éxito!");
+    }//GEN-LAST:event_botonGenerarVentaActionPerformed
 
     private void cbxCategoriaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaVentaActionPerformed
         // TODO add your handling code here:
@@ -2108,17 +2306,17 @@ public class SistemaVista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoCarritoActionPerformed
 
-    private void botonLimpiarCarrito2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLimpiarCarrito2ActionPerformed
+    private void botonActualizarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarCarritoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonLimpiarCarrito2ActionPerformed
+    }//GEN-LAST:event_botonActualizarCarritoActionPerformed
 
     private void botonLimpiarCarrito1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLimpiarCarrito1ActionPerformed
-        // TODO add your handling code here:
+        limpiarVenta();
     }//GEN-LAST:event_botonLimpiarCarrito1ActionPerformed
 
-    private void txtCodigoCarrito2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoCarrito2ActionPerformed
+    private void txtNombreCliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCliente2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoCarrito2ActionPerformed
+    }//GEN-LAST:event_txtNombreCliente2ActionPerformed
 
     private void tabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneMouseClicked
         if(tabbedPane.getSelectedIndex()==1){
@@ -2151,6 +2349,123 @@ public class SistemaVista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaReporteMouseClicked
 
+    private void cboEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEmpleadosActionPerformed
+        
+    }//GEN-LAST:event_cboEmpleadosActionPerformed
+
+    private void cbxCategoriaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxCategoriaProductoActionPerformed
+
+    private void jLabel37MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MousePressed
+        int dni = Integer.parseInt(txtNombreCliente2.getText());
+        llenarClientes(dni);
+    }//GEN-LAST:event_jLabel37MousePressed
+
+    private void jLabel35MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MousePressed
+        String codigoProd = txtCodigoCarrito.getText();
+        
+        Producto prodEscogido = proDao.productoEscogido(codigoProd);
+        
+        String categoria = prodEscogido.getCategoria_producto().toString();
+        String nombre = prodEscogido.getNombre_producto();
+        String descripcion = prodEscogido.getDescripcion_producto();
+        String stock = String.valueOf(prodEscogido.getStock_producto());
+        String precioU = String.valueOf(prodEscogido.getVenta_producto());
+        
+        cbxCategoriaVenta.setSelectedItem(categoria);
+        txtNombreCarrito.setText(nombre);
+        txtStockCarrito.setText(stock);
+        txtPrecioCarrito.setText(precioU);
+        //txtDescripcionCarrito.setText(descripcion);
+        
+    }//GEN-LAST:event_jLabel35MousePressed
+
+    private void txtNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreClienteActionPerformed
+
+    private void txtStockCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockCarritoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStockCarritoActionPerformed
+
+    private void buttonCustom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCustom1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonCustom1ActionPerformed
+
+    private void buttonEliminarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEliminarCarritoActionPerformed
+        eliminarFila();
+    }//GEN-LAST:event_buttonEliminarCarritoActionPerformed
+
+    private void botonActualizarCarritoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonActualizarCarritoMousePressed
+        
+        DecimalFormat df = new DecimalFormat();
+        
+        String codigoP = txtCodigoCarrito.getText();
+        String nombreP =txtNombreCarrito.getText();
+        String cate = cbxCategoriaVenta.getSelectedItem().toString();
+        String canti = txtCantidadCarrito.getValue().toString();
+        
+        
+        if (codigoP.equals("") || nombreP.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese un producto por código primero antes de actualizar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            txtCodigoCarrito.grabFocus();
+        }else{
+            int fila = tablaProducto1.getSelectedRow();
+            if (fila>=0) {
+                
+                tablaProducto1.setValueAt(cate, fila, 1);
+                tablaProducto1.setValueAt(canti, fila, 4);
+                
+                
+                float cantidad1 = Float.parseFloat(tablaProducto1.getValueAt(fila, 4).toString());
+                float precioUnitario = Float.parseFloat(tablaProducto1.getValueAt(fila, 5).toString());
+                float nuevoTotal = cantidad1*precioUnitario;
+                float nuevoTotalFinal = 0;
+                
+                tablaProducto1.setValueAt(df.format(nuevoTotal), fila, 6);
+                
+                for (int i = 0; i < tablaProducto1.getRowCount(); i++) {
+                    nuevoTotalFinal += Float.parseFloat(tablaProducto1.getValueAt(i, 6).toString());
+                }
+                
+                txtPrecioCarrito1.setText(String.valueOf(df.format(nuevoTotalFinal)));
+                
+                JOptionPane.showMessageDialog(null, "Datos actualizados con éxito", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botonActualizarCarritoMousePressed
+
+    private void eliminarFila(){        
+        float totalFinal = 0;
+        float totalFila = 0;
+        int cantidad = 0;
+        
+        DecimalFormat df = new DecimalFormat();
+        
+        int fila = tablaProducto1.getSelectedRow();
+        if (fila>=0) {
+            
+            //Pregunta con un JOption Pane
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar ese producto del carrito?", "Confirmar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            //Si confirma que desea eliminar la fila
+            if (respuesta == JOptionPane.YES_OPTION) {
+                cantidad = Integer.parseInt(tablaProducto1.getValueAt(fila, 4).toString());
+                totalFila = Float.parseFloat(tablaProducto1.getValueAt(fila, 6).toString());
+                totalFinal = Float.parseFloat(txtPrecioCarrito1.getText()) - totalFila;
+                
+                txtPrecioCarrito1.setText(String.valueOf(df.format(totalFinal)));
+                
+                modelo.removeRow(fila);
+                
+            }            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una venta del carrito primero");
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -2187,31 +2502,31 @@ public class SistemaVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private button.ButtonCustom botonActualizarCarrito;
     private button.ButtonCustom botonActualizarEmpleado;
     private button.ButtonCustom botonActualizarProductoInventario;
     private button.ButtonCustom botonAgregarCarrito;
     private button.ButtonCustom botonDescargarInventario;
     private button.ButtonCustom botonEliminarEmpleado;
     private button.ButtonCustom botonEliminarProductoInventario;
+    private button.ButtonCustom botonGenerarVenta;
     private button.ButtonCustom botonGuardarEmpleado;
     private button.ButtonCustom botonGuardarEmpleado1;
     private button.ButtonCustom botonGuardarProducto;
-    private button.ButtonCustom botonLimpiarCarrito;
     private button.ButtonCustom botonLimpiarCarrito1;
-    private button.ButtonCustom botonLimpiarCarrito2;
     private button.ButtonCustom botonLimpiarEmpleado;
     private button.ButtonCustom botonLimpiarProducto;
     private button.ButtonCustom buscarInventario;
     private button.ButtonCustom buttonCustom1;
-    private button.ButtonCustom buttonCustom2;
+    private button.ButtonCustom buttonEliminarCarrito;
+    private javax.swing.JComboBox<String> cboEmpleados;
     private javax.swing.JComboBox<String> cbxCategoriaInventario;
     private javax.swing.JComboBox<String> cbxCategoriaProducto;
     private javax.swing.JComboBox<String> cbxCategoriaVenta;
     private javax.swing.JComboBox<String> cbxCriterioInventario;
+    private javax.swing.JComboBox<String> cbxDocumentoCliente2;
     private javax.swing.JComboBox<String> cbxDocumentoEmpleado;
-    private javax.swing.JComboBox<String> cbxDocumentoEmpleado2;
     private javax.swing.JComboBox<String> cbxOrdenarInventario;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2334,7 +2649,6 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JSpinner txtCantidadCarrito;
     private javax.swing.JTextField txtCelularEmpleado;
     private javax.swing.JTextField txtCodigoCarrito;
-    private javax.swing.JTextField txtCodigoCarrito2;
     private javax.swing.JTextField txtCodigoInventario;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtCriterioInventario;
@@ -2349,7 +2663,8 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdEmpleado;
     private javax.swing.JTextField txtIdInventario;
     private javax.swing.JTextField txtNombreCarrito;
-    private javax.swing.JTextField txtNombreCarrito2;
+    private javax.swing.JTextField txtNombreCliente;
+    private javax.swing.JTextField txtNombreCliente2;
     private javax.swing.JTextField txtNombreEmpleado;
     private javax.swing.JTextField txtNombreInventario;
     private javax.swing.JTextField txtNombreProducto;
@@ -2396,6 +2711,150 @@ public class SistemaVista extends javax.swing.JFrame {
         txtPrecioVentaProducto.setText("");
         txtStockInventario.setValue(1);
         txtCodigoInventario.setText("");
+    }
+    
+    private void limpiarVenta(){
+        //txtNombreCliente2.setText("");
+        //txtNombreCliente.setText("");
+        txtCodigoCarrito.setText("");
+        txtNombreCarrito.setText("");
+        txtStockCarrito.setText("");
+        txtCantidadCarrito.setValue(1);
+        txtPrecioCarrito.setText("");
+        //txtDescripcionCarrito.setText("");
+    }
+    
+    private void pdf(){
+        DecimalFormat df = new DecimalFormat("#.00");
+        
+        
+        try{
+            int id=ventDao.IdVenta();
+            FileOutputStream archivo;
+            File file = new File("src/pdf/venta"+id+".pdf");
+            archivo=new FileOutputStream(file);
+            Document doc= new Document();
+            PdfWriter.getInstance(doc, archivo);
+            doc.open();
+            Image img=Image.getInstance("src/Imagenes/logo2.png");
+            
+            Paragraph fecha=new Paragraph();
+            Font negrita=new Font(Font.FontFamily.TIMES_ROMAN,12,Font.BOLD,BaseColor.CYAN);
+            fecha.add(Chunk.NEWLINE);
+            Date date=new Date();
+            fecha.add("Factura: "+id+"\n"+ "Fecha: "+new SimpleDateFormat("dd-MM-yyyy").format(date)+"\n\n");
+            
+            
+            PdfPTable Encabezado=new PdfPTable(4);
+            Encabezado.setWidthPercentage(100);
+            Encabezado.getDefaultCell().setBorder(0);
+            float[] ColumnaEncabezado = new float []{20f,30f,70f,40f};
+            Encabezado.setWidths(ColumnaEncabezado);
+            Encabezado.setHorizontalAlignment(Element.ALIGN_LEFT);
+            
+            Encabezado.addCell(img);
+            
+            String ruc="123567429";
+            String nom="Tattoos";
+            String tel="999-999-999";
+            String dir="Av Palmeras 342";
+            String ra="Tatus SAC";
+            
+            Encabezado.addCell("");
+            Encabezado.addCell("Ruc:"+ruc+ "\nNombre: "+nom+ "\nTelefono: "+tel+ "\nDireccion: "+dir+"\nRazon: "+ra);
+            Encabezado.addCell(fecha);
+            doc.add(Encabezado);
+            
+            Paragraph cli=new Paragraph();
+            cli.add(Chunk.NEWLINE);
+            cli.add("Datos de los clientes"+"\n\n");
+            doc.add(cli);
+            
+            PdfPTable tablacli=new PdfPTable(4);
+            tablacli.setWidthPercentage(100);
+            tablacli.getDefaultCell().setBorder(0);
+            float[] Columnacli = new float []{20f,50f,30f,40f};
+            tablacli.setWidths(Columnacli);
+            tablacli.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell cl1=new PdfPCell(new Phrase("Dni/ICE",negrita));
+            PdfPCell cl2=new PdfPCell(new Phrase("Nombre",negrita));
+            //PdfPCell cl3=new PdfPCell(new Phrase("Telefono",negrita));
+            //PdfPCell cl4=new PdfPCell(new Phrase("Direccion",negrita));
+            cl1.setBorder(0);
+            cl2.setBorder(0);
+            //cl3.setBorder(0);
+            //cl4.setBorder(0);
+            tablacli.addCell(cl1);
+            tablacli.addCell(cl2);
+            //tablacli.addCell(cl3);
+            //tablacli.addCell(cl4);
+            tablacli.addCell(txtNombreCliente2.getText());
+            tablacli.addCell(txtNombreCliente.getText());
+            //tablacli.addCell(txtTelefonoCV.getText());
+            //tablacli.addCell(txtDireccionCV.getText());
+            
+            doc.add(tablacli);
+            
+            //productos
+            PdfPTable tablapro=new PdfPTable(4);
+            tablapro.setWidthPercentage(100);
+            tablapro.getDefaultCell().setBorder(0);
+            float[] Columnapro = new float []{10f,15f,30f,20f};
+            tablapro.setWidths(Columnapro);
+            tablapro.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell pro1=new PdfPCell(new Phrase("Cant.",negrita));
+            PdfPCell pro2=new PdfPCell(new Phrase("Descripción",negrita));
+            PdfPCell pro3=new PdfPCell(new Phrase("Precio U.",negrita));
+            PdfPCell pro4=new PdfPCell(new Phrase("Precio T.",negrita));
+            pro1.setBorder(0);
+            pro2.setBorder(0);
+            pro3.setBorder(0);
+            pro4.setBorder(0);
+            pro1.setBackgroundColor(BaseColor.BLACK);
+            pro2.setBackgroundColor(BaseColor.BLACK);
+            pro3.setBackgroundColor(BaseColor.BLACK);
+            pro4.setBackgroundColor(BaseColor.BLACK);
+            tablapro.addCell(pro1);
+            tablapro.addCell(pro2);
+            tablapro.addCell(pro3);
+            tablapro.addCell(pro4);
+            for (int i = 0; i < tablaProducto1.getRowCount(); i++) {
+                String producto = tablaProducto1.getValueAt(i, 3).toString();
+                String cantidad = tablaProducto1.getValueAt(i, 4).toString();
+                String precio = tablaProducto1.getValueAt(i, 5).toString();
+                String total = df.format(Float.valueOf(tablaProducto1.getValueAt(i, 6).toString()));
+                tablapro.addCell(cantidad);
+                tablapro.addCell(producto);
+                tablapro.addCell(precio);
+                tablapro.addCell(total);
+                
+            }
+            doc.add(tablapro);
+            
+            Paragraph info = new Paragraph();
+            info.add(Chunk.NEWLINE);
+            info.add("Total a Pagar: S/."+ txtPrecioCarrito1.getText());
+            info.setAlignment(Element.ALIGN_RIGHT);
+            doc.add(info);
+            
+            Paragraph firma = new Paragraph();
+            firma.add(Chunk.NEWLINE);
+            firma.add("Cancelacion y Firma\n\n");
+            firma.add("------------------------");
+            firma.setAlignment(Element.ALIGN_CENTER);
+            doc.add(firma);
+            
+            Paragraph mensaje = new Paragraph();
+            mensaje.add(Chunk.NEWLINE);
+            mensaje.add("Gracias por su Compra");
+            mensaje.setAlignment(Element.ALIGN_CENTER);
+            doc.add(mensaje);
+            doc.close();
+            archivo.close();
+            Desktop.getDesktop().open(file);
+        }catch(DocumentException | IOException e){
+            System.out.println(e.toString());
+        }
     }
 
 }

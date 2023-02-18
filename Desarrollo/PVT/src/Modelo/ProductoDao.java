@@ -136,4 +136,31 @@ public class ProductoDao {
             }
         }
     }
+    
+    public Producto productoEscogido(String codigo){        
+        String sql = "SELECT * "
+                    + "FROM productos WHERE codigo_producto = '"+codigo+"'";
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto pro = new Producto();
+                pro.setId_producto(rs.getInt("id_producto"));
+                pro.setNombre_producto(rs.getString("nombre_producto"));
+                pro.setCategoria_producto(rs.getString("categoria_producto")); 
+                pro.setDescripcion_producto(rs.getString("descripcion_producto")); 
+                pro.setCosto_producto(rs.getFloat("costo_producto")); 
+                pro.setVenta_producto(rs.getFloat("venta_producto")); 
+                pro.setStock_producto(rs.getInt("stock_producto")); 
+                pro.setCodigo_producto(rs.getString("codigo_producto")); 
+                pro.setFoto_producto(rs.getString("foto_producto")); 
+                
+                return pro;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return null;
+    }
 }

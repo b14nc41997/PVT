@@ -112,6 +112,9 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCustom1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -144,7 +147,7 @@
                   <Color blue="3c" green="32" red="21" type="rgb"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <AccessibilityProperties>
@@ -400,9 +403,9 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="botonLimpiarCarrito2" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="botonActualizarCarrito" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="buttonCustom2" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="buttonEliminarCarrito" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace pref="31" max="32767" attributes="0"/>
                                   <Component id="botonLimpiarCarrito1" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -474,8 +477,8 @@
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="3" attributes="0">
                                                       <Component id="botonAgregarCarrito" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                                      <Component id="botonLimpiarCarrito2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                                      <Component id="buttonCustom2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                                      <Component id="botonActualizarCarrito" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                                      <Component id="buttonEliminarCarrito" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                                                       <Component id="botonLimpiarCarrito1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -588,9 +591,12 @@
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Color id="Cursor Por defecto"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel35MousePressed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -607,6 +613,7 @@
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtNombreCarrito">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder thickness="5">
@@ -645,7 +652,7 @@
                             </Property>
                             <Property name="autoscrolls" type="boolean" value="true"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Default Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                               <SpinnerEditor format="" type="3"/>
@@ -710,6 +717,7 @@
                         </Container>
                         <Component class="javax.swing.JTextField" name="txtPrecioCarrito">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="12" style="0"/>
                             </Property>
@@ -782,7 +790,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAgregarCarritoActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="button.ButtonCustom" name="botonLimpiarCarrito2">
+                        <Component class="button.ButtonCustom" name="botonActualizarCarrito">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Actualizar"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -793,10 +801,11 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonLimpiarCarrito2ActionPerformed"/>
+                            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botonActualizarCarritoMousePressed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonActualizarCarritoActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="button.ButtonCustom" name="buttonCustom2">
+                        <Component class="button.ButtonCustom" name="buttonEliminarCarrito">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Eliminar"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -806,6 +815,9 @@
                               <Value id="SECONDARY"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEliminarCarritoActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="button.ButtonCustom" name="botonLimpiarCarrito1">
                           <Properties>
@@ -836,10 +848,13 @@
                             </Property>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtStockCarritoActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="button.ButtonCustom" name="botonLimpiarCarrito">
+                    <Component class="button.ButtonCustom" name="botonGenerarVenta">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Generar venta"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -850,7 +865,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonLimpiarCarritoActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonGenerarVentaActionPerformed"/>
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -975,7 +990,7 @@
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblNombreCarrito1" min="-2" pref="58" max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="cboEmpleados" min="-2" pref="180" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="21" max="32767" attributes="0"/>
                               </Group>
@@ -987,7 +1002,7 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="lblNombreCarrito1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="cboEmpleados" min="-2" pref="35" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1005,7 +1020,7 @@
                             <Property name="text" type="java.lang.String" value="Nombre"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="jComboBox1">
+                        <Component class="javax.swing.JComboBox" name="cboEmpleados">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="4">
@@ -1016,6 +1031,9 @@
                               </StringArray>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboEmpleadosActionPerformed"/>
+                          </Events>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                           </AuxValues>
@@ -1052,9 +1070,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="cbxDocumentoEmpleado2" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="cbxDocumentoCliente2" min="-2" pref="55" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="txtCodigoCarrito2" min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component id="txtNombreCliente2" min="-2" pref="90" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="jPanel21" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -1066,7 +1084,7 @@
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtNombreCarrito2" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="txtNombreCliente" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                                       <Component id="lblNombreCarrito2" alignment="0" min="-2" pref="58" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -1084,13 +1102,13 @@
                                               <Component id="lblCodigoCarrito3" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtNombreCarrito2" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="txtNombreCliente" min="-2" pref="30" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Component id="cbxDocumentoEmpleado2" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                                          <Component id="cbxDocumentoCliente2" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txtCodigoCarrito2" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txtNombreCliente2" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jPanel21" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1101,7 +1119,7 @@
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JComboBox" name="cbxDocumentoEmpleado2">
+                        <Component class="javax.swing.JComboBox" name="cbxDocumentoCliente2">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="2">
@@ -1114,7 +1132,7 @@
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                           </AuxValues>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCodigoCarrito2">
+                        <Component class="javax.swing.JTextField" name="txtNombreCliente2">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="12" style="0"/>
@@ -1128,7 +1146,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodigoCarrito2ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreCliente2ActionPerformed"/>
                           </Events>
                         </Component>
                         <Container class="javax.swing.JPanel" name="jPanel21">
@@ -1175,9 +1193,12 @@
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Color id="Cursor Por defecto"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel37MousePressed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1192,7 +1213,7 @@
                             <Property name="text" type="java.lang.String" value="Nombre"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNombreCarrito2">
+                        <Component class="javax.swing.JTextField" name="txtNombreCliente">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -1202,6 +1223,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreClienteActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblCodigoCarrito3">
                           <Properties>
@@ -1959,7 +1983,7 @@
                             </Property>
                             <Property name="autoscrolls" type="boolean" value="true"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Default Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                               <SpinnerEditor format="" type="3"/>
@@ -2039,7 +2063,7 @@
                                   <Image iconType="3" name="/Imagenes/iconImagen.png"/>
                                 </Property>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
+                                  <Color id="Cursor Por defecto"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -2258,6 +2282,9 @@
                         <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxCategoriaProductoActionPerformed"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
@@ -2509,7 +2536,7 @@
                         </Property>
                         <Property name="autoscrolls" type="boolean" value="true"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Default Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                         <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                           <SpinnerEditor format="" type="3"/>
@@ -2600,7 +2627,7 @@
                           <Color blue="81" green="66" red="43" type="rgb"/>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Hand Cursor"/>
+                          <Color id="Cursor Por defecto"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -3115,7 +3142,7 @@
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -3208,7 +3235,7 @@
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -3611,7 +3638,7 @@
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Hand Cursor"/>
+                              <Color id="Cursor Por defecto"/>
                             </Property>
                           </Properties>
                         </Component>
