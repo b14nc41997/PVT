@@ -49,6 +49,7 @@ public class SistemaVista extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     
     public SistemaVista() {
+        System.out.println(getClass().getResource(""));
         initComponents();
         llenarEmpleados(); //Usar método al inicializar programa
         txtIdEmpleado.setVisible(false);
@@ -118,7 +119,39 @@ public class SistemaVista extends javax.swing.JFrame {
     private void llenarClientes(int dni){
         
         String nombre = cliDao.clienteEscogido(dni);
-        txtNombreCliente.setText(nombre);
+        
+        if ((nombre == null) || (nombre == "")) {
+            
+            JOptionPane.showMessageDialog(null, "Cliente no encontrado. "
+                    + "Se procederá a ingresar nuevo cliente.", "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            
+            int dniCli = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                    "Ingrese DNI del "
+                    + "nuevo cliente: ", "NUEVO INGRESO", 
+                    JOptionPane.INFORMATION_MESSAGE));
+            
+            String nombreCli = JOptionPane.showInputDialog(null, "Ingrese "
+                    + "nombre:", "NUEVO INGRESO", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            cli.setDni(dniCli);
+            cli.setNombre(nombreCli);
+            
+            cliDao.registrarCliente(cli);
+            
+            txtNombreCliente2.setText(String.valueOf(dniCli));
+            
+            JOptionPane.showMessageDialog(null, "¡Cliente "+nombreCli
+                    +" ingresado con éxito!","ÉXITO", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            
+        }else{
+            txtNombreCliente.setText(nombre);
+        }
+        
+        
         
     }
     
@@ -2239,26 +2272,34 @@ public class SistemaVista extends javax.swing.JFrame {
 
         String codigo = txtCodigoCarrito.getText();
         String cliente = txtNombreCliente.getText();
-        String empleado = cboEmpleados.getSelectedItem().toString();
+        //String empleado = cboEmpleados.getSelectedItem().toString();
         String nombreProd = txtNombreCarrito.getText();
         String categoria = cbxCategoriaVenta.getSelectedItem().toString();
         int cantidad = (Integer) txtCantidadCarrito.getValue();
         float precio = Float.valueOf(txtPrecioCarrito.getText());   
         int contador = 1;
-        float total = cantidad*precio;
+        
         
         float sumaTotal = 0;
         
+        if (categoria.equals("Tatuaje")) {
+            cantidad = 1;
+            if (txtDescripcionCarrito.getText().equals("") ||
+                    txtDescripcionCarrito.getText().equals(null)) {
+                JOptionPane.showMessageDialog(null, "Debe ingresar "
+                        + "una descripción para el tatuaje");
+                return;
+            }
+        }
         
+        float total = cantidad*precio;
+        
+        /*
         if (cliente.equals("") || txtNombreCliente.getText().equals(null)) {
             JOptionPane.showMessageDialog(null, "El campo cliente debe estar lleno");
-        }
+            return;
+        } */      
         
-        if (nombreProd.equals("") ||
-                txtPrecioCarrito.getText().equals("") ||
-                txtStockCarrito.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Todos los campos de productos deben estar llenos. Selecciónelo buscando el ID del producto.");
-        }
         
         modelo = (DefaultTableModel) tablaProducto1.getModel();
         Object[] obj = new Object[7];        
@@ -2267,8 +2308,8 @@ public class SistemaVista extends javax.swing.JFrame {
         obj[2] = codigo;
         obj[3] = nombreProd;
         obj[4] = cantidad;        
-        obj[5] = df.format(precio);
-        obj[6] = df.format(total);        
+        obj[5] = precio;
+        obj[6] = total;        
         modelo.addRow((obj));
 
         contador++;
@@ -2278,16 +2319,25 @@ public class SistemaVista extends javax.swing.JFrame {
             sumaTotal += Float.valueOf(tablaProducto1.getValueAt(i, 6).toString());
         }
         
-        txtPrecioCarrito1.setText(String.valueOf(df.format(sumaTotal)));
+        txtPrecioCarrito1.setText(String.valueOf(sumaTotal));
         
         limpiarVenta();
         
     }//GEN-LAST:event_botonAgregarCarritoActionPerformed
 
     private void botonGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarVentaActionPerformed
+
+        if (txtNombreCliente2.getText().equals(null) || txtNombreCliente2.getText().equals("")
+                || txtNombreCliente.getText().equals(null) || txtNombreCliente.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un cliente");
+            txtNombreCliente2.grabFocus();
+            return;
+        }
+
         pdf();
         registrarVenta();
         registrarDetalle();
+        actualizarStock();
         limpiarTabla();
         limpiarVenta();
         txtNombreCliente2.setText("");
@@ -2298,10 +2348,48 @@ public class SistemaVista extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "¡Venta realizada con éxito!");
     }//GEN-LAST:event_botonGenerarVentaActionPerformed
 
+    private void actualizarStock(){
+        for (int i = 0; i < tablaProducto1.getRowCount(); i++) {
+            String cod = tablaProducto1.getValueAt(i, 2).toString();
+            int cant = Integer.parseInt(tablaProducto1.getValueAt(i, 4).toString());
+            pro = proDao.productoEscogido(cod);
+            int stockActual = pro.getStock_producto() - cant;
+            ventDao.ActualizarStock(stockActual, cod);
+        }
+    }
+    
     private void cbxCategoriaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaVentaActionPerformed
-        // TODO add your handling code here:
+        String categoria = cbxCategoriaVenta.getSelectedItem().toString();
+        
+        if (categoria.equals("Joya")) {
+            txtPrecioCarrito.setEnabled(false);
+            txtPrecioCarrito.setEditable(false);
+            
+            txtCodigoCarrito.setEnabled(true);
+            txtCodigoCarrito.setEditable(true);
+            
+            txtCantidadCarrito.setEnabled(true);
+            txtCantidadCarrito.setValue(1);
+        }else{
+            txtStockCarrito.setText("");
+            limpiarVenta();
+            txtPrecioCarrito.setEnabled(true);
+            txtPrecioCarrito.setEditable(true);
+            txtCodigoCarrito.setEnabled(false);
+            txtCodigoCarrito.setEditable(false);
+            txtStockCarrito.setEnabled(false);
+            txtStockCarrito.setEditable(false);
+            txtCantidadCarrito.setEnabled(false);
+            txtCantidadCarrito.setValue(0);
+            
+            txtNombreCarrito.setEditable(true);
+            txtNombreCarrito.setEnabled(true);
+            
+            txtNombreCarrito.grabFocus();
+        }
+        
     }//GEN-LAST:event_cbxCategoriaVentaActionPerformed
-
+        
     private void txtCodigoCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoCarritoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoCarritoActionPerformed
@@ -2358,12 +2446,40 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCategoriaProductoActionPerformed
 
     private void jLabel37MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MousePressed
-        int dni = Integer.parseInt(txtNombreCliente2.getText());
-        llenarClientes(dni);
+        String dni = txtNombreCliente2.getText();
+        
+        if (dni.equals(null) || dni.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe llenar el campo 'DNI'", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }else{
+            int dni2 = Integer.parseInt(dni);
+            llenarClientes(dni2);
+        }
+        
+        
     }//GEN-LAST:event_jLabel37MousePressed
 
     private void jLabel35MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MousePressed
+        
+        DecimalFormat df = new DecimalFormat("#.00");
+        
         String codigoProd = txtCodigoCarrito.getText();
+        String categoriaA = cbxCategoriaVenta.getSelectedItem().toString();
+        
+        if (txtCodigoCarrito.getText().equals(null) ||
+                txtCodigoCarrito.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un codigo de"
+                    + " producto a buscar","ADVERTENCIA",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (categoriaA.equals("Joya")) {
+            txtPrecioCarrito.setEnabled(false);
+            txtPrecioCarrito.setEditable(false);
+        }else{
+            txtPrecioCarrito.setEnabled(true);
+            txtPrecioCarrito.setEditable(true);
+        }
         
         Producto prodEscogido = proDao.productoEscogido(codigoProd);
         
@@ -2373,7 +2489,13 @@ public class SistemaVista extends javax.swing.JFrame {
         String stock = String.valueOf(prodEscogido.getStock_producto());
         String precioU = String.valueOf(prodEscogido.getVenta_producto());
         
-        cbxCategoriaVenta.setSelectedItem(categoria);
+        if (categoria.equals("Joyas")) {
+            cbxCategoriaVenta.setSelectedIndex(0);
+        }else if(categoria.equals("Tatuajes")){
+            cbxCategoriaVenta.setSelectedIndex(1);
+        }
+        
+        //cbxCategoriaVenta.setSelectedItem(categoria.toString());
         txtNombreCarrito.setText(nombre);
         txtStockCarrito.setText(stock);
         txtPrecioCarrito.setText(precioU);
@@ -2833,7 +2955,7 @@ public class SistemaVista extends javax.swing.JFrame {
             
             Paragraph info = new Paragraph();
             info.add(Chunk.NEWLINE);
-            info.add("Total a Pagar: S/."+ txtPrecioCarrito1.getText());
+            info.add("Total a Pagar: S/."+ df.format(Float.parseFloat(txtPrecioCarrito1.getText())));
             info.setAlignment(Element.ALIGN_RIGHT);
             doc.add(info);
             
