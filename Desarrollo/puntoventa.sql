@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3307
--- Tiempo de generación: 16-02-2023 a las 22:17:05
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 20-02-2023 a las 19:02:48
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,6 +20,77 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `puntoventa`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id_cliente` int(11) NOT NULL,
+  `dni_cliente` varchar(11) NOT NULL,
+  `nombre_cliente` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `dni_cliente`, `nombre_cliente`) VALUES
+(1, '12345678', 'Jose Maria'),
+(2, '45734583', 'Maria Jose');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_venta`
+--
+
+CREATE TABLE `detalle_venta` (
+  `id` int(12) NOT NULL,
+  `id_producto` varchar(50) NOT NULL,
+  `cantidad` int(12) NOT NULL,
+  `precio` float(6,2) NOT NULL,
+  `id_venta` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_venta`
+--
+
+INSERT INTO `detalle_venta` (`id`, `id_producto`, `cantidad`, `precio`, `id_venta`) VALUES
+(1, 'sdf', 1, 4.33, 0),
+(2, 'sdf2', 4, 23.00, 0),
+(3, 'sdf', 1, 4.33, 0),
+(4, 'sdf', 1, 4.33, 7),
+(5, 'sdf', 1, 4.33, 8),
+(6, 'sdf2', 1, 23.00, 8),
+(7, 'sdf2', 3, 23.00, 8),
+(8, 'sdf', 1, 4.33, 9),
+(9, 'sdf2', 1, 23.00, 9),
+(10, 'sdf', 4, 4.33, 9),
+(11, 'sdf', 3, 4.33, 9),
+(12, 'sdf2', 3, 23.00, 9),
+(13, 'sdf', 1, 4.33, 10),
+(14, 'sdf', 1, 4.33, 11),
+(15, 'sdf2', 3, 23.00, 11),
+(16, 'sdf', 2, 4.33, 11),
+(17, 'sdf2', 1, 23.00, 12),
+(18, 'sdf', 3, 4.33, 12),
+(19, 'sdf2', 3, 23.00, 12),
+(20, 'sdf', 1, 4.33, 13),
+(21, 'sdf', 1, 4.33, 14),
+(22, 'sdf2', 3, 23.00, 14),
+(23, 'sdf', 4, 4.33, 15),
+(24, 'sdf', 4, 4.33, 16),
+(25, 'sdf', 2, 4.33, 17),
+(26, 'sdf2', 3, 23.00, 17),
+(27, 'sdf', 3, 4.33, 18),
+(28, 'sdf', 2, 4.33, 19),
+(29, 'sdf2', 3, 23.00, 19),
+(30, 'sdf', 3, 4.33, 20),
+(31, 'sdf2', 3, 23.00, 20);
 
 -- --------------------------------------------------------
 
@@ -49,7 +120,8 @@ INSERT INTO `empleados` (`id_empleado`, `nombre_empleado`, `ape_paterno_empleado
 (8, 'Carlos', 'Rivera', 'Rios', 654, 654, '2023-02-02', '2023-02-02'),
 (10, 'q', 'q', 'q', 123, 123, '2023-02-01', '2023-02-02'),
 (11, 'q', 'q', 'q', 42314, 234, '2023-02-09', '2023-02-17'),
-(12, 'q', 'q', 'q', 42314, 234, '2023-02-14', '2023-02-17');
+(12, 'q', 'q', 'q', 42314, 234, '2023-02-14', '2023-02-17'),
+(13, 'w', 'w', 'w', 2, 2, '2023-02-15', '0020-02-18');
 
 -- --------------------------------------------------------
 
@@ -188,7 +260,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
