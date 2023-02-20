@@ -13,7 +13,8 @@ public class Venta {
     private String descripcion;
     private float total;
     
-    public Venta(){}
+    public Venta(){
+    }
 
     public Venta(int id, Date fecha, int dni, String nombre, String empleado, String descripcion, float total) {        
         this.id = id;

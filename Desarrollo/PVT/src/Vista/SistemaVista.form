@@ -272,7 +272,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="tablaCarrito">
+                        <Component class="javax.swing.JTable" name="tablaCarritoVenta">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="7" rowCount="0">
@@ -365,13 +365,13 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="cbxCategoriaVenta" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="cbxCategoriaProductoCarrito" alignment="0" max="32767" attributes="0"/>
                                               <Component id="lblCategoriaCarrito" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="txtCodigoCarrito" min="-2" pref="90" max="-2" attributes="0"/>
+                                                  <Component id="txtCodigoProductoCarrito" min="-2" pref="90" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                   <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                                               </Group>
@@ -379,12 +379,12 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtNombreCarrito" min="-2" pref="150" max="-2" attributes="0"/>
+                                              <Component id="txtNombreProductoCarrito" min="-2" pref="150" max="-2" attributes="0"/>
                                               <Component id="lblNombreCarrito" min="-2" pref="58" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                  <Component id="txtPrecioCarrito" min="-2" pref="90" max="-2" attributes="0"/>
+                                                  <Component id="txtPrecioProductoCarrito" min="-2" pref="90" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="lblPrecioCarrito" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
                                           </Group>
@@ -400,11 +400,11 @@
                                               <Group type="102" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="lblStockCarrito" min="-2" pref="57" max="-2" attributes="0"/>
-                                                      <Component id="txtStockCarrito" min="-2" pref="90" max="-2" attributes="0"/>
+                                                      <Component id="txtStockProductoCarrito" min="-2" pref="90" max="-2" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="txtCantidadCarrito" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
+                                                      <Component id="txtCantidadProductoCarrito" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                                                       <Component id="lblCantidadCarrito" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -418,7 +418,7 @@
                                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                                           <Component id="btnLimpiarVenta" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                                          <Component id="btnAgregarVenta" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="btnAgregarItemVenta" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -441,19 +441,19 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="lblCategoriaCarrito" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="cbxCategoriaVenta" min="-2" pref="35" max="-2" attributes="0"/>
+                                                  <Component id="cbxCategoriaProductoCarrito" min="-2" pref="35" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                                   <Group type="102" attributes="0">
                                                       <Component id="lblNombreCarrito" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="txtNombreCarrito" min="-2" pref="30" max="-2" attributes="0"/>
+                                                      <Component id="txtNombreProductoCarrito" min="-2" pref="30" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" attributes="0">
                                                       <Component id="lblCodigoCarrito" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="txtCodigoCarrito" min="-2" pref="30" max="-2" attributes="0"/>
+                                                          <Component id="txtCodigoProductoCarrito" min="-2" pref="30" max="-2" attributes="0"/>
                                                           <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -468,20 +468,20 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="32767" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="txtStockCarrito" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
+                                                      <Component id="txtStockProductoCarrito" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                                                       <Group type="102" alignment="1" attributes="0">
                                                           <Component id="lblPrecioCarrito" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" attributes="0">
                                                               <Component id="jPanel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                              <Component id="txtPrecioCarrito" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                                                              <Component id="txtPrecioProductoCarrito" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                                           <Component id="lblCantidadCarrito" alignment="0" min="-2" max="-2" attributes="0"/>
                                                           <Group type="102" alignment="0" attributes="0">
                                                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                                              <Component id="txtCantidadCarrito" min="-2" pref="30" max="-2" attributes="0"/>
+                                                              <Component id="txtCantidadProductoCarrito" min="-2" pref="30" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                   </Group>
@@ -489,7 +489,7 @@
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="103" groupAlignment="3" attributes="0">
                                                           <Component id="btnLimpiarVenta" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                                          <Component id="btnAgregarVenta" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarItemVenta" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                                           <Component id="btnEliminarVenta" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                                       </Group>
                                                       <Component id="btnActualizarVenta" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
@@ -515,7 +515,7 @@
                             <Property name="text" type="java.lang.String" value="Categoria"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="cbxCategoriaVenta">
+                        <Component class="javax.swing.JComboBox" name="cbxCategoriaProductoCarrito">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="2">
@@ -525,6 +525,9 @@
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbxCategoriaProductoCarritoItemStateChanged"/>
+                          </Events>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                           </AuxValues>
@@ -540,7 +543,7 @@
                             <Property name="text" type="java.lang.String" value="Codigo"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCodigoCarrito">
+                        <Component class="javax.swing.JTextField" name="txtCodigoProductoCarrito">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="12" style="0"/>
@@ -567,7 +570,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblBotonBuscarProductoVenta" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -575,13 +578,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblBotonBuscarProductoVenta" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JLabel" name="jLabel35">
+                            <Component class="javax.swing.JLabel" name="lblBotonBuscarProductoVenta">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="81" green="66" red="43" type="rgb"/>
@@ -615,7 +618,7 @@
                             <Property name="text" type="java.lang.String" value="Nombre"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNombreCarrito">
+                        <Component class="javax.swing.JTextField" name="txtNombreProductoCarrito">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -624,6 +627,7 @@
                                 </LineBorder>
                               </Border>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblStockCarrito">
@@ -648,7 +652,7 @@
                             <Property name="text" type="java.lang.String" value="Cantidad"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JSpinner" name="txtCantidadCarrito">
+                        <Component class="javax.swing.JSpinner" name="txtCantidadProductoCarrito">
                           <Properties>
                             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                               <SpinnerModel initial="1" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -718,7 +722,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JTextField" name="txtPrecioCarrito">
+                        <Component class="javax.swing.JTextField" name="txtPrecioProductoCarrito">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="12" style="0"/>
@@ -760,7 +764,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JTextArea" name="txtDescripcionCarrito">
+                            <Component class="javax.swing.JTextArea" name="txtDescripcionProductoCarrito">
                               <Properties>
                                 <Property name="columns" type="int" value="20"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -778,7 +782,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JTextField" name="txtStockCarrito">
+                        <Component class="javax.swing.JTextField" name="txtStockProductoCarrito">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="12" style="0"/>
@@ -854,7 +858,7 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnAgregarVenta">
+                        <Component class="javax.swing.JButton" name="btnAgregarItemVenta">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="3c" green="32" red="21" type="rgb"/>
@@ -865,7 +869,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Agregar a carrito"/>
+                            <Property name="text" type="java.lang.String" value="Agregar item"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
@@ -873,10 +877,42 @@
                               <Color id="Hand Cursor"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarItemVentaMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarItemVentaActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="btnAgregarVenta1">
+                    <Component class="javax.swing.JButton" name="btnCancelarVenta">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="33" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Tahoma" size="12" style="1"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Cancelar venta"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="null"/>
+                        </Property>
+                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                          <Color id="Hand Cursor"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarVentaActionPerformed"/>
+                      </Events>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                          <AbsoluteConstraints x="130" y="520" width="150" height="40"/>
+                        </Constraint>
+                      </Constraints>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnGenerarVenta1">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="3c" green="32" red="21" type="rgb"/>
@@ -895,6 +931,9 @@
                           <Color id="Hand Cursor"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerarVenta1ActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="400" y="520" width="150" height="40"/>
@@ -967,7 +1006,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JTextField" name="txtPrecioCarrito1">
+                    <Component class="javax.swing.JTextField" name="txtTotalVenta">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -1018,7 +1057,7 @@
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblNombreCarrito1" min="-2" pref="58" max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="cbxEmpleadoVenta" min="-2" pref="180" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
@@ -1030,7 +1069,7 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="lblNombreCarrito1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="cbxEmpleadoVenta" min="-2" pref="35" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1048,15 +1087,10 @@
                             <Property name="text" type="java.lang.String" value="Nombre"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="jComboBox1">
+                        <Component class="javax.swing.JComboBox" name="cbxEmpleadoVenta">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="Item 1"/>
-                                <StringItem index="1" value="Item 2"/>
-                                <StringItem index="2" value="Item 3"/>
-                                <StringItem index="3" value="Item 4"/>
-                              </StringArray>
+                              <StringArray count="0"/>
                             </Property>
                           </Properties>
                           <AuxValues>
@@ -1095,9 +1129,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="cbxDocumentoEmpleado2" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="cbxDocumentoClienteVenta" min="-2" pref="55" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="txtCodigoCarrito2" min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component id="txtDocumentoClienteVenta" min="-2" pref="90" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="jPanel21" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -1109,7 +1143,7 @@
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtNombreCarrito2" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="txtNombreClienteVenta" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                                       <Component id="lblNombreCarrito2" alignment="0" min="-2" pref="58" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -1127,13 +1161,13 @@
                                               <Component id="lblCodigoCarrito3" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtNombreCarrito2" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="txtNombreClienteVenta" min="-2" pref="30" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Component id="cbxDocumentoEmpleado2" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                                          <Component id="cbxDocumentoClienteVenta" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txtCodigoCarrito2" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txtDocumentoClienteVenta" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jPanel21" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1144,7 +1178,7 @@
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JComboBox" name="cbxDocumentoEmpleado2">
+                        <Component class="javax.swing.JComboBox" name="cbxDocumentoClienteVenta">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="2">
@@ -1157,7 +1191,7 @@
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                           </AuxValues>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtCodigoCarrito2">
+                        <Component class="javax.swing.JTextField" name="txtDocumentoClienteVenta">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="12" style="0"/>
@@ -1170,6 +1204,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDocumentoClienteVentaKeyTyped"/>
+                          </Events>
                         </Component>
                         <Container class="javax.swing.JPanel" name="jPanel21">
                           <Properties>
@@ -1184,7 +1221,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblBotonBuscarClienteVenta" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1192,13 +1229,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblBotonBuscarClienteVenta" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JLabel" name="jLabel37">
+                            <Component class="javax.swing.JLabel" name="lblBotonBuscarClienteVenta">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="81" green="66" red="43" type="rgb"/>
@@ -1218,6 +1255,9 @@
                                   <Color id="Hand Cursor"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblBotonBuscarClienteVentaMouseClicked"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1232,7 +1272,7 @@
                             <Property name="text" type="java.lang.String" value="Nombre"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNombreCarrito2">
+                        <Component class="javax.swing.JTextField" name="txtNombreClienteVenta">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -1242,6 +1282,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreClienteVentaKeyTyped"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblCodigoCarrito3">
                           <Properties>
@@ -1814,6 +1857,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreInventarioKeyTyped"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel25">
                           <Properties>
@@ -2309,6 +2355,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreProductoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="30" y="110" width="180" height="30"/>
@@ -2930,6 +2979,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreEmpleadoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="30" y="110" width="180" height="30"/>
@@ -2965,6 +3017,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApePaternoEmpleadoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="340" y="110" width="180" height="30"/>
@@ -3000,6 +3055,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApeMaternoEmpleadoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="660" y="110" width="180" height="30"/>
@@ -3053,6 +3111,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDocumentoEmpleadoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="90" y="180" width="120" height="30"/>
@@ -3128,6 +3189,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCelularEmpleadoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="370" y="180" width="150" height="30"/>
@@ -3142,7 +3206,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Fecha de Nacimiento"/>
+                        <Property name="text" type="java.lang.String" value="Fecha de Nacimiento (dd-mm-yyyy)"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -3158,6 +3222,9 @@
                         </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dchFecNacimientoEmpleadoKeyTyped"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="660" y="180" width="180" height="35"/>
@@ -3172,7 +3239,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Fecha de Ingreso"/>
+                        <Property name="text" type="java.lang.String" value="Fecha de Ingreso (dd-mm-yyyy)"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

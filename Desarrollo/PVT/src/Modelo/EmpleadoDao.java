@@ -45,7 +45,6 @@ public class EmpleadoDao {
         }
     }
     
-    
     public List listarEmpleados(){
         List<Empleado> listEmp = new ArrayList();
         String sql = "SELECT * "
@@ -123,5 +122,26 @@ public class EmpleadoDao {
                 System.out.println(ex.toString());
             }
         }
+    }
+    
+    public List listarEmpleadosSimple(){
+        List<Empleado> listEmpSimple = new ArrayList();
+        String sql = "SELECT nombre_empleado,ape_paterno_empleado "
+                    + "FROM empleados";
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Empleado emp = new Empleado();
+                emp.setNombre_empleado(rs.getString("nombre_empleado"));
+                emp.setApe_paterno_empleado(rs.getString("ape_paterno_empleado"));
+                
+                listEmpSimple.add(emp);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return listEmpSimple;
     }
 }

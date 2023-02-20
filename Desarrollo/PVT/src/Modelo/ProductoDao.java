@@ -1,20 +1,12 @@
 
 package Modelo;
 
-import Vista.SistemaVista;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -92,7 +84,6 @@ public class ProductoDao {
         return listPro;
     }
         
-    
     public boolean eliminarProducto(int id_producto){
         String sql = "DELETE "
                     + "FROM productos "
@@ -146,4 +137,30 @@ public class ProductoDao {
         }
     }
     
+    public Producto productoEscogido(String codigo){        
+        String sql = "SELECT * "
+                    + "FROM productos WHERE codigo_producto = '"+codigo+"'";
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto pro = new Producto();
+                pro.setId_producto(rs.getInt("id_producto"));
+                pro.setNombre_producto(rs.getString("nombre_producto"));
+                pro.setCategoria_producto(rs.getString("categoria_producto")); 
+                pro.setDescripcion_producto(rs.getString("descripcion_producto")); 
+                pro.setCosto_producto(rs.getFloat("costo_producto")); 
+                pro.setVenta_producto(rs.getFloat("venta_producto")); 
+                pro.setStock_producto(rs.getInt("stock_producto")); 
+                pro.setCodigo_producto(rs.getString("codigo_producto")); 
+                pro.setFoto_producto(rs.getBytes("foto_producto"));
+                
+                return pro;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return null;
+    }
 }
