@@ -37,7 +37,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExportarReporteExcel {
     
-    public void reporte(DefaultTableModel modelo) {
+    public void reporte(DefaultTableModel modelo, String fecha) {
  
         Workbook book = new XSSFWorkbook();
         Sheet sheet = book.createSheet("Reporte-de-ventas");
@@ -182,7 +182,7 @@ public class ExportarReporteExcel {
             sheet.setZoom(150);
             String fileName = "reporte_ventas";
             String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/" + fileName + ".xlsx");
+            File file = new File(home + "/Downloads/" + fileName +" - "+fecha+ ".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();
@@ -196,148 +196,5 @@ public class ExportarReporteExcel {
         }
  
     }
-    
-    /*
-    public void reporte(String fecha) {
- 
-        Workbook book = new XSSFWorkbook();
-        Sheet sheet = book.createSheet("Reporte-de-ventas");
- 
-        try {
-            //Imagen logo de la empresa
-            InputStream is = new FileInputStream("src/Imagenes/logo.png");
-            byte[] bytes = IOUtils.toByteArray(is);
-            int imgIndex = book.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
-            is.close();
- 
-            CreationHelper help = book.getCreationHelper();
-            Drawing draw = sheet.createDrawingPatriarch();
- 
-            ClientAnchor anchor = help.createClientAnchor();
-            anchor.setCol1(0);
-            anchor.setRow1(1);
-            Picture pict = draw.createPicture(anchor, imgIndex);
-            pict.resize(1, 3);
- 
-            CellStyle tituloEstilo = book.createCellStyle();
-            tituloEstilo.setAlignment(HorizontalAlignment.CENTER);
-            tituloEstilo.setVerticalAlignment(VerticalAlignment.CENTER);
-            Font fuenteTitulo = book.createFont();
-            fuenteTitulo.setFontName("Arial");
-            fuenteTitulo.setBold(true);
-            fuenteTitulo.setFontHeightInPoints((short) 14);
-            tituloEstilo.setFont(fuenteTitulo);
- 
-            Row filaTitulo = sheet.createRow(1);
-            Cell celdaTitulo = filaTitulo.createCell(1);
-            celdaTitulo.setCellStyle(tituloEstilo);
-            celdaTitulo.setCellValue("Reporte de Ventas");
- 
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 3));
-            
-            //Encabezado
-            String[] cabecera = new String[]{"ID_Venta", "Fecha", "DNI/ICE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total", "Progreso del día"};
- 
-            CellStyle headerStyle = book.createCellStyle();
-            headerStyle.setFillForegroundColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            headerStyle.setBorderBottom(BorderStyle.THIN);
-            headerStyle.setBorderLeft(BorderStyle.THIN);
-            headerStyle.setBorderRight(BorderStyle.THIN);
-            headerStyle.setBorderBottom(BorderStyle.THIN);
- 
-            Font font = book.createFont();
-            font.setFontName("Arial");
-            font.setBold(true);
-            font.setColor(IndexedColors.WHITE.getIndex());
-            font.setFontHeightInPoints((short) 12);
-            headerStyle.setFont(font);
- 
-            Row filaEncabezados = sheet.createRow(4);
- 
-            for (int i = 0; i < cabecera.length; i++) {
-                Cell celdaEnzabezado = filaEncabezados.createCell(i);
-                celdaEnzabezado.setCellStyle(headerStyle);
-                celdaEnzabezado.setCellValue(cabecera[i]);
-            }
- 
-            Conexion con = new Conexion();
-            PreparedStatement ps;
-            ResultSet rs;
-            Connection conn = con.getConnection();
- 
-            int numFilaDatos = 5;
- 
-            CellStyle datosEstilo = book.createCellStyle();
-            datosEstilo.setBorderBottom(BorderStyle.THIN);
-            datosEstilo.setBorderLeft(BorderStyle.THIN);
-            datosEstilo.setBorderRight(BorderStyle.THIN);
-            datosEstilo.setBorderBottom(BorderStyle.THIN);
- 
-            //Consulta para llamar por fecha
-            ps = conn.prepareStatement("SELECT * FROM ventas WHERE fecha = '"+fecha+"'");
-            rs = ps.executeQuery();
- 
-            int numCol = rs.getMetaData().getColumnCount();            
-            //int numCol = 8;
-            
-            float suma = 0;
-            
-            
- 
-            while (rs.next()) {
-                Row filaDatos = sheet.createRow(numFilaDatos);
- 
-                for (int a = 0; a < numCol; a++) {
- 
-                    Cell CeldaDatos = filaDatos.createCell(a);
-                                        
-                    CeldaDatos.setCellStyle(datosEstilo);  
-                    
-                    //Mostrar en la última columna la suma
-                    
-                    if (a == numCol) {
-                        CeldaDatos.setCellValue(suma);                        
-                    }
-                    
-                    //En la última columna retorna decimal y suma
-                    if(a == numCol-1){
-                        suma += rs.getFloat(a+1);
-                        CeldaDatos.setCellValue(rs.getFloat(a + 1));
-                    }else{
-                        CeldaDatos.setCellValue(rs.getString(a + 1));
-                    }
-                                                            
-                    //CeldaDatos.setCellValue(rs.getString(a + 1));
-                }
-                numFilaDatos++;
-            }
-            
-            sheet.autoSizeColumn(0);
-            sheet.autoSizeColumn(1);
-            sheet.autoSizeColumn(2);
-            sheet.autoSizeColumn(3);
-            sheet.autoSizeColumn(4);
-            sheet.autoSizeColumn(5);
-            sheet.autoSizeColumn(6);
-            sheet.autoSizeColumn(7);
-                                   
-            sheet.setZoom(150);
-            String fileName = "reporte_ventas";
-            String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/" + fileName + ".xlsx");
-            FileOutputStream fileOut = new FileOutputStream(file);
-            book.write(fileOut);
-            fileOut.close();
-            Desktop.getDesktop().open(file);
-            JOptionPane.showMessageDialog(null, "Reporte Generado");
- 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ExportarReporteExcel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(ExportarReporteExcel.class.getName()).log(Level.SEVERE, null, ex);
-        }
- 
-    }*/
     
 }

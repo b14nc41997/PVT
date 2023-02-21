@@ -2089,7 +2089,7 @@ public class SistemaVista extends javax.swing.JFrame {
         String fecha = formato.format(dchFechaReporte.getDate());
         
         ExportarReporteExcel excel = new ExportarReporteExcel();
-        excel.reporte(modelo);
+        excel.reporte(modelo, fecha);
         //excel.reporte(fecha);
     }//GEN-LAST:event_btnDescargaReporteActionPerformed
 
