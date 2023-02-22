@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VentaDao {
     
@@ -42,6 +44,12 @@ public class VentaDao {
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
+        }finally{
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
         }
         
         return listRepo;

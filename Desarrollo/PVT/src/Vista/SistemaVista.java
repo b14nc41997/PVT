@@ -1662,6 +1662,24 @@ public class SistemaVista extends javax.swing.JFrame {
         dchFechaReporte.setDateFormatString("dd-MM-yyyy");
         dchFechaReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dchFechaReporte.setOpaque(false);
+        dchFechaReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                dchFechaReporteMouseReleased(evt);
+            }
+        });
+        dchFechaReporte.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dchFechaReportePropertyChange(evt);
+            }
+        });
+        dchFechaReporte.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dchFechaReporteKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                dchFechaReporteKeyTyped(evt);
+            }
+        });
         pnlFondoReporte.add(dchFechaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 180, 35));
 
         jPanel7.setBackground(new java.awt.Color(67, 102, 129));
@@ -2083,14 +2101,27 @@ public class SistemaVista extends javax.swing.JFrame {
     
     private void btnDescargaReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargaReporteActionPerformed
         
-        modelo = (DefaultTableModel) tablaReporte.getModel();
+        int tablaC = tablaReporte.getRowCount();
         
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha = formato.format(dchFechaReporte.getDate());
+        if (tablaC > 0) {
+            
         
-        ExportarReporteExcel excel = new ExportarReporteExcel();
-        excel.reporte(modelo, fecha);
-        //excel.reporte(fecha);
+        
+            modelo = (DefaultTableModel) tablaReporte.getModel();
+
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha = formato.format(dchFechaReporte.getDate());
+
+            ExportarReporteExcel excel = new ExportarReporteExcel();
+            excel.reporte(modelo, fecha);
+            //excel.reporte(fecha);
+        
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay datos en la tabla para "
+                    + "exportar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_btnDescargaReporteActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -2099,10 +2130,10 @@ public class SistemaVista extends javax.swing.JFrame {
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
         //Si el campo "fecha" está vacío       
-        if (dchFechaReporte.getDate().equals("") || 
-                dchFechaReporte.getDate().equals(null)) {
+        if (dchFechaReporte.getDate() == null) {
 
-            JOptionPane.showMessageDialog(null, "Debe ingresar una fecha");
+            JOptionPane.showMessageDialog(null, "Debe ingresar una fecha", 
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -2115,6 +2146,22 @@ public class SistemaVista extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jLabel4MousePressed
+
+    private void dchFechaReporteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dchFechaReporteMouseReleased
+        
+    }//GEN-LAST:event_dchFechaReporteMouseReleased
+
+    private void dchFechaReporteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dchFechaReporteKeyPressed
+        
+    }//GEN-LAST:event_dchFechaReporteKeyPressed
+
+    private void dchFechaReporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dchFechaReporteKeyTyped
+        
+    }//GEN-LAST:event_dchFechaReporteKeyTyped
+
+    private void dchFechaReportePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dchFechaReportePropertyChange
+        
+    }//GEN-LAST:event_dchFechaReportePropertyChange
 
     /**
      * @param args the command line arguments
