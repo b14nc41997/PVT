@@ -71,6 +71,7 @@ public class VentaDao {
         }
     }
     
+    /*
     public boolean RegistrarDetalleVenta(DetalleVenta dv) {
         String sql = "INSERT INTO detalle_venta (id_producto, cantidad, precio,"
                 + "id_venta) VALUES (?,?,?,?)";
@@ -94,7 +95,7 @@ public class VentaDao {
 
             }
         }
-    }
+    }*/
     
     /*
     public List Listarventas(){

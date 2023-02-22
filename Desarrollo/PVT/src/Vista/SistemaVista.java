@@ -28,6 +28,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -170,27 +172,43 @@ public class SistemaVista extends javax.swing.JFrame {
         
         vent.setDni(dni);
         vent.setNombre(cliente);
-        vent.setEmpleado(empleado);
-        vent.setDescripcion(descripcion);
+        vent.setEmpleado(empleado); 
+        vent.setDescripcion(registrarDetalle());
+        
+        
         vent.setTotal(monto);
         
         ventDao.RegistrarVenta(vent);
     }
     
-    private void registrarDetalle(){
-        int id = ventDao.IdVenta();
-        for (int i = 0; i < tablaProducto1.getRowCount(); i++) {
-            String codigoProducto = tablaProducto1.getValueAt(i, 2).toString();
+    private String registrarDetalle(){
+        
+        DecimalFormat df = new DecimalFormat("#.00");
+        
+        String detalleF = "";
+        //String detalleT;
+        //int id = ventDao.IdVenta();
+        for (int i = 0; i < tablaProducto1.getRowCount(); i++) {            
+            String codigoProducto = tablaProducto1.getValueAt(i, 2).toString();            
             int cantidadProducto = Integer.parseInt(tablaProducto1.getValueAt(i, 4).toString());
+            String nombreProd = tablaProducto1.getValueAt(i, 1).toString();
             float precioU = Float.valueOf(tablaProducto1.getValueAt(i, 5).toString());
             
-            detalleVenta.setId_producto(codigoProducto);
+            detalleVenta.setNombre(nombreProd);
             detalleVenta.setCantidad(cantidadProducto);
             detalleVenta.setPrecio(precioU);
-            detalleVenta.setId_venta(id);
             
-            ventDao.RegistrarDetalleVenta(detalleVenta);
+            if (i>0 || i==tablaProducto1.getRowCount()-1) {
+                detalleF+="; ";
+            }
+            
+            detalleF += cantidadProducto+"-"+nombreProd+"-"+df.format(precioU);
+            
+            
+            
+            //ventDao.RegistrarDetalleVenta(detalleVenta);
         }
+        return detalleF;
     }
     
     @SuppressWarnings("unchecked")
@@ -854,12 +872,22 @@ public class SistemaVista extends javax.swing.JFrame {
         jPanel6.setOpaque(false);
 
         cbxDocumentoCliente2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "CE" }));
+        cbxDocumentoCliente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxDocumentoCliente2ActionPerformed(evt);
+            }
+        });
 
         txtNombreCliente2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombreCliente2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtNombreCliente2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreCliente2ActionPerformed(evt);
+            }
+        });
+        txtNombreCliente2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreCliente2KeyTyped(evt);
             }
         });
 
@@ -2336,7 +2364,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         pdf();
         registrarVenta();
-        registrarDetalle();
+        //registrarDetalle();
         actualizarStock();
         limpiarTabla();
         limpiarVenta();
@@ -2557,6 +2585,32 @@ public class SistemaVista extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_botonActualizarCarritoMousePressed
+
+    private void txtNombreCliente2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCliente2KeyTyped
+        if (cbxDocumentoCliente2.getSelectedItem().toString().equals("DNI")) {
+            if (txtNombreCliente2.getText().length() >= 8) {
+                evt.consume();
+            }
+        } else {
+            if (txtNombreCliente2.getText().length() >= 12) {
+                evt.consume();
+            }
+        }
+         
+        
+    }//GEN-LAST:event_txtNombreCliente2KeyTyped
+
+    private void cbxDocumentoCliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDocumentoCliente2ActionPerformed
+        if (cbxDocumentoCliente2.getSelectedItem().toString().equals("CE")) {
+            txtNombreCliente2.setText("");
+            txtNombreCliente.setText("");
+            txtNombreCliente2.grabFocus();
+        }else{
+            txtNombreCliente2.setText("");
+            txtNombreCliente.setText("");
+            txtNombreCliente2.grabFocus();
+        }
+    }//GEN-LAST:event_cbxDocumentoCliente2ActionPerformed
 
     private void eliminarFila(){        
         float totalFinal = 0;
@@ -2848,7 +2902,8 @@ public class SistemaVista extends javax.swing.JFrame {
     
     private void pdf(){
         DecimalFormat df = new DecimalFormat("#.00");
-        
+        String dateTime = DateTimeFormatter.ofPattern("hh:mm:ss a")
+                    .format(LocalDateTime.now());
         
         try{
             int id=ventDao.IdVenta();
@@ -2864,9 +2919,8 @@ public class SistemaVista extends javax.swing.JFrame {
             Font negrita=new Font(Font.FontFamily.TIMES_ROMAN,12,Font.BOLD,BaseColor.CYAN);
             fecha.add(Chunk.NEWLINE);
             Date date=new Date();
-            fecha.add("Factura: "+id+"\n"+ "Fecha: "+new SimpleDateFormat("dd-MM-yyyy").format(date)+"\n\n");
-            
-            
+            fecha.add("Boleta: "+id+"\n"+ "Fecha: "+new SimpleDateFormat("dd-MM-yyyy").format(date)+"\nHora: "+dateTime);
+                        
             PdfPTable Encabezado=new PdfPTable(4);
             Encabezado.setWidthPercentage(100);
             Encabezado.getDefaultCell().setBorder(0);
@@ -2886,12 +2940,25 @@ public class SistemaVista extends javax.swing.JFrame {
             Encabezado.addCell("Ruc:"+ruc+ "\nNombre: "+nom+ "\nTelefono: "+tel+ "\nDireccion: "+dir+"\nRazon: "+ra);
             Encabezado.addCell(fecha);
             doc.add(Encabezado);
-            
+           
             Paragraph cli=new Paragraph();
             cli.add(Chunk.NEWLINE);
-            cli.add("Datos de los clientes"+"\n\n");
-            doc.add(cli);
+                                   
+            Chunk c1 = new Chunk("DNI/ICE: ", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD));
+            Chunk c2 = new Chunk("Nombre: ", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD));
+            Chunk c3 = new Chunk("Datos del cliente: ", new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD));
+            Chunk c4 = new Chunk("Empleado: ", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD));
             
+            cli.add(c4);
+            cli.add(cboEmpleados.getSelectedItem().toString()+"\n\n");
+            cli.add(c3);  
+            cli.add("\n");
+            cli.add(c1);
+            cli.add(txtNombreCliente2.getText()+"\n");
+            cli.add(c2);            
+            cli.add(txtNombreCliente.getText()+"\n\n");            
+            
+            /*
             PdfPTable tablacli=new PdfPTable(4);
             tablacli.setWidthPercentage(100);
             tablacli.getDefaultCell().setBorder(0);
@@ -2899,23 +2966,27 @@ public class SistemaVista extends javax.swing.JFrame {
             tablacli.setWidths(Columnacli);
             tablacli.setHorizontalAlignment(Element.ALIGN_LEFT);
             PdfPCell cl1=new PdfPCell(new Phrase("Dni/ICE",negrita));
-            PdfPCell cl2=new PdfPCell(new Phrase("Nombre",negrita));
+            PdfPCell cl2=new PdfPCell(new Phrase("Nombre",negrita));*/
             //PdfPCell cl3=new PdfPCell(new Phrase("Telefono",negrita));
             //PdfPCell cl4=new PdfPCell(new Phrase("Direccion",negrita));
-            cl1.setBorder(0);
-            cl2.setBorder(0);
+            //cl1.setBorder(0);
+            //cl2.setBorder(0);
             //cl3.setBorder(0);
             //cl4.setBorder(0);
-            tablacli.addCell(cl1);
-            tablacli.addCell(cl2);
+            //
+            //cli.add("");
+            //cli.add("DNI/ICE: "+txtNombreCliente2.getText()+"\nCliente: "+txtNombreCliente.getText()+"\n\n");            
+            //tablacli.addCell(cl1);
+            //tablacli.addCell(cl2);
             //tablacli.addCell(cl3);
             //tablacli.addCell(cl4);
-            tablacli.addCell(txtNombreCliente2.getText());
-            tablacli.addCell(txtNombreCliente.getText());
+            //tablacli.addCell(txtNombreCliente2.getText());
+            //tablacli.addCell(txtNombreCliente.getText());
             //tablacli.addCell(txtTelefonoCV.getText());
             //tablacli.addCell(txtDireccionCV.getText());
             
-            doc.add(tablacli);
+            doc.add(cli);
+            //doc.add(tablacli);
             
             //productos
             PdfPTable tablapro=new PdfPTable(4);
