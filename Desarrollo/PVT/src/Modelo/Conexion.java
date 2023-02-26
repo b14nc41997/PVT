@@ -10,7 +10,7 @@ public class Conexion {
     public Connection getConnection(){
         try {
             String myBD = "jdbc:mysql://localhost:3306/puntoventa?serverTimezone=UTC";
-            conexion = DriverManager.getConnection(myBD,"root","");
+            conexion = DriverManager.getConnection(myBD,"root","Xtptlw265");
             return conexion;
         } catch (SQLException e) {
             System.out.println(e.toString());
