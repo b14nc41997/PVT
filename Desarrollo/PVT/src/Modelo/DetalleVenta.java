@@ -4,16 +4,16 @@ package Modelo;
 public class DetalleVenta {
     
     private int id;
-    private String id_producto;
+    private String nombre;
     private int cantidad;
     private float precio;
     private int id_venta;
     
     public DetalleVenta(){}
 
-    public DetalleVenta(int id, String id_producto, int cantidad, float precio, int id_venta) {
+    public DetalleVenta(int id, String nombre, int cantidad, float precio, int id_venta) {
         this.id = id;
-        this.id_producto = id_producto;
+        this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
         this.id_venta = id_venta;
@@ -27,12 +27,12 @@ public class DetalleVenta {
         this.id = id;
     }
 
-    public String getId_producto() {
-        return id_producto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setId_producto(String id_producto) {
-        this.id_producto = id_producto;
+    public void setNombre(String id_producto) {
+        this.nombre = id_producto;
     }
 
     public int getCantidad() {

@@ -4,7 +4,7 @@ package Modelo;
 public class Cliente {
     
     private int id_cliente;
-    private int dni;
+    private long dni;
     private String nombre;
     
     public Cliente() {}
@@ -23,11 +23,11 @@ public class Cliente {
         this.id_cliente = id_cliente;
     }
 
-    public int getDni() {
+    public long getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(long dni) {
         this.dni = dni;
     }
 

@@ -52,14 +52,14 @@ public class ProductoDao {
     }
     
     public void seleccionarCategoriaVenta(JComboBox categoria){
-        categoria.addItem("Tatuaje");
         categoria.addItem("Joya");
+        categoria.addItem("Tatuaje");
     }
     
     public List listarProductos(){
         List<Producto> listPro = new ArrayList();
         String sql = "SELECT * "
-                    + "FROM productos";
+                    + "FROM productos ORDER BY stock_producto";
         try {
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
@@ -83,7 +83,25 @@ public class ProductoDao {
         }
         return listPro;
     }
-        
+    
+    public int obtenerStockProducto(String codigo){
+        String sql = "SELECT stock_producto "
+                    + "FROM productos "
+                    + "WHERE codigo_producto = '"+codigo+"'";
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int stock = rs.getInt("stock_producto");
+                return stock;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return 0;
+    }
+    
     public boolean eliminarProducto(int id_producto){
         String sql = "DELETE "
                     + "FROM productos "
@@ -106,13 +124,52 @@ public class ProductoDao {
     }
     
     public boolean modificarProducto(Producto pro){
-        String sql = "UPDATE productos "
+        
+        try {
+            String sql = "SELECT * FROM productos WHERE id_producto = ?";
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, pro.getId_producto());
+            rs = ps.executeQuery();
+            rs.next();
+            Producto proActual = new Producto(
+                    rs.getInt("id_producto"), rs.getString("nombre_producto"), 
+                    rs.getString("categoria_producto"), rs.getString("descripcion_producto"),
+                    rs.getFloat("costo_producto"), rs.getFloat("venta_producto"),
+                    rs.getInt("stock_producto"), rs.getString("codigo_producto"),
+                    rs.getBytes("foto_producto"));
+            
+            sql = "SELECT COUNT(IF(codigo_producto = ? , 1 ,null)) AS countCod, COUNT(IF(nombre_producto = ? , 1 ,null)) AS countNombre from productos";
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, pro.getCodigo_producto() );
+            ps.setString(2, pro.getNombre_producto() );
+            
+            rs = ps.executeQuery();
+            rs.next();
+            int countCod = rs.getInt("countCod");
+            int countNombre = rs.getInt("countNombre");
+            
+            if(!proActual.getCodigo_producto().equals(pro.getCodigo_producto())){
+                if(countCod>0){
+                    JOptionPane.showMessageDialog(null, "El código del producto ya existe.");
+                    return false;
+                }
+            }
+            
+            if(!proActual.getNombre_producto().equals(pro.getNombre_producto())){
+                if(countNombre>0){
+                    JOptionPane.showMessageDialog(null, "El nombre del producto ya existe");
+                    return false;
+                }
+            }          
+            
+            sql = "UPDATE productos "
                     + "SET nombre_producto=?,categoria_producto=?,codigo_producto=?,"
                     + "descripcion_producto=?,"
                     + "costo_producto=?,venta_producto=?,"
                     + "stock_producto=? "
                     + "WHERE id_producto=?";
-        try {
+            
             ps = conexion.prepareStatement(sql);
             ps.setString(1, pro.getNombre_producto());
             ps.setString(2, pro.getCategoria_producto());
@@ -128,18 +185,42 @@ public class ProductoDao {
         } catch (SQLException e) {
             System.out.println(e.toString());
             return false;
-        } finally{
-            try {
-                conexion.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
+        } 
+    }
+    
+    public List filtrarProductos(String atributo, String valor){
+        List<Producto> listPro = new ArrayList();
+        String sql = "SELECT * "
+                    + "FROM productos WHERE " + atributo + " like ? ORDER BY " + atributo;
+        try {            
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, "%" + valor + "%");  
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto pro = new Producto();
+                pro.setId_producto(rs.getInt("id_producto"));
+                pro.setNombre_producto(rs.getString("nombre_producto"));
+                pro.setCategoria_producto(rs.getString("categoria_producto"));
+                pro.setDescripcion_producto(rs.getString("descripcion_producto"));
+                pro.setCosto_producto(rs.getFloat("costo_producto"));
+                pro.setVenta_producto(rs.getFloat("venta_producto"));
+                pro.setStock_producto(rs.getInt("stock_producto"));
+                pro.setCodigo_producto(rs.getString("codigo_producto"));
+                pro.setFoto_producto(rs.getBytes("foto_producto"));
+                
+                listPro.add(pro);
             }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
         }
+        return listPro;
     }
     
     public Producto productoEscogido(String codigo){        
         String sql = "SELECT * "
-                    + "FROM productos WHERE codigo_producto = '"+codigo+"'";
+                    + "FROM productos "
+                    + "WHERE categoria_producto = 'Joya' AND codigo_producto = '"+codigo+"'";
         try {
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
@@ -162,5 +243,42 @@ public class ProductoDao {
             System.out.println(e.toString());
         }
         return null;
+    }
+    
+    public byte[] getImagenProducto(String codigo){        
+        String sql = "SELECT foto_producto "
+                    + "FROM productos WHERE codigo_producto = '"+codigo+"'";
+        byte[] bytes;
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                bytes = rs.getBytes("foto_producto");
+                return bytes;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return null;
+    }
+
+    public boolean verificarCodigoUnico(String codigo){
+        boolean countCod = false;
+        String sql = "SELECT COUNT(codigo_producto) > 0 AS resultado "
+                    +"FROM productos "
+                    +"WHERE codigo_producto LIKE '"+codigo+"';";
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                countCod = rs.getBoolean("resultado");
+                return countCod;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return countCod;
     }
 }

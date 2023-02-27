@@ -15,7 +15,7 @@ public class ClienteDao {
     ResultSet rs;
     Conexion cn = new Conexion();
 
-    public String clienteEscogido(int dni) {
+    public String clienteEscogido(long dni) {
         String sql = "SELECT * "
                 + "FROM clientes WHERE dni_cliente = '" + dni + "'";
         try {
@@ -48,7 +48,7 @@ public class ClienteDao {
         try {
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
-            ps.setInt(1, cli.getDni());
+            ps.setLong(1, cli.getDni());
             ps.setString(2, cli.getNombre());
 
             ps.execute();
@@ -99,7 +99,7 @@ public class ClienteDao {
                 + "WHERE id_cliente=?";
         try {
             ps = conexion.prepareStatement(sql);
-            ps.setInt(1, cli.getDni());
+            ps.setLong(1, cli.getDni());
             ps.setString(2, cli.getNombre());
             ps.setInt(3, cli.getId_cliente());
 

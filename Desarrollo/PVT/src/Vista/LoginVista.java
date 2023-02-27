@@ -15,12 +15,15 @@ public class LoginVista extends javax.swing.JFrame {
         this.setTitle("PUNTO DE VENTA TATOOS");
     }
     
+    public static String user = "";
+    
     public void validar(){
         String correo_usuario = txtUsuario.getText();
         String contrasena_usuario = String.valueOf(txtContrasenia.getPassword());
         if (!"".equals(correo_usuario) || !"".equals(contrasena_usuario)) {
             log = logDao.login(correo_usuario, contrasena_usuario);
             if (log.getCorreo_usuario()!=null && log.getContrasena_usuario()!=null) {
+                user = log.getNombre_usuario();
                 SistemaVista sv = new SistemaVista();
                 sv.setVisible(true);
                 // JOptionPane.showMessageDialog(null,"Bienvenido: " +log.getNombre_usuario());

@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -37,11 +39,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExportarReporteExcel {
     
-    public void reporte(DefaultTableModel modelo) {
+    public void reporte(DefaultTableModel modelo, String fecha) {
  
         Workbook book = new XSSFWorkbook();
         Sheet sheet = book.createSheet("Reporte-de-ventas");
- 
+        
         try {
             //Imagen logo de la empresa
             InputStream is = new FileInputStream("src/Imagenes/logo.png");
@@ -155,7 +157,13 @@ public class ExportarReporteExcel {
 
                     //En las dos últimas columnas retornan decimal
                     if (a == numCol - 2 || a == numCol - 1) {
-                        CeldaDatos.setCellValue(Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a))));
+                        
+                        double numero = Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a)));
+                        double numeroRedondeado = Math.round(numero * 10.0) / 10.0; // Redondear a un decimal
+                        String numeroFormateado = String.format("%.1f0", numeroRedondeado); // Agregar cero adicional
+                        System.out.println(numeroFormateado);
+                        CeldaDatos.setCellValue(numeroFormateado);
+                        //CeldaDatos.setCellValue(Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a))));
                     } else {
                         CeldaDatos.setCellValue(String.valueOf(modelo.getValueAt(filaCada, a)));
                     }
@@ -177,7 +185,7 @@ public class ExportarReporteExcel {
             sheet.setZoom(150);
             String fileName = "reporte_ventas";
             String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/" + fileName + ".xlsx");
+            File file = new File(home + "/Downloads/" + fileName +" - "+fecha+ ".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();

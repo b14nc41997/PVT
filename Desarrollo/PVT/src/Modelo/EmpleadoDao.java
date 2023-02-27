@@ -144,4 +144,23 @@ public class EmpleadoDao {
         }
         return listEmpSimple;
     }
+    
+    public boolean verificarDocumentoUnico(String documento){
+        boolean countDoc = false;
+        String sql = "SELECT COUNT(documento_empleado) > 0 AS resultado "
+                    +"FROM empleados "
+                    +"WHERE documento_empleado LIKE '"+documento+"';";
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                countDoc = rs.getBoolean("resultado");
+                return countDoc;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return countDoc;
+    }
 }
