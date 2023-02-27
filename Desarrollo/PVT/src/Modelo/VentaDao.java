@@ -23,12 +23,13 @@ public class VentaDao {
     public List listarReportes(String fecha) throws ParseException{
         List<Venta> listRepo = new ArrayList();
         
-        String consulta = "SELECT * FROM ventas WHERE fecha = '"+fecha+"'"
-                + "ORDER BY monto_total ASC";    
+        String consulta = "SELECT * FROM ventas WHERE fecha = ?"
+                + "ORDER BY monto_total ASC";
         
         try {
             conexion = cn.getConnection();
-            ps = conexion.prepareStatement(consulta);            
+            ps = conexion.prepareStatement(consulta);   
+            ps.setString(1, fecha);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Venta rep = new Venta();                
@@ -44,14 +45,30 @@ public class VentaDao {
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
-        }finally{
-            try {
-                conexion.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
+        } finally {
+            /*Cerrar la conexión y sus componentes de manera correcta*/
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar Prepared Statement: " + e.toString());
+                }
             }
-        }
-        
+            if (rs != null) {
+                try{
+                    rs.close();
+                }catch(SQLException e){
+                    System.out.println("Error al cerrar Result Set: "+e.toString());
+                }
+            }
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    System.out.println("Error al cerrar la conexión: "+ex.toString());
+                }
+            }
+        }        
         return listRepo;
     }
     
