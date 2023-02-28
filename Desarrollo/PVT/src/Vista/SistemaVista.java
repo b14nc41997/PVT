@@ -37,6 +37,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+import pvt.PVT;
 
 public class SistemaVista extends javax.swing.JFrame {
     
@@ -68,7 +69,7 @@ public class SistemaVista extends javax.swing.JFrame {
         dchFecNacimientoEmpleado.setMaxSelectableDate(new Date());
         setLocationRelativeTo(null); //centrado
         setResizable(false); //para no maximizar interfaz
-        this.setTitle("PUNTO DE VENTA TATOOS");
+        this.setTitle("PUNTO DE VENTA ARTESANOS INK TATTOO");
         spnCantidadProductoCarrito.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         modeloTablaVenta = (DefaultTableModel) tablaCarritoVenta.getModel();
         modeloTablaInventario = (DefaultTableModel) tablaInventario.getModel();
@@ -162,6 +163,12 @@ public class SistemaVista extends javax.swing.JFrame {
         String fecha = formato.format(dchFechaReporte.getDate());
         
         List<Venta> listRepo = repoDao.listarReportes(fecha);
+        
+        if (listRepo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No hubieron ventas registradas en la fecha seleccionada");
+            return;
+        }
+        
         modeloTablaReporte = (DefaultTableModel) tablaReporte.getModel();        
 
         //Variable donde se almacenará la suma
@@ -301,11 +308,6 @@ public class SistemaVista extends javax.swing.JFrame {
             apellido = listaEmpleados.get(i).getApe_paterno_empleado();
             cbxEmpleadoVenta.addItem(nombre+" "+apellido);
         }
-//        List<Empleado> listaEmpleados = empDao.listarEmpleados();
-//        cbxEmpleadoVenta.removeAllItems();
-//        for (int i = 0; i < listaEmpleados.size(); i++) {
-//            cbxEmpleadoVenta.addItem(listaEmpleados.get(i).getNombre_empleado());
-//        }
     }
     
     private void registrarVenta(){
@@ -334,7 +336,6 @@ public class SistemaVista extends javax.swing.JFrame {
             String codigoProducto = tablaCarritoVenta.getValueAt(i, 2).toString();            
             int cantidadProducto = Integer.parseInt(tablaCarritoVenta.getValueAt(i, 5).toString());
             String nombreProd = tablaCarritoVenta.getValueAt(i, 3).toString();
-            
             Float precioU =  (float)(Math.round(Float.valueOf(tablaCarritoVenta.getValueAt(i, 6).toString()) * 10.0) / 10.0);
             
             detalleVenta.setNombre(nombreProd);
@@ -344,7 +345,7 @@ public class SistemaVista extends javax.swing.JFrame {
             if (i>0 || i==tablaCarritoVenta.getRowCount()-1) {
                 detalleF+="; ";
             }
-            String numeroFormateado = String.format("%.1f0", precioU);
+            String numeroFormateado = String.format("%.1f0", precioU).replace(",",".");
             detalleF += cantidadProducto+"-"+nombreProd+"-"+numeroFormateado;
         }
         return detalleF;
@@ -564,10 +565,16 @@ public class SistemaVista extends javax.swing.JFrame {
         btnSalir.setText("Salir");
         btnSalir.setBorder(null);
         btnSalir.setBorderPainted(false);
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalir.setDefaultCapable(false);
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalirMouseClicked(evt);
+            }
+        });
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
             }
         });
 
@@ -1200,6 +1207,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         txtCriterioInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCriterioInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtCriterioInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlFondoInventario.add(txtCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 180, 30));
 
         btnDescargarTablaInventario.setBackground(new java.awt.Color(33, 50, 60));
@@ -1292,6 +1300,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel24.setText("Nombre");
 
         txtNombreInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtNombreInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtNombreInventario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombreInventarioKeyTyped(evt);
@@ -1343,7 +1352,7 @@ public class SistemaVista extends javax.swing.JFrame {
         );
 
         txtPrecioCostoInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPrecioCostoInventario.setToolTipText("Ingresar nombre(s)");
+        txtPrecioCostoInventario.setToolTipText("");
         txtPrecioCostoInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtPrecioCostoInventario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1380,7 +1389,7 @@ public class SistemaVista extends javax.swing.JFrame {
         );
 
         txtPrecioVentaInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPrecioVentaInventario.setToolTipText("Ingresar nombre(s)");
+        txtPrecioVentaInventario.setToolTipText("");
         txtPrecioVentaInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtPrecioVentaInventario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1623,7 +1632,7 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoProducto.add(lblNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         txtNombreProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNombreProducto.setToolTipText("Ingresar nombre(s)");
+        txtNombreProducto.setToolTipText("");
         txtNombreProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtNombreProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1659,7 +1668,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         lblPrecioCompraProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPrecioCompraProducto.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecioCompraProducto.setText("Precio de compra");
+        lblPrecioCompraProducto.setText("Precio de compra*");
         pnlFondoProducto.add(lblPrecioCompraProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
         jPanel9.setBackground(new java.awt.Color(67, 102, 129));
@@ -1689,7 +1698,7 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoProducto.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 30, 30));
 
         txtPrecioCompraProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPrecioCompraProducto.setToolTipText("Ingresar nombre(s)");
+        txtPrecioCompraProducto.setToolTipText("");
         txtPrecioCompraProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtPrecioCompraProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1730,7 +1739,7 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoProducto.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 30, 30));
 
         txtPrecioVentaProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPrecioVentaProducto.setToolTipText("Ingresar nombre(s)");
+        txtPrecioVentaProducto.setToolTipText("");
         txtPrecioVentaProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtPrecioVentaProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1754,29 +1763,29 @@ public class SistemaVista extends javax.swing.JFrame {
 
         lblCodigoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCodigoProducto.setForeground(new java.awt.Color(255, 255, 255));
-        lblCodigoProducto.setText("Código");
+        lblCodigoProducto.setText("Código*");
         pnlFondoProducto.add(lblCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, -1, -1));
 
         txtCodigoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCodigoProducto.setToolTipText("Ingresar nombre(s)");
+        txtCodigoProducto.setToolTipText("");
         txtCodigoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         pnlFondoProducto.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, 180, 30));
 
         lblFotoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblFotoProducto.setForeground(new java.awt.Color(255, 255, 255));
-        lblFotoProducto.setText("Foto");
+        lblFotoProducto.setText("Foto*");
         pnlFondoProducto.add(lblFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, -1, -1));
 
         txtFotoProducto.setEditable(false);
         txtFotoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtFotoProducto.setToolTipText("Ingresar nombre(s)");
+        txtFotoProducto.setToolTipText("");
         txtFotoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(245, 241, 241), 5));
         pnlFondoProducto.add(txtFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 80, 30));
 
         jPanel12.setBackground(new java.awt.Color(67, 102, 129));
         jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        btnFotoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconUpload.png"))); // NOI18N
+        btnFotoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconUpload.png"))); // NOI18N
         btnFotoProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnFotoProductoMouseClicked(evt);
@@ -1995,6 +2004,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnGuardarEmpleado.setText("Guardar");
         btnGuardarEmpleado.setBorder(null);
         btnGuardarEmpleado.setBorderPainted(false);
+        btnGuardarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarEmpleadoActionPerformed(evt);
@@ -2008,6 +2018,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnActualizarEmpleado.setText("Actualizar");
         btnActualizarEmpleado.setBorder(null);
         btnActualizarEmpleado.setBorderPainted(false);
+        btnActualizarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarEmpleadoActionPerformed(evt);
@@ -2021,6 +2032,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnEliminarEmpleado.setText("Eliminar");
         btnEliminarEmpleado.setBorder(null);
         btnEliminarEmpleado.setBorderPainted(false);
+        btnEliminarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarEmpleadoActionPerformed(evt);
@@ -2034,6 +2046,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnLimpiarEmpleado.setText("Limpiar");
         btnLimpiarEmpleado.setBorder(null);
         btnLimpiarEmpleado.setBorderPainted(false);
+        btnLimpiarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLimpiarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarEmpleadoActionPerformed(evt);
@@ -2174,11 +2187,6 @@ public class SistemaVista extends javax.swing.JFrame {
         lblSelFechaReporte.setText("Seleccionar fecha");
         pnlFondoReporte.add(lblSelFechaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 80, -1, -1));
 
-        tablaReporte = new javax.swing.JTable(){
-            public boolean isCellEditable(int rowIndex, int colIndex){
-                return false;
-            }
-        };
         tablaReporte.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -2186,18 +2194,26 @@ public class SistemaVista extends javax.swing.JFrame {
             new String [] {
                 "#", "ID", "Fecha", "DNI/CE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total", "Progreso del Día"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaReporte.getTableHeader().setReorderingAllowed(false);
         jScrollPane7.setViewportView(tablaReporte);
         if (tablaReporte.getColumnModel().getColumnCount() > 0) {
-            tablaReporte.getColumnModel().getColumn(0).setPreferredWidth(3);
-            tablaReporte.getColumnModel().getColumn(1).setPreferredWidth(5);
-            tablaReporte.getColumnModel().getColumn(2).setPreferredWidth(10);
-            tablaReporte.getColumnModel().getColumn(3).setPreferredWidth(15);
-            tablaReporte.getColumnModel().getColumn(4).setPreferredWidth(20);
-            tablaReporte.getColumnModel().getColumn(5).setPreferredWidth(20);
-            tablaReporte.getColumnModel().getColumn(6).setPreferredWidth(40);
-            tablaReporte.getColumnModel().getColumn(7).setPreferredWidth(8);
+            tablaReporte.getColumnModel().getColumn(0).setMinWidth(10);
+            tablaReporte.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tablaReporte.getColumnModel().getColumn(1).setMinWidth(15);
+            tablaReporte.getColumnModel().getColumn(1).setPreferredWidth(15);
+            tablaReporte.getColumnModel().getColumn(2).setMinWidth(35);
+            tablaReporte.getColumnModel().getColumn(2).setPreferredWidth(35);
+            tablaReporte.getColumnModel().getColumn(3).setMinWidth(35);
+            tablaReporte.getColumnModel().getColumn(3).setPreferredWidth(35);
         }
 
         pnlFondoReporte.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 980, 172));
@@ -2237,6 +2253,7 @@ public class SistemaVista extends javax.swing.JFrame {
         txtTotalReporte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtTotalReporte.setToolTipText("");
         txtTotalReporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 5));
+        txtTotalReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         txtTotalReporte.setFocusable(false);
         txtTotalReporte.setRequestFocusEnabled(false);
         pnlFondoReporte.add(txtTotalReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 340, 130, 30));
@@ -3319,8 +3336,18 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecioVentaProductoKeyTyped
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que cerrar sesión?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            PVT pvt = new PVT();
+            dispose();
+            pvt.main(new String[]{});
+        }
+        
     }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments

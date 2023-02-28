@@ -2,6 +2,11 @@
 package Vista;
 import Modelo.Login;
 import Modelo.LoginDao;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class LoginVista extends javax.swing.JFrame {
@@ -12,7 +17,7 @@ public class LoginVista extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); //centrado
         setResizable(false); //para no maximizar interfaz
-        this.setTitle("PUNTO DE VENTA TATOOS");
+        this.setTitle("PUNTO DE VENTA ARTESANOS INK TATTOO");
     }
     
     public static String user = "";
@@ -23,11 +28,31 @@ public class LoginVista extends javax.swing.JFrame {
         if (!"".equals(correo_usuario) || !"".equals(contrasena_usuario)) {
             log = logDao.login(correo_usuario, contrasena_usuario);
             if (log.getCorreo_usuario()!=null && log.getContrasena_usuario()!=null) {
+                
                 user = log.getNombre_usuario();
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/iconJFrame.png"));
                 SistemaVista sv = new SistemaVista();
+                sv.setIconImage(icon.getImage());
+                
+                sv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                sv.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        int option = JOptionPane.showConfirmDialog(sv, "¿Está seguro de cerrar la aplicación?", "Confirmación de salida", JOptionPane.YES_NO_OPTION);
+                        if (option == JOptionPane.YES_OPTION) {
+                            try{
+                                Process p = Runtime.getRuntime().exec ("C:\\xampp\\xampp_stop.exe");
+                            }catch (IOException ex){ 
+                                System.out.println("No se encontro " + ex); 
+                            }
+                            System.exit(0);
+                        }
+                    }
+                });
+                
                 sv.setVisible(true);
-                // JOptionPane.showMessageDialog(null,"Bienvenido: " +log.getNombre_usuario());
                 dispose();
+                
             } else{
                 JOptionPane.showMessageDialog(null,"Correo o contraseña incorrectos");
             }
@@ -76,7 +101,7 @@ public class LoginVista extends javax.swing.JFrame {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
         jPanel2.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 14, -1, 98));
 
         lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -87,7 +112,7 @@ public class LoginVista extends javax.swing.JFrame {
         pnlIconUsuario.setBackground(new java.awt.Color(67, 102, 129));
 
         lblIconUsuario.setBackground(new java.awt.Color(67, 102, 129));
-        lblIconUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconUsuario.png"))); // NOI18N
+        lblIconUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconUsuario.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlIconUsuarioLayout = new javax.swing.GroupLayout(pnlIconUsuario);
         pnlIconUsuario.setLayout(pnlIconUsuarioLayout);
@@ -116,7 +141,7 @@ public class LoginVista extends javax.swing.JFrame {
 
         pnlIconContrasenia.setBackground(new java.awt.Color(67, 102, 129));
 
-        lblIconContrasenia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconContrasenia.png"))); // NOI18N
+        lblIconContrasenia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconContrasenia.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlIconContraseniaLayout = new javax.swing.GroupLayout(pnlIconContrasenia);
         pnlIconContrasenia.setLayout(pnlIconContraseniaLayout);
@@ -157,12 +182,12 @@ public class LoginVista extends javax.swing.JFrame {
         });
         jPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 120, 37));
 
-        lblfondoTarjetaLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoTarjetaLogin.png"))); // NOI18N
+        lblfondoTarjetaLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTarjetaLogin.png"))); // NOI18N
         jPanel2.add(lblfondoTarjetaLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 320));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 240, 320));
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoLogin.png"))); // NOI18N
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoLogin.png"))); // NOI18N
         lblFondo.setToolTipText("");
         jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 

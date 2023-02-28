@@ -8,7 +8,7 @@ public class Venta {
     private int id;
     private Date fecha;
     private int dni;
-    private String nombre;
+    private String nombre;//categoria codigo
     private String empleado;
     private String descripcion;
     private float total;

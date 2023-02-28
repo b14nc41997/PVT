@@ -23,6 +23,12 @@ public class ColorCelda extends JTable{
                 componente.setForeground(Color.black);
             }                        
         }
+//        @Override
+//        public boolean isCellEditable(int row, int column){
+//        return false;
+//    }
+
+
         return componente;
     }
     
