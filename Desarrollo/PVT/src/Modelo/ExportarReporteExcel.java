@@ -160,8 +160,8 @@ public class ExportarReporteExcel {
                         
                         double numero = Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a)));
                         double numeroRedondeado = Math.round(numero * 10.0) / 10.0; // Redondear a un decimal
-                        String numeroFormateado = String.format("%.1f0", numeroRedondeado); // Agregar cero adicional
-                        System.out.println(numeroFormateado);
+                        String numeroFormateado = String.format("%.1f0", numeroRedondeado).replace(",","."); // Agregar cero adicional
+                        //System.out.println(numeroFormateado);
                         CeldaDatos.setCellValue(numeroFormateado);
                         //CeldaDatos.setCellValue(Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a))));
                     } else {
@@ -185,7 +185,7 @@ public class ExportarReporteExcel {
             sheet.setZoom(150);
             String fileName = "reporte_ventas";
             String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/" + fileName +" - "+fecha+ ".xlsx");
+            File file = new File("D:/" + fileName +" - "+fecha+ ".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();

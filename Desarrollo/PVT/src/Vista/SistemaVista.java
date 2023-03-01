@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +67,7 @@ public class SistemaVista extends javax.swing.JFrame {
         proDao.seleccionarCategoriaInventario(cbxCategoriaProducto);
         proDao.seleccionarCategoriaInventario(cbxCategoriaInventario);
         cargarComboEmpleados();
+        
         dchFecNacimientoEmpleado.setMaxSelectableDate(new Date());
         setLocationRelativeTo(null); //centrado
         setResizable(false); //para no maximizar interfaz
@@ -565,7 +567,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnSalir.setText("Salir");
         btnSalir.setBorder(null);
         btnSalir.setBorderPainted(false);
-        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnSalir.setDefaultCapable(false);
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -685,7 +687,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblBotonBuscarProductoVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBotonBuscarProductoVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         lblBotonBuscarProductoVenta.setToolTipText("");
-        lblBotonBuscarProductoVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBotonBuscarProductoVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBotonBuscarProductoVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBotonBuscarProductoVentaMouseClicked(evt);
@@ -794,7 +796,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnActualizarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizarVenta.setText("Actualizar item");
         btnActualizarVenta.setBorder(null);
-        btnActualizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarVentaActionPerformed(evt);
@@ -806,7 +808,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnEliminarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarVenta.setText("Eliminar item");
         btnEliminarVenta.setBorder(null);
-        btnEliminarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEliminarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarVentaActionPerformed(evt);
@@ -818,7 +820,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnLimpiarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiarVenta.setText("Limpiar carrito");
         btnLimpiarVenta.setBorder(null);
-        btnLimpiarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLimpiarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarVentaActionPerformed(evt);
@@ -830,7 +832,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnAgregarItemVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarItemVenta.setText("Agregar item");
         btnAgregarItemVenta.setBorder(null);
-        btnAgregarItemVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarItemVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAgregarItemVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAgregarItemVentaMouseClicked(evt);
@@ -954,7 +956,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnCancelarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelarVenta.setText("Cancelar venta");
         btnCancelarVenta.setBorder(null);
-        btnCancelarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarVentaActionPerformed(evt);
@@ -967,7 +969,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnGenerarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerarVenta.setText("Generar venta");
         btnGenerarVenta.setBorder(null);
-        btnGenerarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarVentaActionPerformed(evt);
@@ -1066,7 +1068,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblBotonBuscarClienteVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBotonBuscarClienteVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         lblBotonBuscarClienteVenta.setToolTipText("");
-        lblBotonBuscarClienteVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBotonBuscarClienteVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBotonBuscarClienteVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBotonBuscarClienteVentaMouseClicked(evt);
@@ -1207,7 +1209,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         txtCriterioInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCriterioInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
-        txtCriterioInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtCriterioInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlFondoInventario.add(txtCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 180, 30));
 
         btnDescargarTablaInventario.setBackground(new java.awt.Color(33, 50, 60));
@@ -1215,7 +1217,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargarTablaInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnDescargarTablaInventario.setText("Descargar Tabla");
         btnDescargarTablaInventario.setBorder(null);
-        btnDescargarTablaInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargarTablaInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnDescargarTablaInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDescargarTablaInventarioMouseClicked(evt);
@@ -1228,7 +1230,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnDescargarInventario.setText("Descargar Inventario");
         btnDescargarInventario.setBorder(null);
-        btnDescargarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnDescargarInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDescargarInventarioMouseClicked(evt);
@@ -1239,7 +1241,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(67, 102, 129));
 
         lblBotonBuscarInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
-        lblBotonBuscarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBotonBuscarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBotonBuscarInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBotonBuscarInventarioMouseClicked(evt);
@@ -1300,7 +1302,7 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel24.setText("Nombre");
 
         txtNombreInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
-        txtNombreInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtNombreInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         txtNombreInventario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombreInventarioKeyTyped(evt);
@@ -1412,7 +1414,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnEliminarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarInventario.setText("Eliminar");
         btnEliminarInventario.setBorder(null);
-        btnEliminarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEliminarInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarInventarioActionPerformed(evt);
@@ -1424,7 +1426,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnActualizarInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizarInventario.setText("Actualizar");
         btnActualizarInventario.setBorder(null);
-        btnActualizarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizarInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarInventarioActionPerformed(evt);
@@ -1438,7 +1440,7 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlImagenInventario.setBackground(new java.awt.Color(67, 102, 129));
 
         lblImagenInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconImagen.png"))); // NOI18N
-        lblImagenInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblImagenInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblImagenInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblImagenInventarioMouseClicked(evt);
@@ -1783,7 +1785,7 @@ public class SistemaVista extends javax.swing.JFrame {
         pnlFondoProducto.add(txtFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 80, 30));
 
         jPanel12.setBackground(new java.awt.Color(67, 102, 129));
-        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnFotoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconUpload.png"))); // NOI18N
         btnFotoProducto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1814,7 +1816,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnGuardarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarProducto.setText("Guardar");
         btnGuardarProducto.setBorder(null);
-        btnGuardarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnGuardarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarProductoActionPerformed(evt);
@@ -1827,7 +1829,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnLimpiarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiarProducto.setText("Limpiar");
         btnLimpiarProducto.setBorder(null);
-        btnLimpiarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLimpiarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarProductoActionPerformed(evt);
@@ -2004,7 +2006,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnGuardarEmpleado.setText("Guardar");
         btnGuardarEmpleado.setBorder(null);
         btnGuardarEmpleado.setBorderPainted(false);
-        btnGuardarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnGuardarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarEmpleadoActionPerformed(evt);
@@ -2018,7 +2020,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnActualizarEmpleado.setText("Actualizar");
         btnActualizarEmpleado.setBorder(null);
         btnActualizarEmpleado.setBorderPainted(false);
-        btnActualizarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarEmpleadoActionPerformed(evt);
@@ -2032,7 +2034,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnEliminarEmpleado.setText("Eliminar");
         btnEliminarEmpleado.setBorder(null);
         btnEliminarEmpleado.setBorderPainted(false);
-        btnEliminarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarEmpleadoActionPerformed(evt);
@@ -2046,7 +2048,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnLimpiarEmpleado.setText("Limpiar");
         btnLimpiarEmpleado.setBorder(null);
         btnLimpiarEmpleado.setBorderPainted(false);
-        btnLimpiarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLimpiarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarEmpleadoActionPerformed(evt);
@@ -2141,7 +2143,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnDescargaReporte.setText("Descargar progreso del día");
         btnDescargaReporte.setBorder(null);
         btnDescargaReporte.setBorderPainted(false);
-        btnDescargaReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargaReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnDescargaReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDescargaReporteActionPerformed(evt);
@@ -2158,7 +2160,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         lblBotonBuscarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
         lblBotonBuscarReporte.setToolTipText("");
-        lblBotonBuscarReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBotonBuscarReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblBotonBuscarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBotonBuscarReporteMouseClicked(evt);
@@ -2455,7 +2457,24 @@ public class SistemaVista extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "El código ingresado coincide con otro producto. Elija otro código");
                 return;
             }
-            
+            try {
+               String input = txtPrecioCompraProducto.getText();
+               Float.parseFloat(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El precio de compra del producto no está escrito correctamente."
+                        + "\nRecuerde usar el punto decimal");
+                return;
+            }
+
+            //VERIFICAR PRECIO VENTA SI ESTÁ BIEN ESCRITO EL FLOAT 
+            try {
+               String input = txtPrecioVentaProducto.getText();
+               Float.parseFloat(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El precio de venta del producto no está escrito correctamente."
+                        + "\nRecuerde usar el punto decimal");
+                return;
+            }
             pro.setNombre_producto(txtNombreProducto.getText());
             pro.setCategoria_producto(cbxCategoriaProducto.getSelectedItem().toString());
             pro.setDescripcion_producto(txtDescripcionProducto.getText());
@@ -2498,8 +2517,8 @@ public class SistemaVista extends javax.swing.JFrame {
             }else if (tipoDocumento.equals("DNI") && tamNumDocumento < 8){
                 JOptionPane.showMessageDialog(null, "El DNI ingresado no tiene 8 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
-            }else if (tipoDocumento.equals("CE") && tamNumDocumento < 12){
-                JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 12 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }else if (tipoDocumento.equals("CE") && tamNumDocumento < 9){
+                JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 9 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
@@ -2520,6 +2539,13 @@ public class SistemaVista extends javax.swing.JFrame {
             Date inputIng = dchFecIngresoEmpleado.getDate();
             if(inputIng == null){
                 JOptionPane.showMessageDialog(null, "La fecha de ingreso es un campo obligatorio."
+                        +"\nVerificar el campo."
+                        , "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if(dchFecNacimientoEmpleado.getDate().after(dchFecIngresoEmpleado.getDate())){
+                JOptionPane.showMessageDialog(null, "La fecha de nacimiento debe ser anterior a la fecha de ingreso."
                         +"\nVerificar el campo."
                         , "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -2617,8 +2643,8 @@ public class SistemaVista extends javax.swing.JFrame {
                 }else if (tipoDocumento.equals("DNI") && tamNumDocumento < 8){
                     JOptionPane.showMessageDialog(null, "El DNI ingresado no tiene 8 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     return;
-                }else if (tipoDocumento.equals("CE") && tamNumDocumento < 12){
-                    JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 12 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }else if (tipoDocumento.equals("CE") && tamNumDocumento < 9){
+                    JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 9 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     return;
                 }else if(txtCelularEmpleado.getText().length()<9){
                     JOptionPane.showMessageDialog(null, "Verificar la cantidad de dígitos del celular");
@@ -2634,13 +2660,18 @@ public class SistemaVista extends javax.swing.JFrame {
                     return;
                 }
                 Date inputIng = dchFecIngresoEmpleado.getDate();
+                
                 if(inputIng == null){
                     JOptionPane.showMessageDialog(null, "La fecha de ingreso es un campo obligatorio."
                             +"\nVerificar el campo."
                             , "Advertencia", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                
+                if(empDao.verificarDocumentoUnico(txtDocumentoEmpleado.getText())){
+                    JOptionPane.showMessageDialog(null, "El documento ingresado coincide con el de otro empleado."
+                            +"\nVerifique el documento");
+                    return;
+                }
                 int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres modificar este empleado?");
                 if (pregunta == 0) {
                     
@@ -2694,7 +2725,8 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
     private void lblBotonBuscarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonBuscarReporteMouseClicked
-        //Verificación fecha     
+        //Verificación fecha 
+        txtTotalReporte.setText("");
         Date inputIng = dchFechaReporte.getDate();
         if(inputIng == null){
             JOptionPane.showMessageDialog(null, "Verificar la fecha ingresada."
@@ -2757,7 +2789,7 @@ public class SistemaVista extends javax.swing.JFrame {
         }
         //Caso Carnet de Extranjería
         else if(cbxDocumentoClienteVenta.getSelectedIndex()==1){
-            if(txtDocumentoClienteVenta.getText().length() >= 12){
+            if(txtDocumentoClienteVenta.getText().length() >= 9){
                 evt.consume();
             }  
         }
@@ -2779,7 +2811,7 @@ public class SistemaVista extends javax.swing.JFrame {
         }
         //Caso Carnet de Extranjería
         else if(cbxDocumentoEmpleado.getSelectedIndex()==1){
-            if(txtDocumentoEmpleado.getText().length() >= 12){
+            if(txtDocumentoEmpleado.getText().length() >= 9){
                 evt.consume();
             }  
         }
@@ -2868,8 +2900,8 @@ public class SistemaVista extends javax.swing.JFrame {
             txtNombreClienteVenta.setText("");
         }else if (tipoDocumento.equals("DNI") && tamNumDocumento < 8){
             JOptionPane.showMessageDialog(null, "El DNI ingresado no tiene 8 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }else if (tipoDocumento.equals("CE") && tamNumDocumento < 12){
-            JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 12 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }else if (tipoDocumento.equals("CE") && tamNumDocumento < 9){
+            JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 9 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             txtNombreClienteVenta.setText("");
         }else{
             long numDocumento2 = Long.parseLong(numDocumento);
@@ -3204,10 +3236,9 @@ public class SistemaVista extends javax.swing.JFrame {
 
     private void txtPrecioProductoCarritoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProductoCarritoKeyTyped
         int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-
-        if (minusculas || mayusculas){
+        boolean numeros = key >= 48 && key <= 57;
+        boolean punto = key == 46;
+        if (!(numeros || punto)){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioProductoCarritoKeyTyped
@@ -3297,40 +3328,36 @@ public class SistemaVista extends javax.swing.JFrame {
 
     private void txtPrecioCostoInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCostoInventarioKeyTyped
         int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-
-        if (minusculas || mayusculas){
+        boolean numeros = key >= 48 && key <= 57;
+        boolean punto = key == 46;
+        if (!(numeros || punto)){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioCostoInventarioKeyTyped
 
     private void txtPrecioVentaInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaInventarioKeyTyped
         int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-
-        if (minusculas || mayusculas){
+        boolean numeros = key >= 48 && key <= 57;
+        boolean punto = key == 46;
+        if (!(numeros || punto)){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioVentaInventarioKeyTyped
 
     private void txtPrecioCompraProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraProductoKeyTyped
         int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-
-        if (minusculas || mayusculas){
+        boolean numeros = key >= 48 && key <= 57;
+        boolean punto = key == 46;
+        if (!(numeros || punto)){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioCompraProductoKeyTyped
 
     private void txtPrecioVentaProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaProductoKeyTyped
         int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-
-        if (minusculas || mayusculas){
+        boolean numeros = key >= 48 && key <= 57;
+        boolean punto = key == 46;
+        if (!(numeros || punto)){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioVentaProductoKeyTyped
