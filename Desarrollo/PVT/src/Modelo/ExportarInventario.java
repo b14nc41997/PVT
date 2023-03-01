@@ -87,13 +87,13 @@ public class ExportarInventario {
             fuenteTitulo.setFontHeightInPoints((short) 14);
             tituloEstilo.setFont(fuenteTitulo);
  
-            celdaTitulo.setCellStyle(tituloEstilo);
-            celdaTitulo.setCellValue("Inventario");
+            //celdaTitulo.setCellStyle(tituloEstilo);
+            //celdaTitulo.setCellValue("Inventario");
  
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 3));
             
             //Encabezado            
-            headerStyle.setFillForegroundColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
             headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             headerStyle.setBorderBottom(BorderStyle.THIN);
             headerStyle.setBorderLeft(BorderStyle.THIN);
@@ -102,7 +102,7 @@ public class ExportarInventario {
  
             font.setFontName("Arial");
             font.setBold(true);
-            font.setColor(IndexedColors.BLACK.getIndex());
+            font.setColor(IndexedColors.WHITE.getIndex());
             font.setFontHeightInPoints((short) 12);
             headerStyle.setFont(font);
  
@@ -124,8 +124,8 @@ public class ExportarInventario {
             estiloCelda.setBorderBottom(BorderStyle.THIN);
             estiloCelda.setBorderLeft(BorderStyle.THIN);
             estiloCelda.setBorderRight(BorderStyle.THIN);
-            estiloCelda.setBorderBottom(BorderStyle.THIN);   
-            estiloCelda.setFont(font);
+            estiloCelda.setBorderBottom(BorderStyle.THIN);
+            
             
         }catch(FileNotFoundException ex){
             Logger.getLogger(ExportarInventario.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,7 +136,9 @@ public class ExportarInventario {
         
     public void exportarTablaExcel(DefaultTableModel modelo){         
         formatoExcel();        
-        try{            
+        try{       
+            celdaTitulo.setCellStyle(tituloEstilo);
+            celdaTitulo.setCellValue("Inventario Filtrado");
             int numCol = modelo.getColumnCount();
             int filaCada = 0;
             
@@ -161,13 +163,14 @@ public class ExportarInventario {
                     }
                     
                     //Colorear sólo las dos últimas columnas
-                    if ((a == numCol - 1 || a == numCol - 2) && suma < 330) {
+                    if ((a == numCol - 1 || a == numCol - 3 || a == numCol - 2) && suma < 330) {
                         CeldaDatos.setCellStyle(estiloCelda);
                     }
 
                     //En las dos últimas columnas retornan decimal
-                    if (a == numCol - 2 || a == numCol - 1) {
-                        CeldaDatos.setCellValue(Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a))));
+                    if (a == numCol - 2 || a == numCol - 3 || a == numCol - 1 ) {
+                        CeldaDatos.setCellValue(Math.round(Float.valueOf(String.valueOf(modelo.getValueAt(filaCada, a)))*10.00)/10.00);
+                        
                     } else {
                         CeldaDatos.setCellValue(String.valueOf(modelo.getValueAt(filaCada, a)));
                     }
@@ -183,7 +186,7 @@ public class ExportarInventario {
             sheet.setZoom(150);
             String fileName = "InventarioFiltrado";            
             String home = System.getProperty("user.home");
-            File file = new File(home+"/Downloads/"+fileName+" - "+fecha+" - "+dateTime+".xlsx");
+            File file = new File("D:/"+fileName+" - "+fecha+" - "+dateTime+".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();
@@ -202,6 +205,10 @@ public class ExportarInventario {
         String sql = "Select * from productos";
         
         try{
+            
+            celdaTitulo.setCellStyle(tituloEstilo);
+            celdaTitulo.setCellValue("Inventario Completo");
+            
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -227,11 +234,11 @@ public class ExportarInventario {
                 celdaDesc.setCellValue(rs.getString("descripcion_producto"));
                 
                 Cell celdaCosto = fila.createCell(5);
-                celdaCosto.setCellValue(rs.getFloat("costo_producto"));
+                celdaCosto.setCellValue(Math.round(rs.getFloat("costo_producto")*10.00)/10.00);
                 
                 Cell celdaVenta = fila.createCell(6);
-                celdaVenta.setCellValue(rs.getFloat("venta_producto"));
-                
+                celdaVenta.setCellValue(Math.round(rs.getFloat("venta_producto")*10.0)/10.0);
+               
                 Cell celdaStock = fila.createCell(7);
                 celdaStock.setCellValue(rs.getInt("stock_producto"));                
             }
@@ -239,10 +246,9 @@ public class ExportarInventario {
                 sheet.autoSizeColumn(i);
             }  
                 
-            sheet.setZoom(150);
-            String fileName = "InventarioCompleto";            
-            String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/"+fileName+" - "+fecha+" - "+dateTime+".xlsx");
+            sheet.setZoom(100);
+            String fileName = "InventarioCompleto";
+            File file = new File("D:/"+fileName+" - "+fecha+" - "+dateTime+".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();

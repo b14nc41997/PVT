@@ -32,7 +32,7 @@ public class ExportarVentaPDF {
                         .format(LocalDateTime.now());    
         try{
             String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/"+"venta"+idVenta+".pdf");
+            File file = new File("D:/" +"venta"+idVenta+".pdf");
             
             FileOutputStream archivo;
             

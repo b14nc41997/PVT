@@ -2595,16 +2595,19 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFotoProductoMouseClicked
 
     private void lblImagenInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenInventarioMouseClicked
+        // TODO add your handling code here:
         String codigo = txtCodigoInventario.getText();
-        if (!(codigo).equals("")){
-            int fila = tablaInventario.getSelectedRow();
-            String codigoTabla = tablaInventario.getValueAt(fila, 1).toString();
-            String codigoProducto = txtCodigoInventario.getText();
 
-            if (!(codigoTabla).equals(codigoProducto)){
-                JOptionPane.showMessageDialog(null, "De clic nuevamente en el producto");
-                return;
-            }
+        int fila = tablaInventario.getSelectedRow();
+        String codigoTabla = tablaInventario.getValueAt(fila, 1).toString();
+        String codigoProducto = txtCodigoInventario.getText();
+
+        if (!(codigoTabla).equals(codigoProducto)){
+            JOptionPane.showMessageDialog(null, "De clic nuevamente en el producto");
+            return;
+        }
+
+        if (!(codigo).equals("")){
             byte[] bytes = proDao.getImagenProducto(codigo);
             BufferedImage img = null;
             try{
@@ -2615,7 +2618,46 @@ public class SistemaVista extends javax.swing.JFrame {
                 }
 
                 ImageIcon icono = new ImageIcon(img);
-                JOptionPane.showMessageDialog(null,"",codigo, JOptionPane.INFORMATION_MESSAGE, icono);
+
+                //JOptionPane.showMessageDialog(null,"",codigo, JOptionPane.YES_NO_OPTION,icono);
+                int seleccion = JOptionPane.showOptionDialog(
+                    null,
+                    "", 
+                    codigo,
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    icono,    // null para icono por defecto.
+                    new Object[] { "Cambiar Imagen", "Cerrar"},
+                    "Cambiar Imagen"// null para YES, NO y CANCEL
+                );
+
+                if(seleccion == 0){
+                    JFileChooser jFileChooser = new JFileChooser();
+                    jFileChooser.setMultiSelectionEnabled(false);
+                    FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG & PNG","jpg","png");
+                    jFileChooser.setFileFilter(filtrado);
+                    String ruta = "";
+                    String nombre = ""; 
+                    int respuesta = jFileChooser.showOpenDialog(this);
+
+                    if(respuesta == JFileChooser.APPROVE_OPTION){
+                        ruta = jFileChooser.getSelectedFile().getAbsolutePath();
+                        int pregunta = JOptionPane.showConfirmDialog(null,"¿Deseas reemplazar la imagen?","Aviso",JOptionPane.YES_NO_OPTION);
+                        if(pregunta == 0){
+                            pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
+                            pro.setFoto_producto(getImagen(ruta));
+                            proDao.modificarFotoProducto(pro);
+                            JOptionPane.showMessageDialog(null, "Imagen actualizada con exito");
+                        }
+                        //nombre = jFileChooser.getSelectedFile().getName();
+                        //System.out.println(ruta);
+                        //pro.setFoto_producto(getImagen(txtFotoProducto.getText()));
+                    }
+
+                }               
+
+                if (seleccion != -1)
+                System.out.println("seleccionada opcion " + (seleccion + 1));
 
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "No tiene una imagen asignada");
@@ -3317,13 +3359,14 @@ public class SistemaVista extends javax.swing.JFrame {
             obj[2] = listPro.get(i).getNombre_producto();
             obj[3] = listPro.get(i).getCategoria_producto();
             obj[4] = listPro.get(i).getDescripcion_producto();
-            obj[5] = listPro.get(i).getCosto_producto();
-            obj[6] = listPro.get(i).getVenta_producto();
+            obj[5] = String.format("%.1f0", Math.round(listPro.get(i).getCosto_producto() * 10.0) / 10.0).replace(",",".");
+            obj[6] = String.format("%.1f0", Math.round(listPro.get(i).getVenta_producto() * 10.0) / 10.0).replace(",",".");
             obj[7] = listPro.get(i).getStock_producto();
             obj[1] = listPro.get(i).getCodigo_producto();
             modeloTablaInventario.addRow((obj));
         }
         tablaInventario.setModel(modeloTablaInventario);
+        limpiarInventario();
     }//GEN-LAST:event_lblBotonBuscarInventarioMouseClicked
 
     private void txtPrecioCostoInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCostoInventarioKeyTyped

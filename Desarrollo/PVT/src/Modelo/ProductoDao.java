@@ -281,4 +281,20 @@ public class ProductoDao {
         }
         return countCod;
     }
+    
+    public boolean modificarFotoProducto(Producto pro){
+        String sql = "UPDATE productos "
+                    + "SET foto_producto = ? WHERE id_producto=?";
+        try{
+            ps = conexion.prepareStatement(sql);
+            ps.setBytes(1, pro.getFoto_producto());
+            ps.setInt(2, pro.getId_producto());
+            ps.execute();
+            return true;            
+        }catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+        
+    }
 }
