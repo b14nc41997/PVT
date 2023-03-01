@@ -2417,28 +2417,32 @@ public class SistemaVista extends javax.swing.JFrame {
                     return;
                 }
                 
-                int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres modificar este producto?");
-                if (pregunta == 0) {
-                    //VERIFICAR CODIGO UNICO
-                    pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
-                    pro.setNombre_producto(txtNombreInventario.getText());
-                    pro.setCategoria_producto(cbxCategoriaInventario.getSelectedItem().toString());
-                    pro.setCodigo_producto(txtCodigoInventario.getText());
-                    pro.setDescripcion_producto(txtDescripcionInventario.getText());
-                    pro.setStock_producto((Integer)txtStockInventario.getValue());
-                    
-                    Float pc = Float.parseFloat(txtPrecioCostoInventario.getText());
-                    pro.setCosto_producto((float)(Math.round(pc * 10.0) / 10.0));
-                    
-                    Float pv = Float.parseFloat(txtPrecioVentaInventario.getText());
-                    pro.setVenta_producto((float)(Math.round(pv * 10.0) / 10.0)); 
+                String nombre = txtNombreInventario.getText();
+                String codigo = txtCodigoInventario.getText();
+                int id = Integer.parseInt(txtIdInventario.getText());
 
+                if(proDao.verificarCodNOmProducto(id, nombre, codigo)){
+                    int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres modificar este producto?");
+                    if (pregunta == 0) {
+                        //VERIFICAR CODIGO UNICO
+                        pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
+                        pro.setNombre_producto(txtNombreInventario.getText());
+                        pro.setCategoria_producto(cbxCategoriaInventario.getSelectedItem().toString());
+                        pro.setCodigo_producto(txtCodigoInventario.getText());
+                        pro.setDescripcion_producto(txtDescripcionInventario.getText());
+                        pro.setStock_producto((Integer)txtStockInventario.getValue());
+                        
+                        Float pc = Float.parseFloat(txtPrecioCostoInventario.getText());
+                        pro.setCosto_producto((float)(Math.round(pc * 10.0) / 10.0));
+                        
+                        Float pv = Float.parseFloat(txtPrecioVentaInventario.getText());
+                        pro.setVenta_producto((float)(Math.round(pv * 10.0) / 10.0)); 
 
-                    if(proDao.modificarProducto(pro)){
+                        proDao.modificarProducto(pro);
                         limpiarTabla(modeloTablaInventario);
                         limpiarInventario();
                         listarProductos();
-                        JOptionPane.showMessageDialog(null, "ACTUALIZADO CON ÉXITO");                        
+                        JOptionPane.showMessageDialog(null, "ACTUALIZADO CON ÉXITO");                         
                     }
                 }
             } else{
@@ -2573,6 +2577,7 @@ public class SistemaVista extends javax.swing.JFrame {
             limpiarEmpleado();
             listarEmpleados();
             JOptionPane.showMessageDialog(null,"Empleado Registrado con éxito");
+            cargarComboEmpleados();
         } else{
             JOptionPane.showMessageDialog(null,"Existen campos vacios");
         }
@@ -2709,7 +2714,7 @@ public class SistemaVista extends javax.swing.JFrame {
                             , "Advertencia", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                if(empDao.verificarDocumentoUnico(txtDocumentoEmpleado.getText())){
+                if(empDao.verificarActDocEmpleado(Integer.parseInt(txtIdEmpleado.getText()), txtDocumentoEmpleado.getText())){
                     JOptionPane.showMessageDialog(null, "El documento ingresado coincide con el de otro empleado."
                             +"\nVerifique el documento");
                     return;
@@ -2740,6 +2745,7 @@ public class SistemaVista extends javax.swing.JFrame {
                     limpiarEmpleado();
                     listarEmpleados();
                     JOptionPane.showMessageDialog(null, "ACTUALIZADO CON EXITO");
+                    cargarComboEmpleados();
                 }
             } else{
                 JOptionPane.showMessageDialog(null, "Existen algunos campos vacios");
@@ -2760,6 +2766,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 limpiarTabla(modeloTablaEmpleado);
                 limpiarEmpleado();
                 listarEmpleados();
+                cargarComboEmpleados();
             }
         } else{
             JOptionPane.showMessageDialog(null, "Seleccione un empleado");

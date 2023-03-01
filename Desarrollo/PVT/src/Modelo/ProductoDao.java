@@ -123,52 +123,62 @@ public class ProductoDao {
         }
     }
     
-    public boolean modificarProducto(Producto pro){
-        
+    public boolean verificarCodNOmProducto(int id, String nombre,String codigo){
         try {
-            String sql = "SELECT * FROM productos WHERE id_producto = ?";
+            String sql = "SELECT nombre_producto, codigo_producto "
+                        +"FROM productos "
+                        +"WHERE id_producto = ?";
             ps = conexion.prepareStatement(sql);
-            ps.setInt(1, pro.getId_producto());
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             rs.next();
-            Producto proActual = new Producto(
-                    rs.getInt("id_producto"), rs.getString("nombre_producto"), 
-                    rs.getString("categoria_producto"), rs.getString("descripcion_producto"),
-                    rs.getFloat("costo_producto"), rs.getFloat("venta_producto"),
-                    rs.getInt("stock_producto"), rs.getString("codigo_producto"),
-                    rs.getBytes("foto_producto"));
             
-            sql = "SELECT COUNT(IF(codigo_producto = ? , 1 ,null)) AS countCod, COUNT(IF(nombre_producto = ? , 1 ,null)) AS countNombre from productos";
+            String nombreB = rs.getString("nombre_producto");
+            String codigoB = rs.getString("codigo_producto");
+            
+            sql = "SELECT "
+                        +"COUNT(IF(codigo_producto = ? , 1 ,null)) AS countCod, "
+                        +"COUNT(IF(nombre_producto = ? , 1 ,null)) AS countNombre "
+                    +"from productos";
             
             ps = conexion.prepareStatement(sql);
-            ps.setString(1, pro.getCodigo_producto() );
-            ps.setString(2, pro.getNombre_producto() );
+            ps.setString(1, codigo);
+            ps.setString(2, nombre);
             
             rs = ps.executeQuery();
             rs.next();
             int countCod = rs.getInt("countCod");
             int countNombre = rs.getInt("countNombre");
             
-            if(!proActual.getCodigo_producto().equals(pro.getCodigo_producto())){
+            if(!codigoB.equals(codigo)){
                 if(countCod>0){
                     JOptionPane.showMessageDialog(null, "El código del producto ya existe.");
                     return false;
                 }
             }
             
-            if(!proActual.getNombre_producto().equals(pro.getNombre_producto())){
+            if(!nombreB.equals(nombre)){
                 if(countNombre>0){
                     JOptionPane.showMessageDialog(null, "El nombre del producto ya existe");
                     return false;
                 }
-            }          
-            
-            sql = "UPDATE productos "
-                    + "SET nombre_producto=?,categoria_producto=?,codigo_producto=?,"
-                    + "descripcion_producto=?,"
+            }
+            return true; 
+        }catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    public void modificarProducto(Producto pro){
+        
+        try {
+            String sql = "UPDATE productos "
+                + "SET nombre_producto=?,categoria_producto=?,"
+                    + "codigo_producto=?,descripcion_producto=?,"
                     + "costo_producto=?,venta_producto=?,"
                     + "stock_producto=? "
-                    + "WHERE id_producto=?";
+                + "WHERE id_producto=?";
             
             ps = conexion.prepareStatement(sql);
             ps.setString(1, pro.getNombre_producto());
@@ -181,10 +191,8 @@ public class ProductoDao {
             ps.setInt(8, pro.getId_producto());
             
             ps.execute();
-            return true;
         } catch (SQLException e) {
             System.out.println(e.toString());
-            return false;
         } 
     }
     

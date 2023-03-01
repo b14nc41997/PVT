@@ -146,21 +146,59 @@ public class EmpleadoDao {
     }
     
     public boolean verificarDocumentoUnico(String documento){
-        boolean countDoc = false;
-        String sql = "SELECT COUNT(documento_empleado) > 0 AS resultado "
-                    +"FROM empleados "
-                    +"WHERE documento_empleado LIKE '"+documento+"';";
+        int countDoc;
+        String sql = "SELECT COUNT(IF(documento_empleado = ? , 1 ,null)) AS countCod from empleados";
+
+
         try {
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
+            ps.setString(1, documento );
             rs = ps.executeQuery();
             if (rs.next()) {
-                countDoc = rs.getBoolean("resultado");
-                return countDoc;
+                countDoc = rs.getInt("countCod");
+                return false;
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        return countDoc;
+        return true;
+    }
+    
+    public boolean verificarActDocEmpleado(int id, String documento){
+        try {
+            String sql = "SELECT documento_empleado "
+                        +"FROM empleados "
+                        +"WHERE id_empleado = ?";
+            ps = conexion.prepareStatement(sql);
+           
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            rs.next();
+            
+            String documentoB = rs.getString("documento_empleado");
+            
+            sql = "SELECT "
+                        +"COUNT(IF(documento_empleado = ? , 1 ,null)) AS countDocumento "
+                    +"from empleados";
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, documento);
+            
+            rs = ps.executeQuery();
+            rs.next();
+            int countDoc = rs.getInt("countDocumento");
+            
+            if(documentoB.equals(documento)){
+                if(countDoc>0){
+                    return false;
+                }
+            }
+
+            return true; 
+        }catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
     }
 }
