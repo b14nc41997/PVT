@@ -202,6 +202,22 @@ public class ProductoDao {
         } 
     }
     
+    public boolean modificarFotoProducto(Producto pro){
+        String sql = "UPDATE productos "
+                    + "SET foto_producto = ? WHERE id_producto=?";
+        try{
+            ps = conexion.prepareStatement(sql);
+            ps.setBytes(1, pro.getFoto_producto());
+            ps.setInt(2, pro.getId_producto());
+            ps.execute();
+            return true;            
+        }catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+        
+    }
+    
     
 //    public Producto buscarProducto(int id) throws SQLException {
 //        String sql = "Select * "
@@ -257,6 +273,23 @@ public class ProductoDao {
         return listPro;
     }
     
+    public byte[] getImagenProducto(String codigo){        
+        String sql = "SELECT foto_producto "
+                    + "FROM productos WHERE codigo_producto = '"+codigo+"'";
+        byte[] bytes;
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                bytes = rs.getBytes("foto_producto");
+                return bytes;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return null;
+    }
     
     
 }
