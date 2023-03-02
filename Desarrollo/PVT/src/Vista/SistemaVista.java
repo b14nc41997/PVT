@@ -2984,6 +2984,8 @@ public class SistemaVista extends javax.swing.JFrame {
                 return;
             }
         }else if (categoria.equals("Joya")) {
+            System.out.println("Estas dentro de joya xd");
+            
             if ("".equals(txtCodigoProductoCarrito.getText())) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar el código de un producto");
                 return;
@@ -2993,7 +2995,16 @@ public class SistemaVista extends javax.swing.JFrame {
             }else if ((Integer)spnCantidadProductoCarrito.getValue()>Integer.parseInt(txtStockProductoCarrito.getText())) {
                 JOptionPane.showMessageDialog(null, "No hay suficiente stock del item para la cantidad solicitada");
                 return;
+            }else{
+                for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {
+                    if (txtCodigoProductoCarrito.getText().equals(tablaCarritoVenta.getValueAt(i,2).toString())) {
+                        JOptionPane.showMessageDialog(null,"Ya agregaste este el producto"
+                                + "\nSe recomienda actualizarlo del carrito");
+                        return;
+                    }
+                }
             }
+            
         }         
         
         int contador = modeloTablaVenta.getRowCount()+1;
