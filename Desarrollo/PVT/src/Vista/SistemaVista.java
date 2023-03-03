@@ -63,6 +63,7 @@ public class SistemaVista extends javax.swing.JFrame {
         lblUserName.setText(user);
         txtIdEmpleado.setVisible(false);
         txtIdInventario.setVisible(false);
+        txtIdProductoCarrito.setVisible(false);
         proDao.seleccionarCategoriaVenta(cbxCategoriaProductoCarrito);
         proDao.seleccionarCategoriaInventario(cbxCategoriaProducto);
         proDao.seleccionarCategoriaInventario(cbxCategoriaInventario);
@@ -234,7 +235,7 @@ public class SistemaVista extends javax.swing.JFrame {
     private void limpiarInventario(){
         txtIdInventario.setText("");
         txtNombreInventario.setText("");
-        cbxCategoriaInventario.setSelectedIndex(-1);
+        cbxCategoriaInventario.setSelectedIndex(0);
         txtDescripcionInventario.setText("");
         txtPrecioCostoInventario.setText("");
         txtPrecioVentaInventario.setText("");
@@ -330,25 +331,28 @@ public class SistemaVista extends javax.swing.JFrame {
     }
     
     private String registrarDetalle(){
-        
         String detalleF = "";
-        //String detalleT;
-        //int id = ventDao.IdVenta();
-        for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {            
-            String codigoProducto = tablaCarritoVenta.getValueAt(i, 2).toString();            
+        for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {
+            String nombreProd;
+            String categoria = tablaCarritoVenta.getValueAt(i, 1).toString();
+            if(categoria.equals("Joya")){
+                nombreProd = tablaCarritoVenta.getValueAt(i, 2).toString();
+            }else{
+                nombreProd = categoria;
+            }
             int cantidadProducto = Integer.parseInt(tablaCarritoVenta.getValueAt(i, 5).toString());
-            String nombreProd = tablaCarritoVenta.getValueAt(i, 3).toString();
             Float precioU =  (float)(Math.round(Float.valueOf(tablaCarritoVenta.getValueAt(i, 6).toString()) * 10.0) / 10.0);
+            String numeroFormateado = String.format("%.1f0", precioU).replace(",",".");
             
             detalleVenta.setNombre(nombreProd);
             detalleVenta.setCantidad(cantidadProducto);
             detalleVenta.setPrecio(precioU);
             
-            if (i>0 || i==tablaCarritoVenta.getRowCount()-1) {
+            if (i > 0 || i == tablaCarritoVenta.getRowCount()-1) {
                 detalleF+="; ";
             }
-            String numeroFormateado = String.format("%.1f0", precioU).replace(",",".");
-            detalleF += cantidadProducto+"-"+nombreProd+"-"+numeroFormateado;
+            
+            detalleF += nombreProd+" "+cantidadProducto+"x"+numeroFormateado;
         }
         return detalleF;
     }
@@ -402,6 +406,7 @@ public class SistemaVista extends javax.swing.JFrame {
         btnEliminarVenta = new javax.swing.JButton();
         btnLimpiarVenta = new javax.swing.JButton();
         btnAgregarItemVenta = new javax.swing.JButton();
+        txtIdProductoCarrito = new javax.swing.JTextField();
         btnCancelarVenta = new javax.swing.JButton();
         btnGenerarVenta = new javax.swing.JButton();
         lblPrecioCarrito1 = new javax.swing.JLabel();
@@ -677,6 +682,11 @@ public class SistemaVista extends javax.swing.JFrame {
 
         txtCodigoProductoCarrito.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCodigoProductoCarrito.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtCodigoProductoCarrito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoProductoCarritoKeyTyped(evt);
+            }
+        });
 
         jPanel13.setBackground(new java.awt.Color(67, 102, 129));
         jPanel13.setAlignmentX(0.0F);
@@ -951,6 +961,10 @@ public class SistemaVista extends javax.swing.JFrame {
 
         pnlFondoVenta.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 168, -1, -1));
 
+        txtIdProductoCarrito.setBackground(new java.awt.Color(102, 255, 102));
+        txtIdProductoCarrito.setText("jTextField1");
+        pnlFondoVenta.add(txtIdProductoCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, -1, -1));
+
         btnCancelarVenta.setBackground(new java.awt.Color(51, 0, 0));
         btnCancelarVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelarVenta.setForeground(new java.awt.Color(255, 255, 255));
@@ -1163,7 +1177,7 @@ public class SistemaVista extends javax.swing.JFrame {
             .addGroup(pnlVentaLayout.createSequentialGroup()
                 .addGap(90, 90, 90)
                 .addComponent(pnlFondoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         pnlVentaLayout.setVerticalGroup(
             pnlVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1210,6 +1224,11 @@ public class SistemaVista extends javax.swing.JFrame {
         txtCriterioInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCriterioInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtCriterioInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCriterioInventario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCriterioInventarioKeyTyped(evt);
+            }
+        });
         pnlFondoInventario.add(txtCriterioInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 180, 30));
 
         btnDescargarTablaInventario.setBackground(new java.awt.Color(33, 50, 60));
@@ -1314,12 +1333,22 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel25.setText("Categoría");
 
         cbxCategoriaInventario.setToolTipText("");
+        cbxCategoriaInventario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCategoriaInventarioItemStateChanged(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setText("Código");
 
         txtCodigoInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtCodigoInventario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoInventarioKeyTyped(evt);
+            }
+        });
 
         lblDescripcionInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDescripcionInventario.setForeground(new java.awt.Color(255, 255, 255));
@@ -1652,6 +1681,11 @@ public class SistemaVista extends javax.swing.JFrame {
         cbxCategoriaProducto.setBorder(null);
         cbxCategoriaProducto.setLightWeightPopupEnabled(false);
         cbxCategoriaProducto.setRequestFocusEnabled(false);
+        cbxCategoriaProducto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCategoriaProductoItemStateChanged(evt);
+            }
+        });
         pnlFondoProducto.add(cbxCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 180, 35));
 
         lblDescripcionProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1771,6 +1805,11 @@ public class SistemaVista extends javax.swing.JFrame {
         txtCodigoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCodigoProducto.setToolTipText("");
         txtCodigoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtCodigoProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoProductoKeyTyped(evt);
+            }
+        });
         pnlFondoProducto.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, 180, 30));
 
         lblFotoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -2394,8 +2433,7 @@ public class SistemaVista extends javax.swing.JFrame {
         } else{
             if (!"".equals(txtNombreInventario.getText()) && !"".equals(cbxCategoriaInventario.getSelectedItem())
                 && !"".equals(txtCodigoInventario.getText()) && !"".equals(txtDescripcionInventario.getText())
-                && !"".equals(txtPrecioCostoInventario.getText()) && !"".equals(txtPrecioVentaInventario.getText())
-                && (Integer)txtStockInventario.getValue()!= 0 ){
+                && !"".equals(txtPrecioCostoInventario.getText())){
                 
                 //VERIFICAR PRECIO COSTO SI ESTÁ BIEN ESCRITO EL FLOAT 
                 try {
@@ -2408,14 +2446,18 @@ public class SistemaVista extends javax.swing.JFrame {
                 }
                 
                 //VERIFICAR PRECIO VENTA SI ESTÁ BIEN ESCRITO EL FLOAT 
+                //VERIFICAR PRECIO VENTA SI ESTÁ BIEN ESCRITO EL FLOAT 
+            String catProductoElegido=(String)cbxCategoriaInventario.getSelectedItem();
+            if (catProductoElegido.equals("Joya")){
                 try {
                    String input = txtPrecioVentaInventario.getText();
                    Float.parseFloat(input);
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "El precio venta del producto del inventario no está escrito correctamente. "
-                            + "Recuerda usar '.'");
+                    JOptionPane.showMessageDialog(null, "El precio de venta del producto no está escrito correctamente."
++ "\nRecuerde usar el punto decimal");
                     return;
                 }
+            }
                 
                 String nombre = txtNombreInventario.getText();
                 String codigo = txtCodigoInventario.getText();
@@ -2437,6 +2479,10 @@ public class SistemaVista extends javax.swing.JFrame {
                         
                         Float pv = Float.parseFloat(txtPrecioVentaInventario.getText());
                         pro.setVenta_producto((float)(Math.round(pv * 10.0) / 10.0)); 
+                        
+                        if (cbxCategoriaInventario.getSelectedItem().toString().equals("Otro")){
+                            pro.setVenta_producto(0);
+                        }
 
                         proDao.modificarProducto(pro);
                         limpiarTabla(modeloTablaInventario);
@@ -2471,14 +2517,18 @@ public class SistemaVista extends javax.swing.JFrame {
             }
 
             //VERIFICAR PRECIO VENTA SI ESTÁ BIEN ESCRITO EL FLOAT 
-            try {
-               String input = txtPrecioVentaProducto.getText();
-               Float.parseFloat(input);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "El precio de venta del producto no está escrito correctamente."
-                        + "\nRecuerde usar el punto decimal");
-                return;
+            String catProductoElegido=(String)cbxCategoriaProducto.getSelectedItem();
+            if (catProductoElegido.equals("Joya")){
+                try {
+                   String input = txtPrecioVentaProducto.getText();
+                   Float.parseFloat(input);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "El precio de venta del producto no está escrito correctamente."
++ "\nRecuerde usar el punto decimal");
+                    return;
+                }
             }
+            
             pro.setNombre_producto(txtNombreProducto.getText());
             pro.setCategoria_producto(cbxCategoriaProducto.getSelectedItem().toString());
             pro.setDescripcion_producto(txtDescripcionProducto.getText());
@@ -2903,6 +2953,9 @@ public class SistemaVista extends javax.swing.JFrame {
         if (!(minusculas || mayusculas)){
             evt.consume();
         }
+        if(txtNombreEmpleado.getText().length() >= 30){
+            evt.consume();
+        }
     }//GEN-LAST:event_txtNombreEmpleadoKeyTyped
 
     private void txtApePaternoEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApePaternoEmpleadoKeyTyped
@@ -2914,6 +2967,9 @@ public class SistemaVista extends javax.swing.JFrame {
         if (!(minusculas || mayusculas)){
             evt.consume();
         }
+        if(txtApePaternoEmpleado.getText().length() >= 20){
+            evt.consume();
+        }
     }//GEN-LAST:event_txtApePaternoEmpleadoKeyTyped
 
     private void txtApeMaternoEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApeMaternoEmpleadoKeyTyped
@@ -2923,6 +2979,9 @@ public class SistemaVista extends javax.swing.JFrame {
         boolean minusculas = key >= 97 && key <= 122;
 
         if (!(minusculas || mayusculas)){
+            evt.consume();
+        }
+        if(txtApeMaternoEmpleado.getText().length() >= 20){
             evt.consume();
         }
     }//GEN-LAST:event_txtApeMaternoEmpleadoKeyTyped
@@ -2984,7 +3043,6 @@ public class SistemaVista extends javax.swing.JFrame {
                 return;
             }
         }else if (categoria.equals("Joya")) {
-            System.out.println("Estas dentro de joya xd");
             
             if ("".equals(txtCodigoProductoCarrito.getText())) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar el código de un producto");
@@ -2995,7 +3053,10 @@ public class SistemaVista extends javax.swing.JFrame {
             }else if ((Integer)spnCantidadProductoCarrito.getValue()>Integer.parseInt(txtStockProductoCarrito.getText())) {
                 JOptionPane.showMessageDialog(null, "No hay suficiente stock del item para la cantidad solicitada");
                 return;
-            }else{
+            } else if (!(proDao.verificarExisteIdCodigo(txtIdProductoCarrito.getText(),txtCodigoProductoCarrito.getText()))){
+                JOptionPane.showMessageDialog(null, "Realice la búsqueda del producto.");
+                return;
+            } else{
                 for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {
                     if (txtCodigoProductoCarrito.getText().equals(tablaCarritoVenta.getValueAt(i,2).toString())) {
                         JOptionPane.showMessageDialog(null,"Ya agregaste este el producto"
@@ -3122,6 +3183,8 @@ public class SistemaVista extends javax.swing.JFrame {
             Producto prodEscogido = proDao.productoEscogido(codigoProd);//try catch
             
             if(prodEscogido != null){
+                String id = String.valueOf(prodEscogido.getId_producto());
+                txtIdProductoCarrito.setText(id);
                 categoria = prodEscogido.getCategoria_producto();
                 String nombre = prodEscogido.getNombre_producto();
                 String descripcion = prodEscogido.getDescripcion_producto();
@@ -3169,7 +3232,7 @@ public class SistemaVista extends javax.swing.JFrame {
                
         spnCantidadProductoCarrito.setValue(Integer.parseInt(tablaCarritoVenta.getValueAt(fila, 5).toString()));        
         txtPrecioProductoCarrito.setText(String.valueOf(tablaCarritoVenta.getValueAt(fila, 6)));
- 
+        
     }//GEN-LAST:event_tablaCarritoVentaMouseClicked
 
     private void btnActualizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentaActionPerformed
@@ -3301,17 +3364,13 @@ public class SistemaVista extends javax.swing.JFrame {
         if (!(numeros || punto)){
             evt.consume();
         }
+        if(txtPrecioProductoCarrito.getText().length() >= 9){
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPrecioProductoCarritoKeyTyped
 
     private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
         switch (tabbedPane.getSelectedIndex()) {
-            case 0:
-                limpiarTabla(modeloTablaVenta);               
-                limpiarCarrito();
-                txtTotalVenta.setText("");
-                txtDocumentoClienteVenta.setText("");
-                txtNombreClienteVenta.setText("");
-                break;
             case 1:
                 tablaInventario.setModel(modeloTablaInventario);
                 limpiarTabla(modeloTablaInventario);
@@ -3394,6 +3453,9 @@ public class SistemaVista extends javax.swing.JFrame {
         if (!(numeros || punto)){
             evt.consume();
         }
+        if(txtPrecioCostoInventario.getText().length() >= 9){
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPrecioCostoInventarioKeyTyped
 
     private void txtPrecioVentaInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaInventarioKeyTyped
@@ -3401,6 +3463,9 @@ public class SistemaVista extends javax.swing.JFrame {
         boolean numeros = key >= 48 && key <= 57;
         boolean punto = key == 46;
         if (!(numeros || punto)){
+            evt.consume();
+        }
+        if(txtPrecioVentaInventario.getText().length() >= 9){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioVentaInventarioKeyTyped
@@ -3412,6 +3477,9 @@ public class SistemaVista extends javax.swing.JFrame {
         if (!(numeros || punto)){
             evt.consume();
         }
+        if(txtPrecioCompraProducto.getText().length() >= 9){
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPrecioCompraProductoKeyTyped
 
     private void txtPrecioVentaProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaProductoKeyTyped
@@ -3419,6 +3487,9 @@ public class SistemaVista extends javax.swing.JFrame {
         boolean numeros = key >= 48 && key <= 57;
         boolean punto = key == 46;
         if (!(numeros || punto)){
+            evt.consume();
+        }
+        if(txtPrecioVentaProducto.getText().length() >= 9){
             evt.consume();
         }
     }//GEN-LAST:event_txtPrecioVentaProductoKeyTyped
@@ -3436,6 +3507,73 @@ public class SistemaVista extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cbxCategoriaProductoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCategoriaProductoItemStateChanged
+        // TODO add your handling code here:
+        String catProductoElegido=(String)cbxCategoriaProducto.getSelectedItem();
+        if (catProductoElegido.equals("Otro")){
+            
+            txtPrecioVentaProducto.setFocusable(false);
+            
+        }else if (catProductoElegido.equals("Joya")){
+            
+            txtPrecioVentaProducto.setFocusable(true);
+        }
+    }//GEN-LAST:event_cbxCategoriaProductoItemStateChanged
+
+    private void cbxCategoriaInventarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCategoriaInventarioItemStateChanged
+        // TODO add your handling code here:
+        String catProductoElegido=(String)cbxCategoriaInventario.getSelectedItem();
+        if (catProductoElegido.equals("Otro")){
+            txtPrecioVentaInventario.setFocusable(false);
+        }else if (catProductoElegido.equals("Joya")){
+            txtPrecioVentaInventario.setFocusable(true);
+        }
+    }//GEN-LAST:event_cbxCategoriaInventarioItemStateChanged
+
+    private void txtCodigoProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProductoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        boolean mayusculas = key >= 65 && key <= 90;
+        if (mayusculas){
+            evt.consume();
+        }
+        if(txtCodigoProducto.getText().length() >= 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoProductoKeyTyped
+
+    private void txtCriterioInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioInventarioKeyTyped
+        // TODO add your handling code here:
+        if(txtCriterioInventario.getText().length() >= 10){
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txtCriterioInventarioKeyTyped
+
+    private void txtCodigoInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoInventarioKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        boolean mayusculas = key >= 65 && key <= 90;
+        if (mayusculas){
+            evt.consume();
+        }
+        if(txtCodigoInventario.getText().length() >= 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoInventarioKeyTyped
+
+    private void txtCodigoProductoCarritoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProductoCarritoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        boolean mayusculas = key >= 65 && key <= 90;
+        if (mayusculas){
+            evt.consume();
+        }
+        if(txtCodigoProductoCarrito.getText().length() >= 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoProductoCarritoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -3635,6 +3773,7 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JTextField txtFotoProducto;
     private javax.swing.JTextField txtIdEmpleado;
     private javax.swing.JTextField txtIdInventario;
+    private javax.swing.JTextField txtIdProductoCarrito;
     private javax.swing.JTextField txtNombreClienteVenta;
     private javax.swing.JTextField txtNombreEmpleado;
     private javax.swing.JTextField txtNombreInventario;

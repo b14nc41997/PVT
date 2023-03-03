@@ -31,11 +31,11 @@ public class ExportarVentaPDF {
         String dateTime = DateTimeFormatter.ofPattern("hh:mm:ss a")
                         .format(LocalDateTime.now());    
         try{
-            String home = System.getProperty("user.home");
-            File file = new File("D:/" +"venta"+idVenta+".pdf");
+            //String home = System.getProperty("user.home");
+            //File file = new File("D:/" +"venta"+idVenta+".pdf");
             
             FileOutputStream archivo;
-            
+            File file = new File("D:\\" +"venta"+idVenta+".pdf");
             archivo=new FileOutputStream(file);
             Document doc= new Document();
             PdfWriter.getInstance(doc, archivo);
@@ -43,7 +43,7 @@ public class ExportarVentaPDF {
             doc.open();
             
             //FORMATO
-            Image img=Image.getInstance("src/Imagenes/logo.png");
+            Image img=Image.getInstance("PVT/src/Imagenes/logo.png");
             
             Paragraph fecha=new Paragraph();
             Font negrita=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD,BaseColor.WHITE);
@@ -63,9 +63,9 @@ public class ExportarVentaPDF {
             Encabezado.addCell(img);
             
             String ruc="123567429";
-            String nom="Tattoos";
-            String dir="Av Palmeras 342";
-            String ra="Tatus SAC";
+            String nom="";
+            String dir="Las Virreynas, 27 de Octubre Mz B1 \nLt A2 Urb, Lurin";
+            String ra="Atesanos Ink Tattoo";
             
             Encabezado.addCell("");
             Encabezado.addCell(nom+"\n"+ra+"\nRUC: "+ruc+"\n"+dir);
@@ -85,7 +85,7 @@ public class ExportarVentaPDF {
             cli.add(c3);  
             cli.add("\n");
             cli.add(c1);
-            cli.add("Documento\n");
+            cli.add(vent.getDni() +"\n");
             cli.add(c2);            
             cli.add(vent.getNombre()+"\n\n");
             
@@ -166,8 +166,10 @@ public class ExportarVentaPDF {
             mensaje.add("Gracias por su visita");
             mensaje.setAlignment(Element.ALIGN_CENTER);
             doc.add(mensaje);
+            
             doc.close();
             archivo.close();
+            
             Desktop.getDesktop().open(file);
         }catch(DocumentException | IOException e){
             System.out.println(e.toString());

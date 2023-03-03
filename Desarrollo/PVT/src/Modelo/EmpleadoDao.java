@@ -146,23 +146,22 @@ public class EmpleadoDao {
     }
     
     public boolean verificarDocumentoUnico(String documento){
-        int countDoc;
-        String sql = "SELECT COUNT(IF(documento_empleado = ? , 1 ,null)) AS countCod from empleados";
-
-
+        boolean countDoc = false;
+        String sql = "SELECT COUNT(documento_empleado) > 0 AS resultado "
+                    +"FROM empleados "
+                    +"WHERE documento_empleado LIKE "+documento+";";
         try {
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
-            ps.setString(1, documento );
             rs = ps.executeQuery();
             if (rs.next()) {
-                countDoc = rs.getInt("countCod");
-                return false;
+                countDoc = rs.getBoolean("resultado");
+                return countDoc;
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        return true;
+        return countDoc;
     }
     
     public boolean verificarActDocEmpleado(int id, String documento){
@@ -176,29 +175,27 @@ public class EmpleadoDao {
             rs = ps.executeQuery();
             rs.next();
             
-            String documentoB = rs.getString("documento_empleado");
+            String documentoB = rs.getString("documento_empleado"); //documento actual, en base a la busqueda sql
             
-            sql = "SELECT "
-                        +"COUNT(IF(documento_empleado = ? , 1 ,null)) AS countDocumento "
-                    +"from empleados";
-            
-            ps = conexion.prepareStatement(sql);
-            ps.setString(1, documento);
-            
-            rs = ps.executeQuery();
-            rs.next();
-            int countDoc = rs.getInt("countDocumento");
-            
-            if(documentoB.equals(documento)){
-                if(countDoc>0){
-                    return false;
-                }
+            if(documentoB.equals(documento)){ //en doc obtenido por consulta con el id y el que esta en el txt son iguales
+                return false;
+            } else{
+                sql = "SELECT COUNT(*) AS countDocumento " 
+                    +"FROM empleados WHERE documento_empleado = ?";
+                
+                ps = conexion.prepareStatement(sql);
+                ps.setString(1, documento); //documento que esta en el txt
+                
+                rs = ps.executeQuery();
+                rs.next();
+                int countDoc = rs.getInt("countDocumento");
+                
+                return (countDoc>=1);
             }
-
-            return true; 
         }catch (SQLException e) {
             System.out.println(e.toString());
             return false;
         }
     }
+    
 }

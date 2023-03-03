@@ -47,7 +47,7 @@ public class PVT {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/iconJFrame.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/logo5.png"));
                 //System.out.println("La imagen se cargó correctamente: " + icon.getImageLoadStatus());
                 LoginVista lv = new LoginVista();
                 lv.setIconImage(icon.getImage());

@@ -30,7 +30,7 @@ public class LoginVista extends javax.swing.JFrame {
             if (log.getCorreo_usuario()!=null && log.getContrasena_usuario()!=null) {
                 
                 user = log.getNombre_usuario();
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/iconJFrame.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/logo5.png"));
                 SistemaVista sv = new SistemaVista();
                 sv.setIconImage(icon.getImage());
                 

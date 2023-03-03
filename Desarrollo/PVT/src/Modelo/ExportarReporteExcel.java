@@ -46,7 +46,7 @@ public class ExportarReporteExcel {
         
         try {
             //Imagen logo de la empresa
-            InputStream is = new FileInputStream("src/Imagenes/logo.png");
+            InputStream is = new FileInputStream("PVT/src/Imagenes/logo.png");
             byte[] bytes = IOUtils.toByteArray(is);
             int imgIndex = book.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
             is.close();

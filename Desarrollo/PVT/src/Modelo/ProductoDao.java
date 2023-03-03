@@ -290,6 +290,26 @@ public class ProductoDao {
         return countCod;
     }
     
+    public boolean verificarExisteIdCodigo(String id, String codigo){
+        boolean countCod = false;
+        String sql = "SELECT COUNT(codigo_producto) > 0 AS resultado "
+                    +"FROM productos "
+                    +"WHERE codigo_producto = '"+codigo+"' "
+                        + "AND id_producto = "+id;
+        try {
+            conexion = cn.getConnection();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                countCod = rs.getBoolean("resultado");
+                return countCod;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return countCod;
+    }
+    
     public boolean modificarFotoProducto(Producto pro){
         String sql = "UPDATE productos "
                     + "SET foto_producto = ? WHERE id_producto=?";
