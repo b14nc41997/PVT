@@ -273,33 +273,44 @@ public class SistemaVista extends javax.swing.JFrame {
     }       
     
     private void llenarClientes(long numDocumento, String tipoDocumento){
-        
         String nombre = cliDao.clienteEscogido(numDocumento);
         
         if (nombre == null || nombre.equals("")){
+            
             int opcion = JOptionPane.showConfirmDialog(null, tipoDocumento+" no encontrado ¿Deseas registrar un cliente nuevo?",
                     "Confirmar acción", JOptionPane.OK_CANCEL_OPTION);
-
+            
             if (opcion == JOptionPane.OK_OPTION) {
-                String resp = JOptionPane.showInputDialog(null, "Ingrese " + "nombre:", 
-                        "NUEVO INGRESO", JOptionPane.INFORMATION_MESSAGE);
+                String regex = ".*[0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*";
+                String resp;
+                do {
+                    resp = JOptionPane.showInputDialog(null, "Ingrese " + "nombre:", "NUEVO INGRESO", JOptionPane.INFORMATION_MESSAGE);
+                    if (resp == null) {
+                        // El usuario ha presionado el botón "Cancelar"
+                        return;
+                    } else if (resp.trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No dejar vacío el campo");
+                    }else if(resp.length()>50){
+                        JOptionPane.showMessageDialog(null, "El límite de 50 caracteres ha sido excedido");
+                    }else if(resp.matches(regex)){
+                        JOptionPane.showMessageDialog(null, "No ingresar números ni símbolos");
+                    }
+                } while (resp == null || resp.trim().isEmpty() || resp.length()>50 || resp.matches(regex));
+                
+                String nombreCli = resp;
 
-                if (resp != null){
-                    String nombreCli = resp;
+                cli.setDni(numDocumento);
+                cli.setNombre(nombreCli);
 
-                    cli.setDni(numDocumento);
-                    cli.setNombre(nombreCli);
+                cliDao.registrarCliente(cli);
 
-                    cliDao.registrarCliente(cli);
+                txtDocumentoClienteVenta.setText(String.valueOf(numDocumento));
 
-                    txtDocumentoClienteVenta.setText(String.valueOf(numDocumento));
+                JOptionPane.showMessageDialog(null, "¡Cliente "+nombreCli
+                        +" ingresado con éxito!","ÉXITO", 
+                        JOptionPane.INFORMATION_MESSAGE);
 
-                    JOptionPane.showMessageDialog(null, "¡Cliente "+nombreCli
-                            +" ingresado con éxito!","ÉXITO", 
-                            JOptionPane.INFORMATION_MESSAGE);
-
-                    nombre = nombreCli;
-                }
+                nombre = nombreCli;
             }
         }
         txtNombreClienteVenta.setText(nombre);
