@@ -183,7 +183,7 @@ public class ExportarInventario {
                 sheet.autoSizeColumn(i);
             }           
                                    
-            sheet.setZoom(150);
+            sheet.setZoom(100);
             String fileName = "InventarioFiltrado";            
             String home = System.getProperty("user.home");
             File file = new File("D:/"+fileName+" - "+fecha+" - "+dateTime+".xlsx");

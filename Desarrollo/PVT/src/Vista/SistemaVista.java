@@ -25,10 +25,13 @@ import java.sql.SQLException;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -348,11 +351,11 @@ public class SistemaVista extends javax.swing.JFrame {
             detalleVenta.setCantidad(cantidadProducto);
             detalleVenta.setPrecio(precioU);
             
-            if (i > 0 || i == tablaCarritoVenta.getRowCount()-1) {
+            detalleF += nombreProd+" ("+cantidadProducto+"x"+numeroFormateado+")";
+           
+            if (tablaCarritoVenta.getRowCount()>1 && i<= tablaCarritoVenta.getRowCount()-2) {    
                 detalleF+="; ";
             }
-            
-            detalleF += nombreProd+" "+cantidadProducto+"x"+numeroFormateado;
         }
         return detalleF;
     }
@@ -3059,8 +3062,8 @@ public class SistemaVista extends javax.swing.JFrame {
             } else{
                 for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {
                     if (txtCodigoProductoCarrito.getText().equals(tablaCarritoVenta.getValueAt(i,2).toString())) {
-                        JOptionPane.showMessageDialog(null,"Ya agregaste este el producto"
-                                + "\nSe recomienda actualizarlo del carrito");
+                        JOptionPane.showMessageDialog(null,"Ya agregaste este producto"
+                                + "\nSe recomienda actualizar el del carrito");
                         return;
                     }
                 }
@@ -3162,6 +3165,17 @@ public class SistemaVista extends javax.swing.JFrame {
         txtNombreClienteVenta.setText("");
         txtDescripcionProductoCarrito.setText("");
         txtTotalVenta.setText("");
+        
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fecha1LocalDate = dchFechaReporte.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (fecha1LocalDate.isEqual(fechaActual)){
+            limpiarTabla(modeloTablaReporte);
+            try {
+                listarReportes();
+            } catch (ParseException ex) {
+                Logger.getLogger(SistemaVista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         JOptionPane.showMessageDialog(null, "¡Venta realizada con éxito!");
         
