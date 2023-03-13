@@ -62,13 +62,13 @@ public class ExportarVentaPDF {
             
             Encabezado.addCell(img);
             
-            String ruc="123567429";
-            String nom="";
-            String dir="Las Virreynas, 27 de Octubre Mz B1 \nLt A2 Urb, Lurin";
-            String ra="Atesanos Ink Tattoo";
+            String ruc="10713734875";
+            String telf="925332241";
+            String dir="Calle 27 de Octubre Mz B1 \nLt A2 Urb Las Virreynas, Lurin";
+            String nom="Atesanos Ink Tattoo";
             
             Encabezado.addCell("");
-            Encabezado.addCell(nom+"\n"+ra+"\nRUC: "+ruc+"\n"+dir);
+            Encabezado.addCell(nom+"\nRUC: "+ruc+"\n"+dir+"\nTelf: "+telf);
             Encabezado.addCell(fecha);
             doc.add(Encabezado);
             

@@ -2512,6 +2512,11 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarInventarioActionPerformed
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
+        if ((Integer)txtStockProducto.getValue()==0) {
+            JOptionPane.showMessageDialog(null, "El stock del nuevo producto no puede ser igual a 0");
+            return;
+        }
+        
         if(!"".equals(txtNombreProducto.getText()) && !"".equals(cbxCategoriaProducto.getSelectedItem())
             && !"".equals(txtDescripcionProducto.getText()) && !"".equals(txtPrecioCompraProducto.getText())
             && !"0".equals(txtStockProducto.getValue()) && !"".equals(txtCodigoProducto.getText())
@@ -3033,6 +3038,11 @@ public class SistemaVista extends javax.swing.JFrame {
 
     private void btnAgregarItemVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarItemVentaMouseClicked
         
+        if ((Integer)spnCantidadProductoCarrito.getValue()==0) {
+            JOptionPane.showMessageDialog(null, "La cantidad del producto no uede ser 0");
+            return;
+        }
+        
         String categoria = cbxCategoriaProductoCarrito.getSelectedItem().toString();
         
         if (categoria.equals("Tatuaje")) {
@@ -3261,7 +3271,10 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaCarritoVentaMouseClicked
 
     private void btnActualizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentaActionPerformed
-
+        if ((Integer)spnCantidadProductoCarrito.getValue()==0) {
+            JOptionPane.showMessageDialog(null, "La cantidad del producto no uede ser 0");
+            return;
+        }
         String categoriaNuevo = cbxCategoriaProductoCarrito.getSelectedItem().toString();
         //CONSISTENCIAS TATUAJE
         if (categoriaNuevo.equals("Tatuaje")) {
