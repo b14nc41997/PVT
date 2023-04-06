@@ -129,6 +129,10 @@
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="&lt;html&gt;&lt;right&gt;Clientes&lt;/right&gt;&lt;/html&gt;"/>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tabbedPaneStateChanged"/>
           </Events>
@@ -154,8 +158,8 @@
               </AccessibilityProperties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt; Generar &lt;p&gt; venta &lt;/center&gt;&lt;/html&gt;" toolTip="">
-                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt; Generar &lt;p&gt; venta &lt;/center&gt;&lt;/html&gt;"/>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Nueva&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;p&gt;venta&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/center&gt;&lt;/html&gt;" toolTip="">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Nueva&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;p&gt;venta&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/center&gt;&lt;/html&gt;"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Imagenes/iconCarrito.png"/>
                     </Property>
@@ -170,7 +174,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
                           <Component id="pnlFondoVenta" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="84" max="32767" attributes="0"/>
+                          <EmptySpace pref="85" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -226,7 +230,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Venta"/>
+                            <Property name="text" type="java.lang.String" value="Nueva Venta"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1367,8 +1371,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;inventario&lt;/center&gt;&lt;/html&gt;">
-                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;inventario&lt;/center&gt;&lt;/html&gt;"/>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;right&gt;Inventario&lt;/right&gt;&lt;/html&gt;">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;right&gt;Inventario&lt;/right&gt;&lt;/html&gt;"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Imagenes/iconInventario.png"/>
                     </Property>
@@ -1876,7 +1880,7 @@
                                       <Component id="btnEliminarInventario" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                       <Component id="btnActualizarInventario" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="12" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -2296,8 +2300,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;producto&lt;/center&gt;&lt;/html&gt;">
-                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;producto&lt;/center&gt;&lt;/html&gt;"/>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;right&gt;Nuevo&lt;p&gt;producto&lt;/right&gt;&lt;/html&gt;">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;right&gt;Nuevo&lt;p&gt;producto&lt;/right&gt;&lt;/html&gt;"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Imagenes/iconProducto.png"/>
                     </Property>
@@ -2367,7 +2371,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Agregar Producto"/>
+                            <Property name="text" type="java.lang.String" value="Nuevo Producto"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -2935,8 +2939,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;empleado&lt;/center&gt;&lt;/html&gt;">
-                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;empleado&lt;/center&gt;&lt;/html&gt;"/>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;right&gt;Empleados&lt;/right&gt;&lt;/html&gt;">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;right&gt;Empleados&lt;/right&gt;&lt;/html&gt;"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Imagenes/iconEmpleado.png"/>
                     </Property>
@@ -2950,7 +2954,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                           <Component id="pnlFondoEmpleado" min="-2" pref="868" max="-2" attributes="0"/>
-                          <EmptySpace pref="104" max="32767" attributes="0"/>
+                          <EmptySpace pref="107" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3006,7 +3010,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Agregar Empleado"/>
+                            <Property name="text" type="java.lang.String" value="Empleados"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -3577,8 +3581,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;reporte&lt;/center&gt;&lt;/html&gt;">
-                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Ver&lt;p&gt;reporte&lt;/center&gt;&lt;/html&gt;"/>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;right&gt;Reportes&amp;nbsp;&lt;p&gt;de venta&amp;nbsp;&lt;/right&gt;&lt;/html&gt;">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;right&gt;Reportes&amp;nbsp;&lt;p&gt;de venta&amp;nbsp;&lt;/right&gt;&lt;/html&gt;"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Imagenes/iconReporte.png"/>
                     </Property>
@@ -3592,7 +3596,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="pnlFondoReporte" min="-2" pref="1038" max="-2" attributes="0"/>
-                          <EmptySpace pref="19" max="32767" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3648,7 +3652,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Reporte de ventas"/>
+                            <Property name="text" type="java.lang.String" value="Reportes de ventas"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -3980,8 +3984,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;cliente&lt;/center&gt;&lt;/html&gt;">
-                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Agregar&lt;p&gt;cliente&lt;/center&gt;&lt;/html&gt;"/>
+                  <JTabbedPaneConstraints tabName="&lt;html&gt;&lt;right&gt;Clientes&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/right&gt;&lt;/html&gt;">
+                    <Property name="tabTitle" type="java.lang.String" value="&lt;html&gt;&lt;right&gt;Clientes&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/right&gt;&lt;/html&gt;"/>
                     <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Imagenes/iconEmpleado.png"/>
                     </Property>
@@ -3995,7 +3999,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                           <Component id="pnlFondoCliente" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="51" max="32767" attributes="0"/>
+                          <EmptySpace pref="54" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -4004,7 +4008,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                           <Component id="pnlFondoCliente" min="-2" pref="511" max="-2" attributes="0"/>
-                          <EmptySpace pref="42" max="32767" attributes="0"/>
+                          <EmptySpace pref="46" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -4031,7 +4035,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="340" y="30" width="180" height="-1"/>
+                          <AbsoluteConstraints x="400" y="30" width="180" height="-1"/>
                         </Constraint>
                       </Constraints>
 
@@ -4051,7 +4055,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Agregar Cliente"/>
+                            <Property name="text" type="java.lang.String" value="Clientes"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -4374,7 +4378,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="380" y="110" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="400" y="110" width="-1" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -4399,7 +4403,7 @@
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="450" y="100" width="120" height="35"/>
+                          <AbsoluteConstraints x="470" y="100" width="120" height="35"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -4424,7 +4428,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="580" y="100" width="180" height="30"/>
+                          <AbsoluteConstraints x="600" y="100" width="180" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -4436,7 +4440,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="780" y="100" width="30" height="30"/>
+                          <AbsoluteConstraints x="800" y="100" width="30" height="30"/>
                         </Constraint>
                       </Constraints>
 
@@ -4480,7 +4484,7 @@
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="300" y="160" width="620" height="250"/>
+                          <AbsoluteConstraints x="310" y="160" width="610" height="250"/>
                         </Constraint>
                       </Constraints>
 
@@ -4570,7 +4574,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="750" y="430" width="120" height="40"/>
+                          <AbsoluteConstraints x="800" y="430" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -4599,7 +4603,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="450" y="430" width="120" height="40"/>
+                          <AbsoluteConstraints x="470" y="430" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -4628,7 +4632,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="300" y="430" width="120" height="40"/>
+                          <AbsoluteConstraints x="310" y="430" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -4657,7 +4661,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="600" y="430" width="120" height="40"/>
+                          <AbsoluteConstraints x="640" y="430" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
