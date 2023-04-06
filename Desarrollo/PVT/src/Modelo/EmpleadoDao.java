@@ -1,6 +1,4 @@
-
 package Modelo;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +25,7 @@ public class EmpleadoDao {
             ps.setString(1, emp.getNombre_empleado());
             ps.setString(2, emp.getApe_paterno_empleado());
             ps.setString(3, emp.getApe_materno_empleado());
-            ps.setInt(4, emp.getDocumento_empleado());
+            ps.setString(4, emp.getDocumento_empleado());
             ps.setInt(5, emp.getCelular_empleado());
             ps.setString(6, emp.getFec_naciminto_empleado());
             ps.setString(7, emp.getFec_ingreso_empleado());
@@ -59,7 +57,7 @@ public class EmpleadoDao {
                 emp.setNombre_empleado(rs.getString("nombre_empleado"));
                 emp.setApe_paterno_empleado(rs.getString("ape_paterno_empleado"));
                 emp.setApe_materno_empleado(rs.getString("ape_materno_empleado"));
-                emp.setDocumento_empleado(rs.getInt("documento_empleado"));
+                emp.setDocumento_empleado(rs.getString("documento_empleado"));
                 emp.setCelular_empleado(rs.getInt("celular_empleado"));
                 emp.setFec_naciminto_empleado(rs.getString("fec_naciminto_empleado"));
                 emp.setFec_ingreso_empleado(rs.getString("fec_ingreso_empleado"));
@@ -104,7 +102,7 @@ public class EmpleadoDao {
             ps.setString(1, emp.getNombre_empleado());
             ps.setString(2, emp.getApe_paterno_empleado());
             ps.setString(3, emp.getApe_materno_empleado());
-            ps.setInt(4, emp.getDocumento_empleado());
+            ps.setString(4, emp.getDocumento_empleado());
             ps.setInt(5, emp.getCelular_empleado());
             ps.setString(6, emp.getFec_naciminto_empleado());
             ps.setString(7, emp.getFec_ingreso_empleado());

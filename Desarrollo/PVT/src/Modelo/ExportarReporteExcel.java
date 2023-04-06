@@ -77,7 +77,7 @@ public class ExportarReporteExcel {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 3));
             
             //Encabezado
-            String[] cabecera = new String[]{"#", "ID_Venta", "Fecha", "DNI/ICE Cliente", "Nombre Cliente", "Empleado", "Descripción", "Total", "Progreso del día"};
+            String[] cabecera = new String[]{"#", "ID_Venta", "Fecha", "DNI/ICE Cliente", "Nombre Cliente", "Empleado", "Descripción {codigo(cantidad x precio unit.)}", "Total", "Progreso del día"};
  
             CellStyle headerStyle = book.createCellStyle();
             headerStyle.setFillForegroundColor(IndexedColors.BLACK.getIndex());

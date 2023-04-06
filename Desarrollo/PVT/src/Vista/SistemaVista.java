@@ -15,6 +15,7 @@ import Modelo.Venta;
 import Modelo.VentaDao;
 import static Vista.LoginVista.user;
 import java.awt.Cursor;
+import java.awt.event.WindowAdapter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -58,6 +59,7 @@ public class SistemaVista extends javax.swing.JFrame {
     DefaultTableModel modeloTablaVenta = new DefaultTableModel();
     DefaultTableModel modeloTablaInventario = new DefaultTableModel();
     DefaultTableModel modeloTablaEmpleado = new DefaultTableModel();
+    DefaultTableModel modeloTablaCliente = new DefaultTableModel();
     DefaultTableModel modeloTablaReporte = new DefaultTableModel();
     DetalleVenta detalleVenta = new DetalleVenta();
     
@@ -80,6 +82,7 @@ public class SistemaVista extends javax.swing.JFrame {
         modeloTablaVenta = (DefaultTableModel) tablaCarritoVenta.getModel();
         modeloTablaInventario = (DefaultTableModel) tablaInventario.getModel();
         modeloTablaEmpleado = (DefaultTableModel) tablaEmpleado.getModel();
+        modeloTablaCliente = (DefaultTableModel) tablaCliente.getModel();
         modeloTablaReporte = (DefaultTableModel) tablaReporte.getModel();
     }
     
@@ -109,6 +112,53 @@ public class SistemaVista extends javax.swing.JFrame {
             modeloTablaEmpleado.addRow((obj));
         }
         tablaEmpleado.setModel(modeloTablaEmpleado);
+    }
+    
+    public void listarClientes(){
+        List<Cliente> listCli = cliDao.listarClientes();
+        modeloTablaCliente = (DefaultTableModel) tablaCliente.getModel();
+        Object[] obj = new Object[6];
+        for (int i = 0; i < listCli.size(); i++) {
+            obj[0] = listCli.get(i).getId_cliente();
+            obj[1] = listCli.get(i).getDni();
+            obj[2] = listCli.get(i).getNombre();
+            obj[3] = listCli.get(i).getApellido();
+            obj[4] = listCli.get(i).getCelular();
+            obj[5] = listCli.get(i).getInstagram();
+            
+            modeloTablaCliente.addRow((obj));
+        }
+        tablaCliente.setModel(modeloTablaCliente);
+        
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modeloTablaCliente);
+        tablaCliente.setRowSorter(sorter);
+        sorter.setComparator(0, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        
+        sorter.setComparator(2, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareToIgnoreCase(o2);
+            }
+        });
+        
+        sorter.setComparator(3, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareToIgnoreCase(o2);
+            }
+        });
+        
+        sorter.setComparator(5, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareToIgnoreCase(o2);
+            }
+        });
     }
     
     public void listarProductos(){
@@ -224,6 +274,15 @@ public class SistemaVista extends javax.swing.JFrame {
         dchFecIngresoEmpleado.setDate(fechatxt2);
     }
     
+    private void limpiarCliente(){
+        txtIdCliente.setText("");
+        txtDocumentoCliente.setText("");
+        txtNombreCliente.setText("");
+        txtApeCliente.setText("");
+        txtCelularCliente.setText("");
+        txtInstagramCliente.setText("");
+    }
+    
     private void limpiarProducto(){
         txtNombreProducto.setText("");
         cbxCategoriaProducto.setSelectedIndex(0);
@@ -272,48 +331,15 @@ public class SistemaVista extends javax.swing.JFrame {
         }
     }       
     
-    private void llenarClientes(long numDocumento, String tipoDocumento){
+    private void llenarClientes(String numDocumento, String tipoDocumento){
         String nombre = cliDao.clienteEscogido(numDocumento);
+        
+        txtNombreClienteVenta.setText(cliDao.clienteEscogido(numDocumento));
         
         if (nombre == null || nombre.equals("")){
             
-            int opcion = JOptionPane.showConfirmDialog(null, tipoDocumento+" no encontrado ¿Deseas registrar un cliente nuevo?",
-                    "Confirmar acción", JOptionPane.OK_CANCEL_OPTION);
-            
-            if (opcion == JOptionPane.OK_OPTION) {
-                String regex = ".*[0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*";
-                String resp;
-                do {
-                    resp = JOptionPane.showInputDialog(null, "Ingrese " + "nombre:", "NUEVO INGRESO", JOptionPane.INFORMATION_MESSAGE);
-                    if (resp == null) {
-                        // El usuario ha presionado el botón "Cancelar"
-                        return;
-                    } else if (resp.trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "No dejar vacío el campo");
-                    }else if(resp.length()>50){
-                        JOptionPane.showMessageDialog(null, "El límite de 50 caracteres ha sido excedido");
-                    }else if(resp.matches(regex)){
-                        JOptionPane.showMessageDialog(null, "No ingresar números ni símbolos");
-                    }
-                } while (resp == null || resp.trim().isEmpty() || resp.length()>50 || resp.matches(regex));
-                
-                String nombreCli = resp;
-
-                cli.setDni(numDocumento);
-                cli.setNombre(nombreCli);
-
-                cliDao.registrarCliente(cli);
-
-                txtDocumentoClienteVenta.setText(String.valueOf(numDocumento));
-
-                JOptionPane.showMessageDialog(null, "¡Cliente "+nombreCli
-                        +" ingresado con éxito!","ÉXITO", 
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                nombre = nombreCli;
-            }
+            JOptionPane.showMessageDialog(null, tipoDocumento+" no encontrado Debe agregar al cliente en la seccion de Clientes");
         }
-        txtNombreClienteVenta.setText(nombre);
     }
     
     private void cargarComboEmpleados(){
@@ -346,13 +372,15 @@ public class SistemaVista extends javax.swing.JFrame {
     
     private String registrarDetalle(){
         String detalleF = "";
+        
         for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {
-            String nombreProd;
+            String nombreProd = "";
             String categoria = tablaCarritoVenta.getValueAt(i, 1).toString();
-            if(categoria.equals("Joya")){
-                nombreProd = tablaCarritoVenta.getValueAt(i, 2).toString();
-            }else{
+            
+            if(categoria.equals("Tatuaje")){
                 nombreProd = categoria;
+            }else{
+                nombreProd = tablaCarritoVenta.getValueAt(i, 2).toString();
             }
             int cantidadProducto = Integer.parseInt(tablaCarritoVenta.getValueAt(i, 5).toString());
             Float precioU =  (float)(Math.round(Float.valueOf(tablaCarritoVenta.getValueAt(i, 6).toString()) * 10.0) / 10.0);
@@ -373,9 +401,10 @@ public class SistemaVista extends javax.swing.JFrame {
     
     private void actualizarStock(){
         for (int i = 0; i < tablaCarritoVenta.getRowCount(); i++) {
+            String categoria = tablaCarritoVenta.getValueAt(i, 1).toString(); 
             String cod = tablaCarritoVenta.getValueAt(i, 2).toString();
             int cant = Integer.parseInt(tablaCarritoVenta.getValueAt(i, 5).toString());
-            pro = proDao.productoEscogido(cod);
+            pro = proDao.productoEscogido(cod, categoria);
             int stockActual = proDao.obtenerStockProducto(cod) - cant;
             ventDao.ActualizarStock(stockActual, cod);
         }
@@ -563,6 +592,43 @@ public class SistemaVista extends javax.swing.JFrame {
         lblIconSolReporte = new javax.swing.JLabel();
         txtTotalReporte = new javax.swing.JTextField();
         lblFondoReporte = new javax.swing.JLabel();
+        pnlCliente = new javax.swing.JPanel();
+        pnlFondoCliente = new javax.swing.JPanel();
+        pnlTituloCliente = new javax.swing.JPanel();
+        lblTituloCliente = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        lblNombreCliente = new javax.swing.JLabel();
+        txtNombreCliente = new javax.swing.JTextField();
+        lblApeCliente = new javax.swing.JLabel();
+        txtApeCliente = new javax.swing.JTextField();
+        lblDocumentoCliente = new javax.swing.JLabel();
+        cbxDocumentoCliente = new javax.swing.JComboBox<>();
+        txtDocumentoCliente = new javax.swing.JTextField();
+        lblCelularCliente = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        txtCelularCliente = new javax.swing.JTextField();
+        lblInstaCliente = new javax.swing.JLabel();
+        txtInstagramCliente = new javax.swing.JTextField();
+        lblBuscarCliente = new javax.swing.JLabel();
+        cbxCriterioCliente = new javax.swing.JComboBox<>();
+        txtCriterioCliente = new javax.swing.JTextField();
+        jPanel15 = new javax.swing.JPanel();
+        lblBotonBuscarCliente = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaEmpleado = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablaCliente = new javax.swing.JTable();
+        btnGuardarCliente = new javax.swing.JButton();
+        btnActualizarCliente = new javax.swing.JButton();
+        btnEliminarCliente = new javax.swing.JButton();
+        btnLimpiarCliente = new javax.swing.JButton();
+        lblFondoCliente = new javax.swing.JLabel();
+        txtIdCliente = new javax.swing.JTextField();
         iconLogoTienda = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         iconUsuarioLogueado = new javax.swing.JLabel();
@@ -570,7 +636,6 @@ public class SistemaVista extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1270, 750));
 
         jPanel1.setBackground(new java.awt.Color(67, 102, 129));
         jPanel1.setMinimumSize(new java.awt.Dimension(1250, 750));
@@ -2129,10 +2194,13 @@ public class SistemaVista extends javax.swing.JFrame {
             tablaEmpleado.getColumnModel().getColumn(1).setPreferredWidth(20);
             tablaEmpleado.getColumnModel().getColumn(2).setPreferredWidth(20);
             tablaEmpleado.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tablaEmpleado.getColumnModel().getColumn(3).setHeaderValue("A. Materno");
             tablaEmpleado.getColumnModel().getColumn(4).setPreferredWidth(15);
             tablaEmpleado.getColumnModel().getColumn(5).setPreferredWidth(8);
             tablaEmpleado.getColumnModel().getColumn(6).setPreferredWidth(10);
+            tablaEmpleado.getColumnModel().getColumn(6).setHeaderValue("F. Nacimiento");
             tablaEmpleado.getColumnModel().getColumn(7).setPreferredWidth(3);
+            tablaEmpleado.getColumnModel().getColumn(7).setHeaderValue("F. Ingreso");
         }
 
         pnlFondoEmpleado.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 810, 172));
@@ -2334,6 +2402,332 @@ public class SistemaVista extends javax.swing.JFrame {
         );
 
         tabbedPane.addTab("<html><center>Ver<p>reporte</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconReporte.png")), pnlReporte); // NOI18N
+
+        pnlCliente.setBackground(new java.awt.Color(33, 50, 60));
+
+        pnlFondoCliente.setBackground(new java.awt.Color(18, 23, 28));
+        pnlFondoCliente.setOpaque(false);
+        pnlFondoCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlTituloCliente.setBackground(new java.awt.Color(67, 102, 129));
+        pnlTituloCliente.setOpaque(false);
+        pnlTituloCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTituloCliente.setBackground(new java.awt.Color(255, 255, 153));
+        lblTituloCliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTituloCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloCliente.setText("Agregar Cliente");
+        pnlTituloCliente.add(lblTituloCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 43));
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoTitulos.png"))); // NOI18N
+        pnlTituloCliente.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        pnlFondoCliente.add(pnlTituloCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 180, -1));
+
+        jPanel20.setBackground(new java.awt.Color(18, 23, 28));
+        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(153, 153, 153))); // NOI18N
+
+        lblNombreCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNombreCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreCliente.setText("Nombre(s)*");
+
+        txtNombreCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombreCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtNombreCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreClienteKeyTyped(evt);
+            }
+        });
+
+        lblApeCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblApeCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblApeCliente.setText("Apellido(s)");
+
+        txtApeCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtApeCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtApeCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApeClienteKeyTyped(evt);
+            }
+        });
+
+        lblDocumentoCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblDocumentoCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblDocumentoCliente.setText("Documento de Identidad*");
+
+        cbxDocumentoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "CE" }));
+
+        txtDocumentoCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDocumentoCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtDocumentoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocumentoClienteKeyTyped(evt);
+            }
+        });
+
+        lblCelularCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblCelularCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblCelularCliente.setText("Celular");
+
+        jPanel11.setBackground(new java.awt.Color(67, 102, 129));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconCellphone.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        txtCelularCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCelularCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtCelularCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularClienteKeyTyped(evt);
+            }
+        });
+
+        lblInstaCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblInstaCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblInstaCliente.setText("Instagram");
+
+        txtInstagramCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtInstagramCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtInstagramCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtInstagramClienteKeyTyped(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblInstaCliente)
+                        .addComponent(txtInstagramCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblCelularCliente)
+                        .addGroup(jPanel20Layout.createSequentialGroup()
+                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, 0)
+                            .addComponent(txtCelularCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblApeCliente)
+                        .addComponent(txtApeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblNombreCliente)
+                                .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblDocumentoCliente)
+                                .addGroup(jPanel20Layout.createSequentialGroup()
+                                    .addComponent(cbxDocumentoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(5, 5, 5)
+                                    .addComponent(txtDocumentoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(lblDocumentoCliente)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDocumentoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDocumentoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblNombreCliente)
+                .addGap(5, 5, 5)
+                .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblApeCliente)
+                .addGap(5, 5, 5)
+                .addComponent(txtApeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblCelularCliente)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCelularCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblInstaCliente)
+                .addGap(5, 5, 5)
+                .addComponent(txtInstagramCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        pnlFondoCliente.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 230, 390));
+
+        lblBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblBuscarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblBuscarCliente.setText("Buscar por");
+        pnlFondoCliente.add(lblBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, -1, -1));
+
+        cbxCriterioCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxCriterioCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "#", "DNI/CE", "Nombre(s)", "Apellido(s)", "Celular", "Instagram" }));
+        pnlFondoCliente.add(cbxCriterioCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 120, 35));
+
+        txtCriterioCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCriterioCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        txtCriterioCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCriterioCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCriterioClienteKeyTyped(evt);
+            }
+        });
+        pnlFondoCliente.add(txtCriterioCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 180, 30));
+
+        jPanel15.setBackground(new java.awt.Color(67, 102, 129));
+
+        lblBotonBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconBuscar.png"))); // NOI18N
+        lblBotonBuscarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lblBotonBuscarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBotonBuscarClienteMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addComponent(lblBotonBuscarCliente)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addComponent(lblBotonBuscarCliente)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        pnlFondoCliente.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 30, 30));
+
+        tablaCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "#", "DNI/CE", "Nombre(s)", "Apellido(s)", "Celular", "Instagram"
+            }
+        ));
+        tablaCliente.getTableHeader().setReorderingAllowed(false);
+        tablaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaClienteMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tablaCliente);
+        if (tablaCliente.getColumnModel().getColumnCount() > 0) {
+            tablaCliente.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tablaCliente.getColumnModel().getColumn(1).setPreferredWidth(15);
+            tablaCliente.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tablaCliente.getColumnModel().getColumn(3).setPreferredWidth(20);
+            tablaCliente.getColumnModel().getColumn(4).setPreferredWidth(8);
+        }
+
+        pnlFondoCliente.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 620, 250));
+
+        btnGuardarCliente.setBackground(new java.awt.Color(33, 50, 60));
+        btnGuardarCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnGuardarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardarCliente.setText("Guardar");
+        btnGuardarCliente.setBorder(null);
+        btnGuardarCliente.setBorderPainted(false);
+        btnGuardarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarClienteActionPerformed(evt);
+            }
+        });
+        pnlFondoCliente.add(btnGuardarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 430, 120, 40));
+
+        btnActualizarCliente.setBackground(new java.awt.Color(33, 50, 60));
+        btnActualizarCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnActualizarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizarCliente.setText("Actualizar");
+        btnActualizarCliente.setBorder(null);
+        btnActualizarCliente.setBorderPainted(false);
+        btnActualizarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnActualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarClienteActionPerformed(evt);
+            }
+        });
+        pnlFondoCliente.add(btnActualizarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, 120, 40));
+
+        btnEliminarCliente.setBackground(new java.awt.Color(51, 0, 0));
+        btnEliminarCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnEliminarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarCliente.setText("Eliminar");
+        btnEliminarCliente.setBorder(null);
+        btnEliminarCliente.setBorderPainted(false);
+        btnEliminarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEliminarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarClienteActionPerformed(evt);
+            }
+        });
+        pnlFondoCliente.add(btnEliminarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 120, 40));
+
+        btnLimpiarCliente.setBackground(new java.awt.Color(33, 50, 60));
+        btnLimpiarCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnLimpiarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiarCliente.setText("Limpiar");
+        btnLimpiarCliente.setBorder(null);
+        btnLimpiarCliente.setBorderPainted(false);
+        btnLimpiarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnLimpiarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarClienteActionPerformed(evt);
+            }
+        });
+        pnlFondoCliente.add(btnLimpiarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 120, 40));
+
+        lblFondoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoCliente.png"))); // NOI18N
+        lblFondoCliente.setMaximumSize(new java.awt.Dimension(870, 513));
+        pnlFondoCliente.add(lblFondoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, -1));
+
+        txtIdCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtIdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdClienteActionPerformed(evt);
+            }
+        });
+        pnlFondoCliente.add(txtIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 20));
+
+        javax.swing.GroupLayout pnlClienteLayout = new javax.swing.GroupLayout(pnlCliente);
+        pnlCliente.setLayout(pnlClienteLayout);
+        pnlClienteLayout.setHorizontalGroup(
+            pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClienteLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(pnlFondoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+        pnlClienteLayout.setVerticalGroup(
+            pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClienteLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(pnlFondoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        tabbedPane.addTab("<html><center>Agregar<p>cliente</center></html>", new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconEmpleado.png")), pnlCliente); // NOI18N
 
         jPanel1.add(tabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1210, 600));
 
@@ -2627,7 +3021,7 @@ public class SistemaVista extends javax.swing.JFrame {
             emp.setNombre_empleado(txtNombreEmpleado.getText());
             emp.setApe_paterno_empleado(txtApePaternoEmpleado.getText());
             emp.setApe_materno_empleado(txtApeMaternoEmpleado.getText());
-            emp.setDocumento_empleado(Integer.parseInt(txtDocumentoEmpleado.getText()));
+            emp.setDocumento_empleado(txtDocumentoEmpleado.getText());
             emp.setCelular_empleado(Integer.parseInt(txtCelularEmpleado.getText()));
             
             Date fNacimiento = dchFecNacimientoEmpleado.getDate();
@@ -2795,7 +3189,7 @@ public class SistemaVista extends javax.swing.JFrame {
                     emp.setNombre_empleado(txtNombreEmpleado.getText());
                     emp.setApe_paterno_empleado(txtApePaternoEmpleado.getText());
                     emp.setApe_materno_empleado(txtApeMaternoEmpleado.getText());
-                    emp.setDocumento_empleado(Integer.parseInt(txtDocumentoEmpleado.getText()));
+                    emp.setDocumento_empleado(txtDocumentoEmpleado.getText());
                     emp.setCelular_empleado(Integer.parseInt(txtCelularEmpleado.getText()));
                     
                     Date fNacimiento = dchFecNacimientoEmpleado.getDate();
@@ -2947,18 +3341,13 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreClienteVentaKeyTyped
 
     private void txtNombreInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreInventarioKeyTyped
-        //Solo ingreso de letras
-        int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-
-        if (!(minusculas || mayusculas)){
+        if(txtNombreInventario.getText().length() >= 25){
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreInventarioKeyTyped
 
     private void txtNombreProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreProductoKeyTyped
-        if(txtNombreInventario.getText().length() >= 25){
+        if(txtNombreProducto.getText().length() >= 25){
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreProductoKeyTyped
@@ -3031,7 +3420,7 @@ public class SistemaVista extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 9 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             txtNombreClienteVenta.setText("");
         }else{
-            long numDocumento2 = Long.parseLong(numDocumento);
+            String numDocumento2 = numDocumento;
             llenarClientes(numDocumento2, tipoDocumento);
         }
     }//GEN-LAST:event_lblBotonBuscarClienteVentaMouseClicked
@@ -3130,11 +3519,12 @@ public class SistemaVista extends javax.swing.JFrame {
         limpiarCarrito();
         limpiarVenta();
         limpiarTabla(modeloTablaVenta);
+        txtTotalVenta.setText("");
     }//GEN-LAST:event_btnCancelarVentaActionPerformed
 
     private void cbxCategoriaProductoCarritoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCategoriaProductoCarritoItemStateChanged
         String catProductoElegido=(String)cbxCategoriaProductoCarrito.getSelectedItem();
-        if (catProductoElegido.equals("Joya")){
+        if (catProductoElegido.equals("Joya") || catProductoElegido.equals("Otro")){
             
             txtNombreProductoCarrito.setFocusable(false);
             txtStockProductoCarrito.setFocusable(false);
@@ -3205,7 +3595,7 @@ public class SistemaVista extends javax.swing.JFrame {
     private void lblBotonBuscarProductoVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonBuscarProductoVentaMouseClicked
         String categoria = cbxCategoriaProductoCarrito.getSelectedItem().toString();
         
-        if (categoria.equals("Joya")){
+        if (categoria.equals("Joya") || categoria.equals("Otro")){
             String codigoProd = txtCodigoProductoCarrito.getText();
 
             if (txtCodigoProductoCarrito.getText().equals("")) {
@@ -3215,7 +3605,7 @@ public class SistemaVista extends javax.swing.JFrame {
                 return;
             }
             
-            Producto prodEscogido = proDao.productoEscogido(codigoProd);//try catch
+            Producto prodEscogido = proDao.productoEscogido(codigoProd,categoria);//try catch
             
             if(prodEscogido != null){
                 String id = String.valueOf(prodEscogido.getId_producto());
@@ -3241,9 +3631,10 @@ public class SistemaVista extends javax.swing.JFrame {
 
         if (categoria.equals("Joyas")) {
             cbxCategoriaProductoCarrito.setSelectedIndex(0);
-            
         }else if(categoria.equals("Tatuajes")){
             cbxCategoriaProductoCarrito.setSelectedIndex(1);
+        }else if(categoria.equals("Otro")){
+            cbxCategoriaProductoCarrito.setSelectedIndex(2);
         }
     }//GEN-LAST:event_lblBotonBuscarProductoVentaMouseClicked
 
@@ -3272,7 +3663,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
     private void btnActualizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentaActionPerformed
         if ((Integer)spnCantidadProductoCarrito.getValue()==0) {
-            JOptionPane.showMessageDialog(null, "La cantidad del producto no uede ser 0");
+            JOptionPane.showMessageDialog(null, "La cantidad del producto no puede ser 0");
             return;
         }
         String categoriaNuevo = cbxCategoriaProductoCarrito.getSelectedItem().toString();
@@ -3304,7 +3695,7 @@ public class SistemaVista extends javax.swing.JFrame {
         String codigoNuevo = txtCodigoProductoCarrito.getText();
 
         //CONSISTENCIAS JOYA
-        if (categoriaNuevo.equals("Joya")) {
+        if (categoriaNuevo.equals("Joya") || categoriaNuevo.equals("Otro")) {
             if (codigoNuevo.equals("")){
                 JOptionPane.showMessageDialog(null, "Primero debe seleccionar un item del carrito", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 //txtCodigoProductoCarrito.grabFocus();
@@ -3422,6 +3813,10 @@ public class SistemaVista extends javax.swing.JFrame {
                 listarEmpleados();
                 break;
             case 4:
+                break;
+            case 5:
+                limpiarTabla(modeloTablaCliente);
+                listarClientes();
                 break;
             default:
                 break;
@@ -3570,12 +3965,6 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCategoriaInventarioItemStateChanged
 
     private void txtCodigoProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProductoKeyTyped
-        // TODO add your handling code here:
-        int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        if (mayusculas){
-            evt.consume();
-        }
         if(txtCodigoProducto.getText().length() >= 10){
             evt.consume();
         }
@@ -3590,12 +3979,6 @@ public class SistemaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCriterioInventarioKeyTyped
 
     private void txtCodigoInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoInventarioKeyTyped
-        // TODO add your handling code here:
-        int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <= 90;
-        if (mayusculas){
-            evt.consume();
-        }
         if(txtCodigoInventario.getText().length() >= 10){
             evt.consume();
         }
@@ -3612,6 +3995,245 @@ public class SistemaVista extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtCodigoProductoCarritoKeyTyped
+
+    private void txtNombreClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreClienteKeyTyped
+        //Solo ingreso de letras
+        int key = evt.getKeyChar();
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+
+        if (!(minusculas || mayusculas)){
+            evt.consume();
+        }
+        if(txtNombreCliente.getText().length() >= 30){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreClienteKeyTyped
+
+    private void txtApeClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApeClienteKeyTyped
+        //Solo ingreso de letras
+        int key = evt.getKeyChar();
+        boolean mayusculas = key >= 65 && key <= 90;
+        boolean minusculas = key >= 97 && key <= 122;
+
+        if (!(minusculas || mayusculas)){
+            evt.consume();
+        }
+        if(txtApeCliente.getText().length() >= 30){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApeClienteKeyTyped
+
+    private void txtDocumentoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoClienteKeyTyped
+        //Solo ingreso de números
+        int key = evt.getKeyChar();
+        boolean numeros = key >= 48 && key <= 57;
+        if (!numeros){
+            evt.consume();
+        }
+        
+        //Caso DNI, max 8 números
+        if(cbxDocumentoCliente.getSelectedIndex()==0){
+            if(txtDocumentoCliente.getText().length() >= 8){
+                evt.consume();
+            }
+        }
+        //Caso Carnet de Extranjería
+        else if(cbxDocumentoCliente.getSelectedIndex()==1){
+            if(txtDocumentoCliente.getText().length() >= 9){
+                evt.consume();
+            }  
+        }
+    }//GEN-LAST:event_txtDocumentoClienteKeyTyped
+
+    private void txtCelularClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularClienteKeyTyped
+        //Solo ingreso de números
+        int key = evt.getKeyChar();
+        boolean numeros = key >= 48 && key <= 57;
+        if (!numeros){
+            evt.consume();
+        }
+
+        if(txtCelularCliente.getText().length() >= 9){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCelularClienteKeyTyped
+
+    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
+        if(!"".equals(txtNombreCliente.getText()) && !"".equals(txtDocumentoCliente.getText())){
+            
+            String numDocumento = txtDocumentoCliente.getText();
+            String tipoDocumento = cbxDocumentoCliente.getSelectedItem().toString();
+            int tamNumDocumento = numDocumento.length();
+
+            if (tamNumDocumento == 0) {
+                JOptionPane.showMessageDialog(null, "Debe llenar el número de "+tipoDocumento, "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }else if (tipoDocumento.equals("DNI") && tamNumDocumento < 8){
+                JOptionPane.showMessageDialog(null, "El DNI ingresado no tiene 8 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }else if (tipoDocumento.equals("CE") && tamNumDocumento < 9){
+                JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 9 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if(cliDao.verificarDocumentoUnico(txtDocumentoCliente.getText())){
+                JOptionPane.showMessageDialog(null, "El documento ingresado coincide con el de otro cliente."
+                        +"\nIngrese otro documento");
+                return;
+            }
+            
+            cli.setDni(txtDocumentoCliente.getText());
+            cli.setNombre(txtNombreCliente.getText());
+            cli.setApellido(txtApeCliente.getText());
+            if (!"".equals(txtCelularCliente.getText())){
+                cli.setCelular(Long.parseLong(txtCelularCliente.getText()));
+            } else {
+                cli.setCelular(0);
+            }
+            
+            cli.setInstagram(txtInstagramCliente.getText());
+            
+            cliDao.registrarCliente(cli);
+            
+            limpiarTabla(modeloTablaCliente);
+            limpiarCliente();
+            listarClientes();
+            JOptionPane.showMessageDialog(null,"Cliente Registrado con éxito");
+        
+        } else{
+            JOptionPane.showMessageDialog(null,"Existen campos vacios");
+        }
+    }//GEN-LAST:event_btnGuardarClienteActionPerformed
+
+    private void btnActualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarClienteActionPerformed
+        if ("".equals(txtIdCliente.getText())) {
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente");
+        } else{
+            if(!"".equals(txtNombreCliente.getText()) && !"".equals(txtDocumentoCliente.getText())){
+
+                String numDocumento = txtDocumentoCliente.getText();
+                String tipoDocumento = cbxDocumentoCliente.getSelectedItem().toString();
+                int tamNumDocumento = numDocumento.length();
+
+                if (tamNumDocumento == 0) {
+                    JOptionPane.showMessageDialog(null, "Debe llenar el número de "+tipoDocumento, "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }else if (tipoDocumento.equals("DNI") && tamNumDocumento < 8){
+                    JOptionPane.showMessageDialog(null, "El DNI ingresado no tiene 8 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }else if (tipoDocumento.equals("CE") && tamNumDocumento < 9){
+                    JOptionPane.showMessageDialog(null, "El CE ingresado no tiene 9 dígitos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }else if(txtCelularCliente.getText().length()<9 && !txtCelularCliente.getText().equals("0")){
+                    JOptionPane.showMessageDialog(null, "Verificar la cantidad de dígitos del celular");
+                    return;
+                }
+                
+                if(cliDao.verificarActDocCliente(Integer.parseInt(txtIdCliente.getText()), txtDocumentoCliente.getText())){
+                    JOptionPane.showMessageDialog(null, "El documento ingresado coincide con el de otro cliente."
+                            +"\nVerifique el documento");
+                    return;
+                }
+                int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres modificar este cliente?");
+                if (pregunta == 0) {
+                    
+                    cli.setId_cliente(Integer.parseInt(txtIdCliente.getText()));
+                    cli.setDni(txtDocumentoCliente.getText());
+                    cli.setNombre(txtNombreCliente.getText());
+                    cli.setApellido(txtApeCliente.getText());
+                    cli.setCelular(Long.parseLong(txtCelularCliente.getText()));
+                    cli.setInstagram(txtInstagramCliente.getText());
+                    
+                    cliDao.modificarCliente(cli);
+
+                    limpiarTabla(modeloTablaCliente);
+                    limpiarCliente();
+                    listarClientes();
+                    JOptionPane.showMessageDialog(null, "ACTUALIZADO CON EXITO");
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "Existen algunos campos vacios");
+            }
+        }
+    }//GEN-LAST:event_btnActualizarClienteActionPerformed
+
+    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
+        if (!"".equals(txtIdCliente.getText())){
+            int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres eliminar este cliente?");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(txtIdCliente.getText());
+                cliDao.eliminarCliente(id);
+                limpiarTabla(modeloTablaCliente);
+                limpiarCliente();
+                listarClientes();
+            }
+        } else{
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente");
+        }
+    }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void btnLimpiarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarClienteActionPerformed
+        limpiarCliente();
+    }//GEN-LAST:event_btnLimpiarClienteActionPerformed
+
+    private void tablaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClienteMouseClicked
+        int fila = tablaCliente.rowAtPoint(evt.getPoint());
+        
+        txtIdCliente.setText(tablaCliente.getValueAt(fila, 0).toString());
+        txtDocumentoCliente.setText(tablaCliente.getValueAt(fila,1).toString());
+        txtNombreCliente.setText(tablaCliente.getValueAt(fila,2).toString());
+        txtApeCliente.setText(tablaCliente.getValueAt(fila,3).toString());
+        txtCelularCliente.setText(tablaCliente.getValueAt(fila,4).toString());
+        txtInstagramCliente.setText(tablaCliente.getValueAt(fila,5).toString());
+    }//GEN-LAST:event_tablaClienteMouseClicked
+
+    private void txtIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdClienteActionPerformed
+
+    private void txtInstagramClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInstagramClienteKeyTyped
+        if(txtInstagramCliente.getText().length() >= 30){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtInstagramClienteKeyTyped
+
+    private void txtCriterioClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioClienteKeyTyped
+        if(txtCriterioInventario.getText().length() >= 30){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCriterioClienteKeyTyped
+
+    private void lblBotonBuscarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonBuscarClienteMouseClicked
+        limpiarTabla(modeloTablaCliente);
+//        String atributo = Normalizer.normalize((String) cbxCriterioCliente.getSelectedItem(), Normalizer.Form.NFD)
+//                            .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        String atributo = Normalizer.normalize((String) cbxCriterioCliente.getSelectedItem(), Normalizer.Form.NFD);
+        if(atributo.equals("#"))            atributo="id";
+        if(atributo.equals("DNI/CE"))       atributo="dni";
+        if(atributo.equals("Nombre(s)"))    atributo="nombre";
+        if(atributo.equals("Apellido(s)"))  atributo="apellido";
+        atributo = atributo.toLowerCase();
+        atributo = atributo + "_cliente";
+        
+        String valor = txtCriterioCliente.getText();
+        List<Cliente> listCli = cliDao.filtrarClientes(atributo, valor);
+        modeloTablaCliente = (DefaultTableModel) tablaCliente.getModel();
+        Object[] obj = new Object[6];        
+        
+        for (int i = 0; i < listCli.size(); i++) {
+            obj[0] = listCli.get(i).getId_cliente();
+            obj[1] = listCli.get(i).getDni();
+            obj[2] = listCli.get(i).getNombre();
+            obj[3] = listCli.get(i).getApellido();
+            obj[4] = listCli.get(i).getCelular();
+            obj[5] = listCli.get(i).getInstagram();
+            
+            modeloTablaCliente.addRow((obj));
+        }
+        tablaCliente.setModel(modeloTablaCliente);
+        limpiarCliente();
+    }//GEN-LAST:event_lblBotonBuscarClienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -3649,6 +4271,7 @@ public class SistemaVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarCliente;
     private javax.swing.JButton btnActualizarEmpleado;
     private javax.swing.JButton btnActualizarInventario;
     private javax.swing.JButton btnActualizarVenta;
@@ -3657,13 +4280,16 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JButton btnDescargaReporte;
     private javax.swing.JButton btnDescargarInventario;
     private javax.swing.JButton btnDescargarTablaInventario;
+    private javax.swing.JButton btnEliminarCliente;
     private javax.swing.JButton btnEliminarEmpleado;
     private javax.swing.JButton btnEliminarInventario;
     private javax.swing.JButton btnEliminarVenta;
     private javax.swing.JLabel btnFotoProducto;
     private javax.swing.JButton btnGenerarVenta;
+    private javax.swing.JButton btnGuardarCliente;
     private javax.swing.JButton btnGuardarEmpleado;
     private javax.swing.JButton btnGuardarProducto;
+    private javax.swing.JButton btnLimpiarCliente;
     private javax.swing.JButton btnLimpiarEmpleado;
     private javax.swing.JButton btnLimpiarProducto;
     private javax.swing.JButton btnLimpiarVenta;
@@ -3671,7 +4297,9 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxCategoriaInventario;
     private javax.swing.JComboBox<String> cbxCategoriaProducto;
     private javax.swing.JComboBox<String> cbxCategoriaProductoCarrito;
+    private javax.swing.JComboBox<String> cbxCriterioCliente;
     private javax.swing.JComboBox<String> cbxCriterioInventario;
+    private javax.swing.JComboBox<String> cbxDocumentoCliente;
     private javax.swing.JComboBox<String> cbxDocumentoClienteVenta;
     private javax.swing.JComboBox<String> cbxDocumentoEmpleado;
     private javax.swing.JComboBox<String> cbxEmpleadoVenta;
@@ -3689,6 +4317,8 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -3698,14 +4328,17 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -3718,19 +4351,24 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JLabel lblApeCliente;
     private javax.swing.JLabel lblApeMaternoEmpleado;
     private javax.swing.JLabel lblApePaternoEmpleado;
+    private javax.swing.JLabel lblBotonBuscarCliente;
     private javax.swing.JLabel lblBotonBuscarClienteVenta;
     private javax.swing.JLabel lblBotonBuscarInventario;
     private javax.swing.JLabel lblBotonBuscarProductoVenta;
     private javax.swing.JLabel lblBotonBuscarReporte;
+    private javax.swing.JLabel lblBuscarCliente;
     private javax.swing.JLabel lblBuscarInventario;
     private javax.swing.JLabel lblCantidadCarrito;
     private javax.swing.JLabel lblCategoriaCarrito;
     private javax.swing.JLabel lblCategoriaProducto;
+    private javax.swing.JLabel lblCelularCliente;
     private javax.swing.JLabel lblCelularEmpleado;
     private javax.swing.JLabel lblCodigoCarrito;
     private javax.swing.JLabel lblCodigoCarrito3;
@@ -3738,9 +4376,11 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JLabel lblDescripcionCarrito;
     private javax.swing.JLabel lblDescripcionInventario;
     private javax.swing.JLabel lblDescripcionProducto;
+    private javax.swing.JLabel lblDocumentoCliente;
     private javax.swing.JLabel lblDocumentoEmpleado;
     private javax.swing.JLabel lblFecIngresoEmpleado;
     private javax.swing.JLabel lblFecNacimientoEmpleado;
+    private javax.swing.JLabel lblFondoCliente;
     private javax.swing.JLabel lblFondoEmpleado;
     private javax.swing.JLabel lblFondoProducto;
     private javax.swing.JLabel lblFondoReporte;
@@ -3749,9 +4389,11 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JLabel lblFotoProducto;
     private javax.swing.JLabel lblIconSolReporte;
     private javax.swing.JLabel lblImagenInventario;
+    private javax.swing.JLabel lblInstaCliente;
     private javax.swing.JLabel lblNombreCarrito;
     private javax.swing.JLabel lblNombreCarrito1;
     private javax.swing.JLabel lblNombreCarrito2;
+    private javax.swing.JLabel lblNombreCliente;
     private javax.swing.JLabel lblNombreEmpleado;
     private javax.swing.JLabel lblNombreProducto;
     private javax.swing.JLabel lblPrecioCarrito;
@@ -3766,13 +4408,16 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JLabel lblStockInventario;
     private javax.swing.JLabel lblStockInventario1;
     private javax.swing.JLabel lblStockProducto;
+    private javax.swing.JLabel lblTituloCliente;
     private javax.swing.JLabel lblTituloEmpleado;
     private javax.swing.JLabel lblTituloInventario;
     private javax.swing.JLabel lblTituloProducto;
     private javax.swing.JLabel lblTituloReporte;
     private javax.swing.JLabel lblTituloVenta;
     private javax.swing.JLabel lblUserName;
+    private javax.swing.JPanel pnlCliente;
     private javax.swing.JPanel pnlEmpleado;
+    private javax.swing.JPanel pnlFondoCliente;
     private javax.swing.JPanel pnlFondoEmpleado;
     private javax.swing.JPanel pnlFondoInventario;
     private javax.swing.JPanel pnlFondoProducto;
@@ -3786,6 +4431,7 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JPanel pnlProducto;
     private javax.swing.JPanel pnlReporte;
     private javax.swing.JPanel pnlSOlPrecioCostoInventario;
+    private javax.swing.JPanel pnlTituloCliente;
     private javax.swing.JPanel pnlTituloEmpleado;
     private javax.swing.JPanel pnlTituloProducto;
     private javax.swing.JPanel pnlTituloReporte;
@@ -3793,25 +4439,33 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JSpinner spnCantidadProductoCarrito;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable tablaCarritoVenta;
+    private javax.swing.JTable tablaCliente;
     private javax.swing.JTable tablaEmpleado;
     private javax.swing.JTable tablaInventario;
     private javax.swing.JTable tablaReporte;
+    private javax.swing.JTextField txtApeCliente;
     private javax.swing.JTextField txtApeMaternoEmpleado;
     private javax.swing.JTextField txtApePaternoEmpleado;
+    private javax.swing.JTextField txtCelularCliente;
     private javax.swing.JTextField txtCelularEmpleado;
     private javax.swing.JTextField txtCodigoInventario;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtCodigoProductoCarrito;
+    private javax.swing.JTextField txtCriterioCliente;
     private javax.swing.JTextField txtCriterioInventario;
     private javax.swing.JTextArea txtDescripcionInventario;
     private javax.swing.JTextArea txtDescripcionProducto;
     private javax.swing.JTextArea txtDescripcionProductoCarrito;
+    private javax.swing.JTextField txtDocumentoCliente;
     private javax.swing.JTextField txtDocumentoClienteVenta;
     private javax.swing.JTextField txtDocumentoEmpleado;
     private javax.swing.JTextField txtFotoProducto;
+    private javax.swing.JTextField txtIdCliente;
     private javax.swing.JTextField txtIdEmpleado;
     private javax.swing.JTextField txtIdInventario;
     private javax.swing.JTextField txtIdProductoCarrito;
+    private javax.swing.JTextField txtInstagramCliente;
+    private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNombreClienteVenta;
     private javax.swing.JTextField txtNombreEmpleado;
     private javax.swing.JTextField txtNombreInventario;
@@ -3828,9 +4482,4 @@ public class SistemaVista extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalReporte;
     private javax.swing.JTextField txtTotalVenta;
     // End of variables declaration//GEN-END:variables
-    
 }
-
-
-
-

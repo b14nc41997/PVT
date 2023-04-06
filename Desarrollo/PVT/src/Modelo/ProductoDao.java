@@ -54,6 +54,7 @@ public class ProductoDao {
     public void seleccionarCategoriaVenta(JComboBox categoria){
         categoria.addItem("Joya");
         categoria.addItem("Tatuaje");
+        categoria.addItem("Otro"); //nuevo
     }
     
     public List listarProductos(){
@@ -225,10 +226,10 @@ public class ProductoDao {
         return listPro;
     }
     
-    public Producto productoEscogido(String codigo){        
+    public Producto productoEscogido(String codigo, String categoria){        
         String sql = "SELECT * "
                     + "FROM productos "
-                    + "WHERE categoria_producto = 'Joya' AND codigo_producto = '"+codigo+"'";
+                    + "WHERE categoria_producto = '"+categoria+"' AND codigo_producto = '"+codigo+"'";
         try {
             conexion = cn.getConnection();
             ps = conexion.prepareStatement(sql);
