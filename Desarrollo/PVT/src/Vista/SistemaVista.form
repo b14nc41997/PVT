@@ -1896,7 +1896,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Nombre"/>
+                            <Property name="text" type="java.lang.String" value="Nombre*"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtNombreInventario">
@@ -1924,7 +1924,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Categor&#xed;a"/>
+                            <Property name="text" type="java.lang.String" value="Categor&#xed;a*"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JComboBox" name="cbxCategoriaInventario">
@@ -1949,7 +1949,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
+                            <Property name="text" type="java.lang.String" value="C&#xf3;digo*"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtCodigoInventario">
@@ -1985,7 +1985,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Precio Costo"/>
+                            <Property name="text" type="java.lang.String" value="Precio Costo*"/>
                           </Properties>
                         </Component>
                         <Container class="javax.swing.JPanel" name="pnlSOlPrecioCostoInventario">
@@ -2131,7 +2131,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Stock"/>
+                            <Property name="text" type="java.lang.String" value="Stock*"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JSpinner" name="txtStockInventario">
@@ -2784,7 +2784,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Foto*"/>
+                        <Property name="text" type="java.lang.String" value="Foto"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

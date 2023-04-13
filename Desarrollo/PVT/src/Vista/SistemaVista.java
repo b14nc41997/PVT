@@ -1397,7 +1397,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("Nombre");
+        jLabel24.setText("Nombre*");
 
         txtNombreInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtNombreInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1409,7 +1409,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Categoría");
+        jLabel25.setText("Categoría*");
 
         cbxCategoriaInventario.setToolTipText("");
         cbxCategoriaInventario.addItemListener(new java.awt.event.ItemListener() {
@@ -1420,7 +1420,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Código");
+        jLabel26.setText("Código*");
 
         txtCodigoInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtCodigoInventario.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1435,7 +1435,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         lblPrecioCostoInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPrecioCostoInventario.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecioCostoInventario.setText("Precio Costo");
+        lblPrecioCostoInventario.setText("Precio Costo*");
 
         pnlSOlPrecioCostoInventario.setBackground(new java.awt.Color(67, 102, 129));
 
@@ -1509,7 +1509,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         lblStockInventario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblStockInventario.setForeground(new java.awt.Color(255, 255, 255));
-        lblStockInventario.setText("Stock");
+        lblStockInventario.setText("Stock*");
 
         txtStockInventario.setModel(new javax.swing.SpinnerNumberModel(1, 0, null, 1));
         txtStockInventario.setAutoscrolls(true);
@@ -1893,7 +1893,7 @@ public class SistemaVista extends javax.swing.JFrame {
 
         lblFotoProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblFotoProducto.setForeground(new java.awt.Color(255, 255, 255));
-        lblFotoProducto.setText("Foto*");
+        lblFotoProducto.setText("Foto");
         pnlFondoProducto.add(lblFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, -1, -1));
 
         txtFotoProducto.setEditable(false);
@@ -2914,9 +2914,8 @@ public class SistemaVista extends javax.swing.JFrame {
         }
         
         if(!"".equals(txtNombreProducto.getText()) && !"".equals(cbxCategoriaProducto.getSelectedItem())
-            && !"".equals(txtDescripcionProducto.getText()) && !"".equals(txtPrecioCompraProducto.getText())
-            && !"0".equals(txtStockProducto.getValue()) && !"".equals(txtCodigoProducto.getText())
-            && !"".equals(txtFotoProducto.getText())){
+            && !"".equals(txtPrecioCompraProducto.getText()) && !"0".equals(txtStockProducto.getValue())
+            && !"".equals(txtCodigoProducto.getText())){
             
             if(proDao.verificarCodigoUnico(txtCodigoProducto.getText())){
                 JOptionPane.showMessageDialog(null, "El código ingresado coincide con otro producto. Elija otro código");
@@ -2955,7 +2954,13 @@ public class SistemaVista extends javax.swing.JFrame {
             }
             pro.setStock_producto((Integer)txtStockProducto.getValue());
             pro.setCodigo_producto(txtCodigoProducto.getText());
-            pro.setFoto_producto(getImagen(txtFotoProducto.getText()));
+            
+            if (txtFotoProducto.getText().equals("")){
+                pro.setFoto_producto(null);
+            }else{
+                pro.setFoto_producto(getImagen(txtFotoProducto.getText()));
+            }
+            
             proDao.registrarProducto(pro);
 
             limpiarProducto();
@@ -3080,27 +3085,10 @@ public class SistemaVista extends javax.swing.JFrame {
         if (!(codigo).equals("")){
             byte[] bytes = proDao.getImagenProducto(codigo);
             BufferedImage img = null;
-            try{
-                try{
-                    img = ImageIO.read(new ByteArrayInputStream(bytes));
-                }catch(IOException ex){
-                    System.out.println(ex.getMessage());
-                }
-
-                ImageIcon icono = new ImageIcon(img);
-
-                //JOptionPane.showMessageDialog(null,"",codigo, JOptionPane.YES_NO_OPTION,icono);
-                int seleccion = JOptionPane.showOptionDialog(
-                    null,
-                    "", 
-                    codigo,
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    icono,    // null para icono por defecto.
-                    new Object[] { "Cambiar Imagen", "Cerrar"},
-                    "Cambiar Imagen"// null para YES, NO y CANCEL
-                );
-
+            
+            if (bytes==null){
+                int seleccion = JOptionPane.showConfirmDialog(null,"Este producto no tiene imagen.\n¿Deseas agregar una imagen?","Aviso",JOptionPane.YES_NO_OPTION);
+                
                 if(seleccion == 0){
                     JFileChooser jFileChooser = new JFileChooser();
                     jFileChooser.setMultiSelectionEnabled(false);
@@ -3112,26 +3100,76 @@ public class SistemaVista extends javax.swing.JFrame {
 
                     if(respuesta == JFileChooser.APPROVE_OPTION){
                         ruta = jFileChooser.getSelectedFile().getAbsolutePath();
-                        int pregunta = JOptionPane.showConfirmDialog(null,"¿Deseas reemplazar la imagen?","Aviso",JOptionPane.YES_NO_OPTION);
-                        if(pregunta == 0){
-                            pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
-                            pro.setFoto_producto(getImagen(ruta));
-                            proDao.modificarFotoProducto(pro);
-                            JOptionPane.showMessageDialog(null, "Imagen actualizada con exito");
-                        }
-                        //nombre = jFileChooser.getSelectedFile().getName();
-                        //System.out.println(ruta);
-                        //pro.setFoto_producto(getImagen(txtFotoProducto.getText()));
+                        pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
+                        pro.setFoto_producto(getImagen(ruta));
+                        boolean valor = proDao.modificarFotoProducto(pro);
+                        if (valor == true)
+                            JOptionPane.showMessageDialog(null, "Imagen agregada con exito");
+                        else
+                            JOptionPane.showMessageDialog(null, "Imagen muy grande, no se puede guardar");
+                    }
+                }            
+            }
+            
+            else{
+                try{
+                    try{
+                        img = ImageIO.read(new ByteArrayInputStream(bytes));
+                    }catch(IOException ex){
+                        System.out.println(ex.getMessage());
                     }
 
-                }               
+                    ImageIcon icono = new ImageIcon(img);
 
-                if (seleccion != -1)
-                System.out.println("seleccionada opcion " + (seleccion + 1));
+                    int seleccion = JOptionPane.showOptionDialog(
+                        null,
+                        "", 
+                        codigo,
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        icono,    // null para icono por defecto.
+                        new Object[] {"Quitar imagen","Cambiar Imagen","Cerrar"},
+                        "Cambiar Imagen"// null para YES, NO y CANCEL
+                    );
+                    if(seleccion == 0){
+                        pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
+                        pro.setFoto_producto(null);
+                        proDao.modificarFotoProducto(pro);
+                        JOptionPane.showMessageDialog(null, "Imagen quitada con éxito");
+                    }
 
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null, "No tiene una imagen asignada");
+                    if(seleccion == 1){
+                        JFileChooser jFileChooser = new JFileChooser();
+                        jFileChooser.setMultiSelectionEnabled(false);
+                        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG & PNG","jpg","png");
+                        jFileChooser.setFileFilter(filtrado);
+                        String ruta = "";
+                        String nombre = ""; 
+                        int respuesta = jFileChooser.showOpenDialog(this);
+
+                        if(respuesta == JFileChooser.APPROVE_OPTION){
+                            ruta = jFileChooser.getSelectedFile().getAbsolutePath();
+                            int pregunta = JOptionPane.showConfirmDialog(null,"¿Deseas cambiar la imagen?","Aviso",JOptionPane.YES_NO_OPTION);
+                            if(pregunta == 0){
+                                pro.setId_producto(Integer.parseInt(txtIdInventario.getText()));
+                                pro.setFoto_producto(getImagen(ruta));
+                                boolean valor = proDao.modificarFotoProducto(pro);
+                                if (valor == true)
+                                    JOptionPane.showMessageDialog(null, "Imagen cambiada con exito");
+                                else
+                                    JOptionPane.showMessageDialog(null, "Imagen muy grande, no se puede cambiar");
+                            }
+                        }
+                    }               
+
+                    if (seleccion != -1)
+                    System.out.println("seleccionada opcion " + (seleccion + 1));
+
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "No tiene una imagen asignada");
+                }
             }
+                
         }else {
             JOptionPane.showMessageDialog(null, "Seleccione un producto del inventario");
         }
